@@ -1,0 +1,247 @@
+---
+title: "Scraping USADA sanctions"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+    df_print: kable
+vignette: >
+  %\VignetteIndexEntry{Scraping USADA sanctions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(
+  pillar.print_max = 25, 
+  dplyr.print_max = 25,
+  knitr.kable.NA = '',
+  pillar.print_min = 25)
+library(polite)
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+library(robotstxt)
+options(robotstxt_warn = FALSE)
+```
+
+Packages:
+
+```{r pkg, eval=FALSE, message=FALSE, warning=FALSE}
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+library(robotstxt)
+options(robotstxt_warn = FALSE)
+```
+
+## USADA sanction data
+
+The data I'll be downloading comes from [USADA sanctions table](https://www.usada.org/testing/results/sanctions/).
+
+## Use your manners 
+
+Because this package is built on top of the efforts of the fine people who collected, organized, and shared their data, we're going to use the [`polite` package](https://dmi3kno.github.io/polite/) for harvesting the HTML tables. 
+
+To install this package, run the code below: 
+
+```{r inst-polite, eval=FALSE}
+remotes::install_github("dmi3kno/polite")
+library(polite)
+```
+
+`polite` has many options for ethically scraping data (check out the [package website](https://dmi3kno.github.io/polite/reference/index.html) for more information), but I've chosen to follow the handy [polite template](https://dmi3kno.github.io/polite/#polite-template):
+
+```{r use_manners, eval=FALSE}
+polite::use_manners()
+```
+
+
+### Check `robots.txt`
+
+I'll check the `robots.txt` file before scraping the website:
+
+```{r rt}
+# retrieval
+rtxt <- robotstxt::robotstxt(domain = "https://www.usada.org/")
+
+# printing
+rtxt$check(
+  # check permissions 
+  paths = c("testing/", 
+            "testing/results/", 
+            "testing/results/sanctions/"),
+  # bots
+  bot   = "*"
+)
+```
+
+All three paths are `TRUE`, but I will also check the domain with `robotstxt::get_robotstxt()`:
+
+```{r get_robotstxt}
+rt <- robotstxt::get_robotstxt(
+  domain = "https://www.usada.org/testing/results/sanctions/")
+# printing
+cat(rt[1])
+```
+
+I can see the `Allow: /` configuration [gives us access to download](https://kinsta.com/blog/wordpress-robots-txt/#how-to-use-robotstxt-allow-all-to-give-robots-full-access-to-your-site) the data. 
+
+
+### Scraping with `polite` and `rvest`
+
+Below are the steps used to scrape the sanctions table:
+
+```{r scrape, include=FALSE, eval=FALSE}
+usada_url = "https://www.usada.org/testing/results/sanctions/"
+# extract html
+usada_extraction <- rvest::read_html(usada_url)
+# nodes
+usada_nodes <- rvest::html_nodes(usada_extraction, "table")
+# raw data
+usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]]) |> 
+  tibble::as_tibble()
+```
+
+```{r polite-scraping, eval=FALSE}
+usada_url = "https://www.usada.org/testing/results/sanctions/"
+usada_nodes <- polite::bow(usada_url) |> 
+  polite::scrape() |> 
+  rvest::html_nodes("table") 
+usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
+```
+
+```{r hidden-usada_sanctions_raw-import, message=FALSE, warning=FALSE, echo=FALSE}
+# fs::dir_tree("../inst/extdata/raw/")
+usada_sanctions_raw <- readr::read_rds(
+  '../inst/extdata/raw/2023-01-19/2023-01-19-usada_sanctions_raw.rds')
+```
+
+What does the raw data look like? 
+
+```{r glimpse-usada_sanctions_raw}
+dplyr::glimpse(usada_sanctions_raw)
+```
+
+You can also use the `scrape_usada_sanctions()` function. 
+
+## Process text 
+
+The raw HTML table needs some reformatting/restructuring before I can build any visualizations or models. I'll start by standardizing the names and making all the text lowercase. 
+
+```{r clean_names-str_to_lower}
+usada_sanctions_lc <- janitor::clean_names(usada_sanctions_raw) |> 
+                     purrr::map_df(.f = str_to_lower)
+glimpse(usada_sanctions_lc)
+```
+
+This takes care of the column names and case, but what about all the invisible characters? (wait, what is a [invisible character???](https://invisible-characters.com/)).
+
+For cleaning text, we can use the `process_text()` function, which adds a few steps: 
+
+1. replaces carriage returns (`\\r`) and newlines (`\\n`) with white space  
+2. converts **all** variables to text (`chr`)  
+
+```{r usada_sanctions_pro}
+usada_sanctions_pro <- process_text(usada_sanctions_raw)
+dplyr::glimpse(usada_sanctions_pro)
+```
+
+If I compare with `waldo::compare()`, I can see the differences: 
+
+```{r waldo-compare}
+waldo::compare(usada_sanctions_lc, usada_sanctions_pro)
+```
+
+## Export raw data
+
+I'll export the raw data into the `inst/extdata/raw/` folder. First create a raw data folder for today's data:
+
+``` r
+create_dir_date(dir_path = "../inst/extdata/", dir_name = "raw/")
+✔ Creating folder: ../inst/extdata/raw/2023-01-20/
+✔ path is on clipboard!
+```
+
+Create the file paths for .csv and .rds files. 
+
+```{r output-csv_pth, eval=TRUE}
+csv_pth <- paste0('../inst/extdata/raw/', Sys.Date(), '/', 
+                  dtstamp(side = "r"), 'usada_sanctions_raw.csv')
+csv_pth
+rds_pth <-  paste0('../inst/extdata/raw/', Sys.Date(), '/', 
+                  dtstamp(side = "r"), 'usada_sanctions_raw.rds')
+rds_pth
+```
+
+If these look good, I can run the export functions:
+
+```{r export-raw, eval=FALSE}
+readr::write_csv(x = usada_sanctions_raw, file = csv_pth)
+readr::write_rds(x = usada_sanctions_raw, file = rds_pth)
+```
+
+Verify: 
+
+```{r verify}
+fs::dir_tree("../inst/extdata/raw/")
+```
+
+
+## Export processed data 
+
+I want to export the processed data into a separate folder (`inst/extdata/<today>`), which I can create using `create_dir_date()`
+
+``` r
+create_dir_date(dir_path = "../inst/extdata", dir_name = "pro/")
+✔ Creating folder: ../inst/extdata/pro/2023-01-20/
+✔ path is on clipboard!
+```
+
+Create export processed paths: 
+
+```{r processed-output-dirs, eval=TRUE}
+csv_pro_pth <- paste0('../inst/extdata/pro/',
+                        Sys.Date(),
+                        '/',
+                        dtstamp(side = "r"),
+                        'usada_sanctions_pro.csv')
+csv_pro_pth
+rds_pro_pth <- paste0('../inst/extdata/pro/',
+                        Sys.Date(),
+                        '/',
+                        dtstamp(side = "r"),
+                        'usada_sanctions_pro.rds')
+rds_pro_pth
+```
+
+```{r export-processed, eval=FALSE}
+readr::write_csv(x = usada_sanctions_pro, file = csv_pro_pth)
+readr::write_rds(x = usada_sanctions_pro, file = rds_pro_pth)
+```
+
+Verify: 
+
+```{r processed-verify}
+fs::dir_tree(path = paste0('../inst/extdata/pro/',
+                        Sys.Date(),
+                        '/'), regexp = "sanctions_pro")
+```

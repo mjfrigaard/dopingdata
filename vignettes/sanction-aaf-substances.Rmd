@@ -1,0 +1,47 @@
+---
+title: "AAF substances sanctions"
+output: 
+  rmarkdown::html_vignette:
+    df_print: kable
+vignette: >
+  %\VignetteIndexEntry{AAF substances sanctions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(
+  pillar.print_max = 25, 
+  dplyr.print_max = 25,
+  knitr.kable.NA = '',
+  pillar.print_min = 25)
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+```
+
+Packages:
+
+```{r pkg, message=FALSE, warning=FALSE}
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+```
