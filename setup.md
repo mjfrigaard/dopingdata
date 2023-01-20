@@ -285,11 +285,85 @@ git checkout main
 git branch --set-upstream-to=origin/<branch> gh-pages
 git branch --set-upstream-to=origin/main gh-pages
 ```
-=======
+
+
 To deploy on main, I added a `.nojekyll` file: 
 
 ```bash
 touch .nojekyll
 ```
 
+# Deploy a pkgdown site to `gh-pages` branch
 
+https://gist.github.com/AliciaSchep/f4287a4797d15d2b7923f12d5d9cc93d
+
+```r
+## Adapted from r-lib/pkgdown source code from RStudio https://github.com/r-lib/pkgdown
+
+## Helper functions, directly from pkgdown code --------------------------------
+git <- function(...) {
+  processx::run("git", c(...), echo_cmd = TRUE, echo = TRUE)
+}
+
+github_clone <- function(dir, repo_slug) {
+  remote_url <- sprintf("git@github.com:%s.git", repo_slug)
+  cli::rule("Cloning existing site", line = 1)
+  git("clone",
+      "--single-branch", "-b", "gh-pages",
+      "--depth", "1",
+      remote_url,
+      dir
+  )
+}
+
+github_push <- function(dir, commit_message) {
+  # force execution before changing working directory
+  force(commit_message)
+  
+  cli::rule("Commiting updated site", line = 1)
+  
+  withr::with_dir(dir, {
+    git("add", "-A", ".")
+    git("commit", "--allow-empty", "-m", commit_message)
+    
+    cli::rule("Deploying to GitHub Pages", line = 1)
+    git("remote", "-v")
+    git("push", "--force", "origin", "HEAD:gh-pages")
+  })
+}
+
+## Deploy function, adapted from deploy_local ----------------------------------
+deploy_site_github_local <- function(repo, preview = TRUE, delete_previous = FALSE, ...) {
+  # repo is the github repository, e.g. "username/repo"
+  # preview is to whether to first preview the site before pushing
+  # delete_previous is a flag to delete previous gh_pages branch content
+  # ... are additional parameters to build_site
+  dest_dir <- fs::dir_create(fs::file_temp())
+  on.exit(fs::dir_delete(dest_dir))
+  
+  github_clone(dest_dir, repo)
+  if (delete_previous) {
+    # This may be necessary if the branch has stuff not built by pkgdown
+    fs::dir_map(dest_dir, fs::file_delete)
+  }
+  pkgdown::build_site(".",
+             override = list(destination = dest_dir),
+             document = FALSE,
+             preview = FALSE,
+             ...
+  )
+  
+  if (preview) {
+    browseURL(fs::path(dest_dir, "index.html"))
+    push <- utils::menu(c("Yes","No"), title = "Push site?") == 1
+  } else {
+    push <- TRUE
+  }
+  
+  if (push) {
+    github_push(dest_dir, "Building new version of pkgdown website")
+  }
+  
+  invisible()
+}
+```
