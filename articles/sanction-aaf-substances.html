@@ -92,7 +92,510 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor" class="external-link">janitor</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dirk.eddelbuettel.com/code/anytime.html" class="external-link">anytime</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<div class="section level3">
+<h3 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
+</h3>
+<p>This vignette covers classification of single substances in the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanction
+data</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
+</h3>
+<p>This package uses data from a table that gets updated regularly. To
+keep track of the versions, I’ve organized the <code>inst/extdata</code>
+folder by date (<code>YYYY-MM-DD</code>), but I have a helper function
+for getting the recent version:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tdy_stmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_recent_version.html">get_recent_version</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
+<span><span class="va">tdy_stmp</span></span></code></pre></div>
+<p>Now I can use <code>tdy_stmp</code> whenever I need to use find the
+data version! See below:</p>
+</div>
+<div class="section level3">
+<h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
+</h3>
+<p>This vignette assumes the following:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Scrape the website:</strong> A copy of the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
+table</a> has been scraped and lives in the
+<code>inst/extdata/raw/</code> folder</li>
+</ol>
+<ul>
+<li><p>See the <code>scrape_usada_sanctions()</code> function and
+<code>scraping-usada.Rmd</code> vignette for more information</p></li>
+<li><p>These data have had all the column names formatted with
+<code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>, and all the text has been converted
+to lowercase</p></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>
+<strong>Fix the dates:</strong> The dates in this table have been
+formatted and wrangled</li>
+</ol>
+<ul>
+<li>See the <code>vignettes/sanction-dates.Rmd</code> vignette for more
+information</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>
+<strong>Tidy the sports:</strong> The <code>sport</code> column has
+been ‘tidied’ and athletes/support personnel listed with more than one
+sport have been repeated in the data</li>
+</ol>
+<ul>
+<li>See the <code>vignettes/sports.Rmd</code> vignette for more
+information</li>
+</ul>
+<div class="section level4">
+<h4 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h4>
+<p>Below I’ll import the most recent version of the tidy USADA sports
+data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_data_file</span>(<span class="st">"../inst/extdata/pro/"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_usada_sports</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv'</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">)</span></span></code></pre></div>
+<p>These data have had their names standardized, and all the text has
+been converted to lowercase.</p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="sanctions">Sanctions<a class="anchor" aria-label="anchor" href="#sanctions"></a>
+</h3>
+<p>The sanctions are divided into two categories:</p>
+<ul>
+<li><p><code>analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text" class="external-link">Adverse
+Analytical Finding</a>, AAF; <em>An AAF is a report from a
+WADA-accredited laboratory that identifies the presence of a prohibited
+substance and/or its metabolites or markers in a sample.</em></p></li>
+<li><p><code>non-analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/" class="external-link">Non-Analytical
+Anti-doping Rule Violation</a> ADRV; <em>a non-analytical anti-doping
+rule violation does not stem from a positive urine or blood sample, but
+instead originates from, and is substantiated by, other evidence of
+doping or violations by an athlete or athlete support
+personnel.</em>.</p></li>
+</ul>
+<div class="section level4">
+<h4 id="substances-vs-reasons">Substances vs Reasons<a class="anchor" aria-label="anchor" href="#substances-vs-reasons"></a>
+</h4>
+<p>The sanctions in the WADA data due to analytic findings (or
+<em>Adverse Analytical Finding (AAF)</em>), and others are due to other
+reasons (i.e. ‘non-analytical’ or ‘non-analytic’ sanctions).</p>
+<p>The <code>substance_reason</code> column contains the details of the
+sanction, which can include the following information:</p>
+<ol style="list-style-type: decimal">
+<li><p>The name of the banned substance</p></li>
+<li><p>A description of the infraction (if non-analytic)</p></li>
+</ol>
+<p>See the examples below:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">25</span><span class="op">)</span>, </span>
+<span>  <span class="st">"steroid"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  <span class="st">"non-analytical"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="sanction-type">Sanction type<a class="anchor" aria-label="anchor" href="#sanction-type"></a>
+</h4>
+<p>Most of the non-analytic sanctions include the terms
+<code>non-analytic</code>/<code>non-analytical</code>/etc., as a prefix
+in the <code>substance_reason</code> column.</p>
+<p>I can pass these terms as regular expressions to create the
+<code>sanction_type</code> variable, which will contain two values:
+<code>non-analytical</code> and <code>analytical</code></p>
+<p>I’ll save this variable in the <code>usada_sanction_types</code>
+dataset.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">usada_sanction_types</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="va">tidy_usada_sports</span>,</span>
+<span>    sanction_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">substance_reason</span>, </span>
+<span>        <span class="st">"non-analytical"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"non-analytical"</span>,</span>
+<span>      <span class="op">!</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, </span>
+<span>        <span class="st">"non-analytical"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"analytical"</span>,</span>
+<span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA_character_</span></span>
+<span>    <span class="op">)</span> </span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">usada_sanction_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sanction_type</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="analytic-sanctions">Analytic sanctions<a class="anchor" aria-label="anchor" href="#analytic-sanctions"></a>
+</h3>
+<p>Now I can filter <code>usada_sanction_types</code> to the
+<code>analytical</code> sanctions in <code>sanction_type</code>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
+<span>        <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>This is the same number of <code>"analytical"</code> values in
+<code>sanction_type</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="non-analytic-sanctions">Non-analytic sanctions<a class="anchor" aria-label="anchor" href="#non-analytic-sanctions"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
+<span>  <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"non-analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="single-vs--multiple-substances">Single vs. multiple substances<a class="anchor" aria-label="anchor" href="#single-vs--multiple-substances"></a>
+</h3>
+<p>To identify single vs. multiple substances, first I’ll identify the
+multiple substances using a regular expression, then I’ll negate the
+regular expression for the single substances.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">usada_substance_types</span> <span class="op">&lt;-</span> <span class="va">usada_sanction_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>multiple_substances <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,</span>
+<span>    <span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span><span class="cn">FALSE</span>,</span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">multiple_substances</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Now I’ll divide these into single and multiple analytic
+substances:</p>
+<div class="section level4">
+<h4 id="multiple-analytic-substances">Multiple analytic substances<a class="anchor" aria-label="anchor" href="#multiple-analytic-substances"></a>
+</h4>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">multiple_analytic_subs</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_substances</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">multiple_analytic_subs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, name <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">Count</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Above is a ‘count of counts’, which tells me most of the multiple
+substance combinations occur only once.</p>
+</div>
+<div class="section level4">
+<h4 id="single-analytic-substances">Single analytic substances<a class="anchor" aria-label="anchor" href="#single-analytic-substances"></a>
+</h4>
+<p>Below is a count of the single analytic substances:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">single_analytic_subs</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_substances</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">single_analytic_subs</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="classifying-substances">Classifying substances<a class="anchor" aria-label="anchor" href="#classifying-substances"></a>
+</h3>
+<p>To identify the <a href="https://www.wada-ama.org/en/prohibited-list#search-anchor" class="external-link">WADA
+banned substances</a>, I’ve written
+<code>classify_wada_substances()</code>, a function that scans the
+<code>substance_reason</code> column and identifies any substances found
+on the <a href="https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf" class="external-link">WADA
+list</a>. See Appendix (bottom) for more information.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">classified_single_aaf_substance</span> <span class="op">&lt;-</span> <span class="fu">classify_wada_substances</span><span class="op">(</span></span>
+<span>  usada_data <span class="op">=</span> <span class="va">single_analytic_subs</span>, </span>
+<span>  subs_column <span class="op">=</span> <span class="va">substance_reason</span><span class="op">)</span> </span>
+<span><span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_group</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="s1-anabolic-agents">S1 ANABOLIC AGENTS<a class="anchor" aria-label="anchor" href="#s1-anabolic-agents"></a>
+</h4>
+<p>The S1 substances are below:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s1_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s2-peptide-hormones-growth-factors-related-substances-and-mimetics">S2 PEPTIDE HORMONES, GROWTH FACTORS, RELATED SUBSTANCES, AND
+MIMETICS<a class="anchor" aria-label="anchor" href="#s2-peptide-hormones-growth-factors-related-substances-and-mimetics"></a>
+</h4>
+<p>The S2 substances are below:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s2_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s2_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s3-beta-2-agonists">S3 BETA-2 AGONISTS<a class="anchor" aria-label="anchor" href="#s3-beta-2-agonists"></a>
+</h4>
+<p>The S3 substances are below:</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s3_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s3_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s4-hormone-and-metabolic-modulators">S4 HORMONE AND METABOLIC MODULATORS<a class="anchor" aria-label="anchor" href="#s4-hormone-and-metabolic-modulators"></a>
+</h4>
+<p>The S4 substances are below:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s4_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s4_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s5-diureticsmasking-agents">S5 DIURETICS/MASKING AGENTS<a class="anchor" aria-label="anchor" href="#s5-diureticsmasking-agents"></a>
+</h4>
+<p>The S5 substances are below:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s5_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s5_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="prohibited-methods">PROHIBITED METHODS<a class="anchor" aria-label="anchor" href="#prohibited-methods"></a>
+</h3>
+<div class="section level4">
+<h4 id="m1-manipulation-of-blood">M1 MANIPULATION OF BLOOD<a class="anchor" aria-label="anchor" href="#m1-manipulation-of-blood"></a>
+</h4>
+<p>The M1 substances are below:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m1_method</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">m1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="m2-chemical-and-physical-manipulation">M2 CHEMICAL AND PHYSICAL MANIPULATION<a class="anchor" aria-label="anchor" href="#m2-chemical-and-physical-manipulation"></a>
+</h4>
+<p>The M2 substances are below:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m2_method</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">m2_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="m3-gene-and-cell-doping">M3 GENE AND CELL DOPING<a class="anchor" aria-label="anchor" href="#m3-gene-and-cell-doping"></a>
+</h4>
+<p>The M3 substances are below:</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m3_method</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">m3_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="substances-methods-prohibited-in-competition">SUBSTANCES &amp; METHODS PROHIBITED IN-COMPETITION<a class="anchor" aria-label="anchor" href="#substances-methods-prohibited-in-competition"></a>
+</h3>
+<div class="section level4">
+<h4 id="s6-stimulants">S6 STIMULANTS<a class="anchor" aria-label="anchor" href="#s6-stimulants"></a>
+</h4>
+<p><em>All S6 STIMULANTS, including all optical isomers,
+e.g. <code>d-</code> and <code>l-</code> where relevant, are
+prohibited.</em></p>
+<p>The S6 substances are below:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s6_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s6_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s7-narcotics">S7 NARCOTICS<a class="anchor" aria-label="anchor" href="#s7-narcotics"></a>
+</h4>
+<p>The S7 substances are below:</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s7_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s7_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s8-cannabinoids">S8 CANNABINOIDS<a class="anchor" aria-label="anchor" href="#s8-cannabinoids"></a>
+</h4>
+<p><em>The following cannabinoids are prohibited: Natural cannabinoids,
+e.g. cannabis, hashish and marijuana; Synthetic cannabinoids
+e.g. Δ9-tetrahydrocannabinol (THC) and other cannabimimetics.</em></p>
+<p>The S8 substances are below:</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s8_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s8_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="s9-glucocorticoids">S9 GLUCOCORTICOIDS<a class="anchor" aria-label="anchor" href="#s9-glucocorticoids"></a>
+</h4>
+<p>The S9 substances are below:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s9_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">s9_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="p1-beta-blockers-prohibited-in-competition-only">P1 BETA BLOCKERS (prohibited In-Competition only)<a class="anchor" aria-label="anchor" href="#p1-beta-blockers-prohibited-in-competition-only"></a>
+</h4>
+<p><em>Beta-blockers are prohibited In-Competition only, in the
+following sports, and also prohibited Out-of-Competition where
+indicated.</em></p>
+<ul>
+<li>archery (wa)</li>
+<li>automobile (fia)</li>
+<li>billiards (all disciplines) (wcbs)</li>
+<li>darts (wdf)</li>
+<li>golf (igf)</li>
+<li>shooting (issf, ipc)</li>
+<li>skiing/snowboarding (fis) in ski jumping, freestyle aerials/halfpipe
+and snowboard halfpipe/big air</li>
+<li>underwater sports (cmas) in constant-weight apnoea with or without
+fins, dynamic apnoea with and without fins, free immersion apnoea, jump
+blue apnoea, spearfishing, static apnoea, target shooting, and variable
+weight apnoea</li>
+</ul>
+<p>The S8 substances are below:</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">p1_substances</span><span class="op">)</span></span></code></pre></div>
+<p>Check matches:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
+<span>  pattern <span class="op">=</span> <span class="va">p1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="unclassified-substances">Unclassified substances<a class="anchor" aria-label="anchor" href="#unclassified-substances"></a>
+</h3>
+<p>The substances that were not classified using the standard WADA list
+will be stored in <code>unclass_single_aaf_substances</code>.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">unclass_single_aaf_substances</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">unclass_single_aaf_substances</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>I can use some additional regular expressions with the
+<code>classify_substance()</code> function.</p>
+<div class="section level4">
+<h4 id="elevated-te-3-whereabouts-failures">
+<code>"elevated t/e"</code> &amp;
+<code>3 whereabouts failures</code><a class="anchor" aria-label="anchor" href="#elevated-te-3-whereabouts-failures"></a>
+</h4>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">classify_substance</span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">unclass_single_aaf_substances</span>, </span>
+<span>  subs_col <span class="op">=</span> <span class="va">substance_reason</span>, </span>
+<span>  subs <span class="op">=</span> <span class="st">"elevated t/e"</span>, </span>
+<span>  var <span class="op">=</span> <span class="st">"analytic"</span>,</span>
+<span>  val <span class="op">=</span> <span class="st">"S1 ANABOLIC AGENTS"</span>,</span>
+<span>  wb <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">classify_substance</span><span class="op">(</span></span>
+<span>  subs_col <span class="op">=</span> <span class="va">substance_reason</span>, </span>
+<span>  subs <span class="op">=</span> <span class="st">"3 whereabouts failures"</span>, </span>
+<span>  var <span class="op">=</span> <span class="st">"non_analytic"</span>,</span>
+<span>  val <span class="op">=</span> <span class="st">"3 whereabouts failures"</span>,</span>
+<span>  wb <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">analytic</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">non_analytic</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">analytic</span>, <span class="va">non_analytic</span><span class="op">)</span></span></code></pre></div>
+<p>I can use these to recode the original values–start with the
+<code>3 whereabouts failures</code></p>
+<p><code>yair rodriguez</code> should be non-analytical, so we can
+create a tiny tibble to bind back to <code>usada_substance_types</code>
+(after removing <code>rodriguez, yair</code>)</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get rodriguez, yair (3 whereabouts failures)</span></span>
+<span><span class="va">miss_classified_sanction_type</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">==</span> <span class="st">"rodriguez, yair"</span> <span class="op">&amp;</span> </span>
+<span>            <span class="va">sanction_date</span> <span class="op">==</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_date</a></span><span class="op">(</span><span class="st">"2020-12-03"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sanction_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"analytical"</span>, </span>
+<span>    true <span class="op">=</span> <span class="st">"non-analytical"</span>, <span class="va">sanction_type</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">substance_group</span><span class="op">)</span></span>
+<span><span class="va">usada_substance_types</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">!=</span> <span class="st">"rodriguez, yair"</span> <span class="op">&amp;</span> </span>
+<span>            <span class="va">sanction_date</span> <span class="op">!=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_date</a></span><span class="op">(</span><span class="st">"2020-12-03"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">miss_classified_sanction_type</span><span class="op">)</span></span>
+<span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">==</span> <span class="st">"rodriguez, yair"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span></code></pre></div>
+<p>Now we can address the <code>elevated t/e</code> (I classify this as
+<code>"S1 ANABOLIC AGENTS"</code>)</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">classified_single_aaf_substance</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    substance_group <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
+<span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"elevated t/e"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"S1 ANABOLIC AGENTS"</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="st">"kirk"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="export-sanction-data">Export sanction data<a class="anchor" aria-label="anchor" href="#export-sanction-data"></a>
+</h3>
+<p>Export analytic sanctions:</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/"</span><span class="op">)</span></span>
+<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">new_pth</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, </span>
+<span>                    <span class="st">"usada_sanction_types.csv"</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanction_types</span>, file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"usada_sanction"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="export-substance-data">Export substance data<a class="anchor" aria-label="anchor" href="#export-substance-data"></a>
+</h3>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="va">tdy_stmp</span>, <span class="st">"/"</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">"usada_substance_types.csv"</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_substance_types</span>, file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"usada_substance_types"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="export-classified-single-substances">Export classified (single) substances<a class="anchor" aria-label="anchor" href="#export-classified-single-substances"></a>
+</h3>
+<p>Export classified single substances:</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="va">tdy_stmp</span>, <span class="st">"/"</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, </span>
+<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">"classified_single_aaf_substance.csv"</span><span class="op">)</span></span>
+<span><span class="va">file_pth</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">classified_single_aaf_substance</span>, </span>
+<span>  file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"classified_single_aaf_substance"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="appendix">Appendix<a class="anchor" aria-label="anchor" href="#appendix"></a>
+</h2>
+<div class="section level3">
+<h3 id="wada-list">WADA list<a class="anchor" aria-label="anchor" href="#wada-list"></a>
+</h3>
+<p>A copy of the original WADA substances is available in
+<code>dopingdata::WADA</code></p>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
