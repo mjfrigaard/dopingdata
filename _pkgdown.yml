@@ -1,4 +1,11 @@
-url: ~
+url: https://mjfrigaard.github.io/dopingdata/
 template:
   bootstrap: 5
+  bootswatch: minty
+  theme: gruvbox-dark
+  bslib:
+    base_font:
+      google: Ubuntu Mono
+    heading_font:
+      google: Ubuntu
 
