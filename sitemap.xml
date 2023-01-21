@@ -16,12 +16,6 @@
     <loc>https://mjfrigaard.github.io/dopingdata/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-aaf-substances.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-adrv-substances.html</loc>
-  </url>
-  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html</loc>
   </url>
   <url>
@@ -32,6 +26,12 @@
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/single-aaf-substances.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/single-adrv-sanctions.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/authors.html</loc>
