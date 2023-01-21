@@ -101,20 +101,15 @@ table</a>.</p>
 <div class="section level2">
 <h2 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
 </h2>
-<p>This package uses data from a table that gets updated regularly. To
-keep track of the versions, I’ve organized the <code>inst/extdata</code>
-folder by date (<code>YYYY-MM-DD</code>), but I have a helper function
-for getting the recent version:</p>
+<p><code>dopingdata</code> uses data from a tables that get updated
+regularly, so to keep track of the versions, I’ve organized the
+<code>inst/extdata</code> folder by date (<code>YYYY-MM-DD</code>). I
+also a helper function for finding the date of the most recent file:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tdy_stmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_recent_version.html">get_recent_version</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: fs</span></span>
-<span><span class="co">#&gt; Loading required package: purrr</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Here is the recent date:</span></span>
-<span><span class="va">tdy_stmp</span></span>
-<span><span class="co">#&gt;     tdy_stmp </span></span>
-<span><span class="co">#&gt; "2023-01-20"</span></span></code></pre></div>
-<p>Now I can use <code>tdy_stmp</code> whenever I need to use find the
-data version! See below:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified date in '../inst/extdata/raw': 2023-01-21</span></span>
+<span><span class="co">#&gt;        dstmp </span></span>
+<span><span class="co">#&gt; "2023-01-21"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
@@ -122,7 +117,7 @@ data version! See below:</p>
 <p>This vignette assumes the following:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Scrape the website:</strong> A copy of the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
+<strong>Harvest the data:</strong> A copy of the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
 table</a> has been scraped and lives in the
 <code>inst/extdata/raw/</code> and <code>inst/extdata/pro/</code>
 folders</li>
@@ -132,19 +127,18 @@ folders</li>
 <p>See the <code>scrape_usada_sanctions()</code> function and
 <code>scraping-usada-sanctions.Rmd</code> vignette for more
 information</p>
-<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/2023-01-20</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-20-usada_sanctions_raw.rds</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
-<li><p>These data have had all the column names formatted with
+<li>
+<p>These data have had all the column names formatted with
 <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>, and all the text has been converted
-to lowercase</p></li>
+to lowercase</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre>
+</li>
 </ul>
-<pre><code>```
-#&gt;  [01;34m../inst/extdata/pro/2023-01-20 [0m
-#&gt; ├── 2023-01-20-usada_sanctions_pro.csv
-#&gt; └── 2023-01-20-usada_sanctions_pro.rds
-```</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Fix the dates:</strong> The dates in this table have been
@@ -154,26 +148,26 @@ formatted and wrangled</li>
 <li>
 <p>See the <code>vignettes/sanction-dates.Rmd</code> vignette for
 more information</p>
-<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/der/</span></span></span>
-<span><span class="co">#&gt; └── sanction_dates.csv</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre>
 </li>
 </ul>
 <div class="section level3">
 <h3 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h3>
 <p>I’m going to locate the most recently wrangled data file from the
-<code>inst/extdata/pro/</code> folder:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_data_file</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">folder =</span> <span class="fu">paste0</span>(<span class="st">"../inst/extdata/der/"</span>, tdy_stmp), </span>
+<code>inst/extdata/</code> folder:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_path</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">folder =</span> <span class="st">"../inst/extdata/"</span>, </span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/der/sanction_dates.csv'</span>)</span></code></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/usada_dates.csv'</span>)</span></code></pre></div>
 <p>The path on the clipboard is the exported data from
 <code>vignettes/sanction-dates.Rmd</code> (if not, please head over to
 that vignette and fix the dates before moving forward).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sanctions</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
-<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/der/sanction_dates.csv'</span><span class="op">)</span></span>
+<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/usada_dates.csv'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">658</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
@@ -630,21 +624,25 @@ aren’t any duplicates (again).</p>
 <span><span class="co">#&gt; $ multiple_sports   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span>
 <span><span class="co">#&gt; $ paralympic        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span></code></pre></div>
 <p>Ready to export!</p>
+</div>
+<div class="section level2">
+<h2 id="export-tidy_sports">Export <code>tidy_sports</code><a class="anchor" aria-label="anchor" href="#export-tidy_sports"></a>
+</h2>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="st">"../inst/extdata/der/"</span></span>
-<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">new_pth</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="st">"tidy_sports.csv"</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/der/tidy_sports.csv"</span></span></code></pre></div>
-<p>Export <code>tidy_sports</code></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tidy_sports</span>, file <span class="op">=</span> <span class="va">csv_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">tidy_sports</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: tidy_sports</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: tidy_sports ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
 <p>Verify</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"tidy_sports|dates"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/der/</span></span></span>
-<span><span class="co">#&gt; ├── sanction_dates.csv</span></span>
-<span><span class="co">#&gt; └── tidy_sports.csv</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, regexp <span class="op">=</span> <span class="st">"tidy_sports|dates"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; ├── tidy_sports.csv</span></span>
+<span><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre></div>
 <p><strong><em>CHECK:</em></strong> Can I can see the <code>dates</code>
 and <code>sports</code> data in the data folder?</p>
 </div>

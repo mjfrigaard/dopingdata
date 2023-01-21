@@ -88,34 +88,18 @@
 <p>Each dataset was ha<strong>rvest</strong>ed using the <a href="https://rvest.tidyverse.org/" class="external-link"><code>rvest</code></a> and <a href="https://xml2.r-lib.org/" class="external-link"><code>xml2</code></a> packages, but using manners (with the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>polite</code></a> package). See the <code>Scraping USADA sanctions</code> and <code>Scraping USADA prohibited associations</code> vignettes for more information.</p>
 <p>The raw data is then saved in the <code>inst/extdata/raw</code> folder. Raw datasets have a date (<code>YYYY-MM-DD</code>) prefix and <code>_raw</code> suffix.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/raw</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-19</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_prohib_assoc_raw.csv</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_prohib_assoc_raw.rds</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_sanctions_raw.csv</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   └── 2023-01-19-usada_sanctions_raw.rds</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-20</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_prohib_assoc_raw.csv</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_prohib_assoc_raw.rds</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_sanctions_raw.csv</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     └── 2023-01-20-usada_sanctions_raw.rds</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-20_usada_prohib_assoc_raw.csv</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-20_usada_sanctions_raw.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="processed-data">Processed Data<a class="anchor" aria-label="anchor" href="#processed-data"></a>
 </h2>
-<p>The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. Processed datasets have a date (<code>YYYY-MM-DD</code>) prefix and <code>_pro</code> suffix.</p>
+<p>The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. All processed datasets have a <code>_pro</code> suffix.</p>
 <p>Processed datasets have the same dimensions and structure as the <code>_raw</code> data, but they’ve been formatted for easier wrangling/manipulation.</p>
-<p>Processed datasets are in the <code>inst/extdata/pro</code> folder:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/pro/</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-19</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_proh_assoc_pro.csv</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_proh_assoc_pro.rds</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   ├── 2023-01-19-usada_sanctions_pro.csv</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; │   └── 2023-01-19-usada_sanctions_pro.rds</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-20</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_proh_assoc_pro.csv</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_proh_assoc_pro.rds</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     ├── 2023-01-20-usada_sanctions_pro.csv</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     └── 2023-01-20-usada_sanctions_pro.rds</span></span></code></pre></div>
+<p>Processed datasets are in the <code>inst/extdata/</code> folder:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── usada_prohib_assoc_pro.csv</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="derived-data">Derived Data<a class="anchor" aria-label="anchor" href="#derived-data"></a>
@@ -136,18 +120,42 @@
 </li>
 <li>Athletes</li>
 </ol>
-<p>All derived datasets are in the <code>inst/extdata/der/</code> folder (and do not have a date prefix or any suffixes).</p>
+<p>All derived datasets are in the <code>inst/extdata/</code> folder (and do not have a date prefix or any suffixes).</p>
 <div class="section level3">
 <h3 id="sanction-dates">Sanction Dates<a class="anchor" aria-label="anchor" href="#sanction-dates"></a>
 </h3>
+<p>Derived from <code>usada_sanctions_pro.csv</code>:</p>
+<ul>
+<li>
+<p>the dates are wrangled and formatted in <code>vignettes/sanction-dates.Rmd</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre></div>
+</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="sports">Sports<a class="anchor" aria-label="anchor" href="#sports"></a>
 </h3>
+<p>Derived from <code>usada_dates.csv</code>:</p>
+<ul>
+<li>
+<p>the sports separated and ‘tidied’ in <code>vignettes/sanction-sports.Rmd</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── tidy_sports.csv</span></span></code></pre></div>
+</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="substances-aaf">Substances (AAF)<a class="anchor" aria-label="anchor" href="#substances-aaf"></a>
 </h3>
+<p>Derived from <code>tidy_sports.csv</code>:</p>
+<ul>
+<li>
+<p>Adverse analytical findings with a single substance are in <code>vignettes/sanction-aaf-substances.Rmd</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── classified_single_aaf_substance.csv</span></span></code></pre></div>
+</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="non-analytic-sanctions-adrv">Non-Analytic Sanctions (ADRV)<a class="anchor" aria-label="anchor" href="#non-analytic-sanctions-adrv"></a>
@@ -170,9 +178,9 @@
 <h2 id="wada-data">WADA data<a class="anchor" aria-label="anchor" href="#wada-data"></a>
 </h2>
 <p>This package also includes a list of the <a href="https://en.wikipedia.org/wiki/World_Anti-Doping_Agency" class="external-link">World Anti-Doping Agency (WADA)</a> banned substances (published online <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">here</a>).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/wada/</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── wada-2019-english-prohibited-list.xlsx</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── wada_2019_english_prohibited_list.pdf</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/wada/</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── wada-2019-english-prohibited-list.xlsx</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── wada_2019_english_prohibited_list.pdf</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="more-wada-resources-on-banned-substances">More WADA Resources on banned substances<a class="anchor" aria-label="anchor" href="#more-wada-resources-on-banned-substances"></a>
 </h3>

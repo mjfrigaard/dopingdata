@@ -290,13 +290,14 @@ the suspension ends.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="usada_proh_assoc">
-<code>usada_proh_assoc</code><a class="anchor" aria-label="anchor" href="#usada_proh_assoc"></a>
+<h2 id="usada_proh_assoc_pro">
+<code>usada_proh_assoc_pro</code><a class="anchor" aria-label="anchor" href="#usada_proh_assoc_pro"></a>
 </h2>
-<p>The resulting dataset will be named <code>usada_proh_assoc</code> and
-exported to <code>inst/extdata/pro/</code></p>
+<p>The resulting processed dataset will be named
+<code>usada_proh_assoc_pro</code> and exported to
+<code>inst/extdata/</code></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_proh_assoc</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="va">usada_prohib_assoc_pro</span>, </span>
+<code class="sourceCode R"><span><span class="va">usada_proh_assoc_pro</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span><span class="va">usada_prohib_assoc_pro</span>, </span>
 <span>  suspend_end <span class="op">=</span> <span class="va">suspension_ends_mm_dd_yyyy</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>suspend_type <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">suspend_end</span>, <span class="st">"lifetime"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"lifetime"</span>,</span>
@@ -306,7 +307,7 @@ exported to <code>inst/extdata/pro/</code></p>
 <span>      <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">suspend_end</span>, <span class="st">"lifetime|indefinite*"</span><span class="op">)</span> <span class="op">~</span> <span class="cn">NA_character_</span>,</span>
 <span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">suspend_end</span><span class="op">)</span>,</span>
 <span>    suspend_end <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="va">suspend_end</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_proh_assoc</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_proh_assoc_pro</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 18</span></span>
 <span><span class="co">#&gt; Columns: 3</span></span>
 <span><span class="co">#&gt; $ name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "chavez, bernabe", "prempeh, ernest", "daniels, jamaal", …</span></span>
@@ -317,69 +318,46 @@ exported to <code>inst/extdata/pro/</code></p>
 <h2 id="export-raw-data">Export raw data<a class="anchor" aria-label="anchor" href="#export-raw-data"></a>
 </h2>
 <p>I’ll export the raw data into the <code>inst/extdata/raw/</code>
-folder. First create a raw data folder for today’s data:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_dir_date</span>(<span class="at">dir_path =</span> <span class="st">"../inst/extdata/"</span>, <span class="at">dir_name =</span> <span class="st">"raw/"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>✔ Creating folder<span class="sc">:</span> ..<span class="sc">/</span>inst<span class="sc">/</span>extdata<span class="sc">/</span>raw<span class="sc">/</span><span class="dv">2023-01-20</span><span class="sc">/</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>✔ path is on clipboard<span class="sc">!</span></span></code></pre></div>
-<p>Create the file paths for .csv and .rds files.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/raw/'</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span>, </span>
-<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">'usada_prohib_assoc_raw.csv'</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/raw/2023-01-20/2023-01-20-usada_prohib_assoc_raw.csv"</span></span>
-<span><span class="va">rds_pth</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/raw/'</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span>, </span>
-<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">'usada_prohib_assoc_raw.rds'</span><span class="op">)</span></span>
-<span><span class="va">rds_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/raw/2023-01-20/2023-01-20-usada_prohib_assoc_raw.rds"</span></span></code></pre></div>
-<p>If these look good, I can run the export functions:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_prohib_assoc_raw</span>, file <span class="op">=</span> <span class="va">csv_pth</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_prohib_assoc_raw</span>, file <span class="op">=</span> <span class="va">rds_pth</span><span class="op">)</span></span></code></pre></div>
+folder using <code><a href="../reference/export_extdata.html">export_extdata()</a></code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_prohib_assoc_raw</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting raw data: usada_prohib_assoc_raw</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting raw data: usada_prohib_assoc_raw ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Raw data successfully exported!</span></span></code></pre></div>
 <p>Verify:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span></span>
-<span>  path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span><span class="op">)</span>, </span>
+<span>  path <span class="op">=</span> <span class="st">"../inst/extdata/raw/"</span>, </span>
 <span>  regexp <span class="op">=</span> <span class="st">"assoc_raw"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/2023-01-20/</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-20-usada_prohib_assoc_raw.rds</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-21_usada_prohib_assoc_raw.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="export-processed-data">Export processed data<a class="anchor" aria-label="anchor" href="#export-processed-data"></a>
 </h2>
-<p>I want to export the processed data into a separate folder
-(<code>inst/extdata/&lt;today&gt;</code>), which I can create using
-<code><a href="../reference/create_dir_date.html">create_dir_date()</a></code></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_dir_date</span>(<span class="at">dir_path =</span> <span class="st">"../inst/extdata/"</span>, <span class="at">dir_name =</span> <span class="st">"pro/"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>✔ Creating folder<span class="sc">:</span> ..<span class="sc">/</span>inst<span class="sc">/</span>extdata<span class="sc">/</span>pro<span class="sc">/</span><span class="dv">2023-01-20</span><span class="sc">/</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>✔ path is on clipboard<span class="sc">!</span></span></code></pre></div>
-<p>Create export processed paths:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/pro/'</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'/'</span>,</span>
-<span>                        <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'usada_proh_assoc_pro.csv'</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/pro/2023-01-20/2023-01-20-usada_proh_assoc_pro.csv"</span></span>
-<span><span class="va">rds_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/pro/'</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'/'</span>,</span>
-<span>                        <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'usada_proh_assoc_pro.rds'</span><span class="op">)</span></span>
-<span><span class="va">rds_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/pro/2023-01-20/2023-01-20-usada_proh_assoc_pro.rds"</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_proh_assoc</span>, file <span class="op">=</span> <span class="va">csv_pth</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_proh_assoc</span>, file <span class="op">=</span> <span class="va">rds_pth</span><span class="op">)</span></span></code></pre></div>
+<p>I want to export the processed data into the
+<code>inst/extdata/</code> folder, which I can do using
+<code>export_extdata(raw = FALSE)</code></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_prohib_assoc_pro</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, raw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_prohib_assoc_pro</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_prohib_assoc_pro ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
 <p>Verify:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/pro/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span><span class="op">)</span>, </span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"../inst/extdata/"</span>, </span>
 <span>  regexp <span class="op">=</span> <span class="st">"assoc_pro"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/pro/2023-01-20/</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_proh_assoc_pro.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-20-usada_proh_assoc_pro.rds</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_prohib_assoc_pro.csv</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

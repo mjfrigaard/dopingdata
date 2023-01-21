@@ -106,15 +106,17 @@ keep track of the versions, I’ve organized the <code>inst/extdata</code>
 folder by date (<code>YYYY-MM-DD</code>), but I have a helper function
 for getting the recent version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tdy_stmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_recent_version.html">get_recent_version</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: fs</span></span>
-<span><span class="co">#&gt; Loading required package: purrr</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Here is the recent date:</span></span>
-<span><span class="va">tdy_stmp</span></span>
-<span><span class="co">#&gt;     tdy_stmp </span></span>
-<span><span class="co">#&gt; "2023-01-20"</span></span></code></pre></div>
-<p>Now I can use <code>tdy_stmp</code> whenever I need to use find the
-data version! See below:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified date in '../inst/extdata/raw': 2023-01-21</span></span>
+<span><span class="co">#&gt;        dstmp </span></span>
+<span><span class="co">#&gt; "2023-01-21"</span></span>
+<span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/wada/"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/wada/': 2023-01-21 08:52:06</span></span>
+<span><span class="co">#&gt;                dtstmp </span></span>
+<span><span class="co">#&gt; "2023-01-21 08:52:06"</span></span></code></pre></div>
+<p>Now I can use <code>get_recent</code> whenever I need to use find the
+most recently modified file in a folder!</p>
+<p>See examples below:</p>
 </div>
 <div class="section level3">
 <h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
@@ -127,33 +129,36 @@ table</a> has been scraped and lives in the
 <code>inst/extdata/raw/</code> folder</li>
 </ol>
 <ul>
+<li><p>See the <code>scrape_usada_sanctions()</code> function and
+<code>scraping-usada.Rmd</code> vignette for more information</p></li>
 <li>
-<p>See the <code>scrape_usada_sanctions()</code> function and
-<code>scraping-usada.Rmd</code> vignette for more information</p>
-<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/2023-01-20</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_prohib_assoc_raw.rds</span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-20-usada_sanctions_raw.rds</span></span></code></pre>
+<p>The raw sanction data is in the <code>inst/extdata/raw</code>
+folder:</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
-<li><p>These data have had all the column names formatted with
+<li><p>The processed data have had all the column names formatted with
 <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>, and all the text has been converted
 to lowercase</p></li>
 </ul>
+<pre><code>```
+#&gt;  [01;34m../inst/extdata/ [0m
+#&gt; └── usada_sanctions_pro.csv
+```</code></pre>
 </div>
 <div class="section level3">
 <h3 id="import-recent-data-file">Import recent data file<a class="anchor" aria-label="anchor" href="#import-recent-data-file"></a>
 </h3>
 <p>I’ve written a custom import function,
-<code><a href="../reference/get_recent_data_file.html">get_recent_data_file()</a></code>, which helps with locating/importing
-the most recent USADA data:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_data_file</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">folder =</span> <span class="fu">paste0</span>(<span class="st">"../inst/extdata/pro/"</span>, tdy_stmp), <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv'</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
-<span>  <span class="st">'../inst/extdata/pro/2023-01-19/2023-01-19-usada_sanctions_pro.csv'</span><span class="op">)</span></span>
+<code><a href="../reference/get_recent_path.html">get_recent_path()</a></code>, which helps with locating/importing the
+most recent USADA data:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_path</span>(<span class="st">"../inst/extdata/"</span>, <span class="st">"csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/usada_sanctions_pro.csv'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">usada_sanctions_pro</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>                          file <span class="op">=</span> <span class="st">'../inst/extdata/usada_sanctions_pro.csv'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">895</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
@@ -161,7 +166,7 @@ the most recent USADA data:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_raw</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_sanctions_pro</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 895</span></span>
 <span><span class="co">#&gt; Columns: 5</span></span>
 <span><span class="co">#&gt; $ athlete            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "montañez barroso, elias", "ruiz-gutierrez, noslen"…</span></span>
@@ -175,8 +180,8 @@ the most recent USADA data:</p>
 <p>I need to format the dates in <code>sanction_announced</code> as an
 actual date, but should check to see if they’re all in the same
 format.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_raw</span>, </span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_sanctions_pro</span>, </span>
 <span>  sanction_announced <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="va">sanction_announced</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">25</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: 29 failed to parse.</span></span>
@@ -211,8 +216,8 @@ format.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable names ¹​substance_reason, ²​sanction_terms,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   ³​sanction_announced</span></span></span></code></pre></div>
 <p>Which ones failed? Store these in <code>bad_dates</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bad_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_raw</span>, </span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bad_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_sanctions_pro</span>, </span>
 <span>  sanction_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">mdy</a></span><span class="op">(</span><span class="va">sanction_announced</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sanction_date</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sanction_announced</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Warning: 29 failed to parse.</span></span>
@@ -253,7 +258,7 @@ date)<br>
 <li>remove the <code>sanction_announced</code> column (use
 <code>sanction_date</code> instead)</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">good_dates</span> <span class="op">&lt;-</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bad_dates</span>,</span>
 <span>  <span class="va">sanction_announced</span>, sep <span class="op">=</span> <span class="st">"updated"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sanction_date <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_remove.html" class="external-link">str_remove_all</a></span><span class="op">(</span><span class="va">sanction_announced</span>, <span class="st">": "</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -274,13 +279,13 @@ date)<br>
 <span><span class="co">#&gt; $ substance_reason <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "dhcmt, androgenic anabolic steroids; non-analytical:…</span></span>
 <span><span class="co">#&gt; $ sanction_terms   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-year suspension; loss of results; sanction tolled …</span></span>
 <span><span class="co">#&gt; $ sanction_date    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2022-02-04, 2022-01-25, 2021-05-17, 2020-11-04, 2021…</span></span></code></pre></div>
-<p>Now I want to format the dates in <code>usada_raw</code> using
-<code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class="external-link">anytime::anydate()</a></code>, then filter out the missing
+<p>Now I want to format the dates in <code>usada_sanctions_pro</code>
+using <code><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class="external-link">anytime::anydate()</a></code>, then filter out the missing
 <code>sanction_date</code>s that didn’t parse, remove the
 <code>sanction_announced</code> column, and bind this back to the
 <code>good_dates</code> table with fixed sanction dates.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_dates</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_raw</span>, </span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">usada_dates</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">usada_sanctions_pro</span>, </span>
 <span>    sanction_date <span class="op">=</span> <span class="fu">anytime</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/anytime/man/anytime.html" class="external-link">anydate</a></span><span class="op">(</span><span class="va">sanction_announced</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sanction_date</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">sanction_announced</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -298,21 +303,20 @@ date)<br>
 <div class="section level3">
 <h3 id="export">Export<a class="anchor" aria-label="anchor" href="#export"></a>
 </h3>
-<p>Create paths for today’s data:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/der/"</span><span class="op">)</span></span>
-<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">new_pth</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="st">"sanction_dates.csv"</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/der/sanction_dates.csv"</span></span></code></pre></div>
-<p>Export the <code>usada_dates</code> as .csv and .rds</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_dates</span>, file <span class="op">=</span> <span class="va">csv_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_dates</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_dates</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_dates ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
 <p>Verify</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"dates"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/der/</span></span></span>
-<span><span class="co">#&gt; └── sanction_dates.csv</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, regexp <span class="op">=</span> <span class="st">"dates"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

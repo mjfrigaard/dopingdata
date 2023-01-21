@@ -253,78 +253,45 @@ differences:</p>
 <span><span class="co">#&gt; <span style="color: #0000BB;">+ "2-year suspension - loss of results  suspension extended 103 days"</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="export-raw-data">Export raw data<a class="anchor" aria-label="anchor" href="#export-raw-data"></a>
+<h2 id="exporting-the-raw-data">Exporting the raw data<a class="anchor" aria-label="anchor" href="#exporting-the-raw-data"></a>
 </h2>
 <p>I’ll export the raw data into the <code>inst/extdata/raw/</code>
-folder. First create a raw data folder for today’s data:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_dir_date</span>(<span class="at">dir_path =</span> <span class="st">"../inst/extdata/"</span>, <span class="at">dir_name =</span> <span class="st">"raw/"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>✔ Creating folder<span class="sc">:</span> ..<span class="sc">/</span>inst<span class="sc">/</span>extdata<span class="sc">/</span>raw<span class="sc">/</span><span class="dv">2023-01-20</span><span class="sc">/</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>✔ path is on clipboard<span class="sc">!</span></span></code></pre></div>
-<p>Create the file paths for .csv and .rds files.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/raw/'</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span>, </span>
-<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">'usada_sanctions_raw.csv'</span><span class="op">)</span></span>
-<span><span class="va">csv_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/raw/2023-01-20/2023-01-20-usada_sanctions_raw.csv"</span></span>
-<span><span class="va">rds_pth</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/raw/'</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'/'</span>, </span>
-<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">'usada_sanctions_raw.rds'</span><span class="op">)</span></span>
-<span><span class="va">rds_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/raw/2023-01-20/2023-01-20-usada_sanctions_raw.rds"</span></span></code></pre></div>
-<p>If these look good, I can run the export functions:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, file <span class="op">=</span> <span class="va">csv_pth</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, file <span class="op">=</span> <span class="va">rds_pth</span><span class="op">)</span></span></code></pre></div>
+folder. I’ve written a custom function for date-stamping the raw data
+before exporting:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting raw data: usada_sanctions_raw</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting raw data: usada_sanctions_raw ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Raw data successfully exported!</span></span></code></pre></div>
 <p>Verify:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw/"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">2023-01-19</span></span></span>
-<span><span class="co">#&gt; │   ├── 2023-01-19-usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; │   ├── 2023-01-19-usada_prohib_assoc_raw.rds</span></span>
-<span><span class="co">#&gt; │   ├── 2023-01-19-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; │   └── 2023-01-19-usada_sanctions_raw.rds</span></span>
-<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">2023-01-20</span></span></span>
-<span><span class="co">#&gt;     ├── 2023-01-20-usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt;     ├── 2023-01-20-usada_prohib_assoc_raw.rds</span></span>
-<span><span class="co">#&gt;     ├── 2023-01-20-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt;     └── 2023-01-20-usada_sanctions_raw.rds</span></span></code></pre></div>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="export-processed-data">Export processed data<a class="anchor" aria-label="anchor" href="#export-processed-data"></a>
 </h2>
-<p>I want to export the processed data into a separate folder
-(<code>inst/extdata/&lt;today&gt;</code>), which I can create using
-<code><a href="../reference/create_dir_date.html">create_dir_date()</a></code></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_dir_date</span>(<span class="at">dir_path =</span> <span class="st">"../inst/extdata"</span>, <span class="at">dir_name =</span> <span class="st">"pro/"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>✔ Creating folder<span class="sc">:</span> ..<span class="sc">/</span>inst<span class="sc">/</span>extdata<span class="sc">/</span>pro<span class="sc">/</span><span class="dv">2023-01-20</span><span class="sc">/</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>✔ path is on clipboard<span class="sc">!</span></span></code></pre></div>
-<p>Create export processed paths:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">csv_pro_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/pro/'</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'/'</span>,</span>
-<span>                        <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'usada_sanctions_pro.csv'</span><span class="op">)</span></span>
-<span><span class="va">csv_pro_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv"</span></span>
-<span><span class="va">rds_pro_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/pro/'</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'/'</span>,</span>
-<span>                        <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'usada_sanctions_pro.rds'</span><span class="op">)</span></span>
-<span><span class="va">rds_pro_pth</span></span>
-<span><span class="co">#&gt; [1] "../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.rds"</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">write_csv</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_pro</span>, file <span class="op">=</span> <span class="va">csv_pro_pth</span><span class="op">)</span></span>
-<span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html" class="external-link">write_rds</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_pro</span>, file <span class="op">=</span> <span class="va">rds_pro_pth</span><span class="op">)</span></span></code></pre></div>
+<p>I want to export the processed data into the
+<code>inst/extdata/</code> folder, which I can create using
+<code>export_extdata(raw = FALSE)</code></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_pro</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, raw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_sanctions_pro</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_sanctions_pro ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
 <p>Verify:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">'../inst/extdata/pro/'</span>,</span>
-<span>                        <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>                        <span class="st">'/'</span><span class="op">)</span>, regexp <span class="op">=</span> <span class="st">"sanctions_pro"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/pro/2023-01-20/</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20-usada_sanctions_pro.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-20-usada_sanctions_pro.rds</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"sanctions_pro"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

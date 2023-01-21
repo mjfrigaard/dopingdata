@@ -68,7 +68,7 @@
 
 
 
-
+<script src="sanction-aaf-substances_files/kePrint-0.0.1/kePrint.js"></script><link href="sanction-aaf-substances_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>AAF substances sanctions</h1>
@@ -95,21 +95,26 @@
 <div class="section level3">
 <h3 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h3>
-<p>This vignette covers classification of single substances in the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanction
-data</a>.</p>
+<p>This vignette covers classification of single analytic substances
+(adverse analytic findings) in the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanction
+table</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
 </h3>
-<p>This package uses data from a table that gets updated regularly. To
-keep track of the versions, I’ve organized the <code>inst/extdata</code>
-folder by date (<code>YYYY-MM-DD</code>), but I have a helper function
-for getting the recent version:</p>
+<p><code>dopingdata</code> uses data from tables that get updated
+regularly. To keep track of the versions, I’ve organized the raw data in
+the <code>inst/extdata</code> folder by date (<code>YYYY-MM-DD</code>),
+but I also have a helper function for getting the recent version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tdy_stmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_recent_version.html">get_recent_version</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span><span class="op">)</span></span>
-<span><span class="va">tdy_stmp</span></span></code></pre></div>
-<p>Now I can use <code>tdy_stmp</code> whenever I need to use find the
-data version! See below:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/': 2023-01-21 08:52:06</span></span>
+<span><span class="co">#&gt;                dtstmp </span></span>
+<span><span class="co">#&gt; "2023-01-21 08:52:06"</span></span>
+<span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/raw': 2023-01-21 08:52:06</span></span>
+<span><span class="co">#&gt;                dtstmp </span></span>
+<span><span class="co">#&gt; "2023-01-21 08:52:06"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
@@ -117,16 +122,25 @@ data version! See below:</p>
 <p>This vignette assumes the following:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Scrape the website:</strong> A copy of the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
+<strong>Harvest the data:</strong> A copy of the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
 table</a> has been scraped and lives in the
 <code>inst/extdata/raw/</code> folder</li>
 </ol>
 <ul>
-<li><p>See the <code>scrape_usada_sanctions()</code> function and
-<code>scraping-usada.Rmd</code> vignette for more information</p></li>
-<li><p>These data have had all the column names formatted with
+<li>
+<p>See the <code>scrape_usada_sanctions()</code> function and
+<code>scraping-usada.Rmd</code> vignette for more information</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
+<span><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre>
+</li>
+<li>
+<p>These data have had all the column names formatted with
 <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>, and all the text has been converted
-to lowercase</p></li>
+to lowercase</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre>
+</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>
@@ -134,8 +148,12 @@ to lowercase</p></li>
 formatted and wrangled</li>
 </ol>
 <ul>
-<li>See the <code>vignettes/sanction-dates.Rmd</code> vignette for more
-information</li>
+<li>
+<p>See the <code>vignettes/sanction-dates.Rmd</code> vignette for
+more information</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre>
+</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>
@@ -144,22 +162,45 @@ been ‘tidied’ and athletes/support personnel listed with more than one
 sport have been repeated in the data</li>
 </ol>
 <ul>
-<li>See the <code>vignettes/sports.Rmd</code> vignette for more
-information</li>
+<li>
+<p>See the <code>vignettes/sports.Rmd</code> vignette for more
+information</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── tidy_sports.csv</span></span></code></pre>
+</li>
 </ul>
 <div class="section level4">
 <h4 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h4>
 <p>Below I’ll import the most recent version of the tidy USADA sports
 data:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_data_file</span>(<span class="st">"../inst/extdata/pro/"</span>, </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv'</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_path</span>(<span class="st">"../inst/extdata/"</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/tidy_sports.csv'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_usada_sports</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
-<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv'</span><span class="op">)</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">)</span></span></code></pre></div>
+<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/tidy_sports.csv'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">689</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span>  (4): athlete, sport, substance_reason, sanction_terms</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (3): support_personnel, multiple_sports, paralympic</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">date</span> (1): sanction_date</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 689</span></span>
+<span><span class="co">#&gt; Columns: 8</span></span>
+<span><span class="co">#&gt; $ athlete           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "montañez barroso, elias", "ruiz-gutierrez, noslen",…</span></span>
+<span><span class="co">#&gt; $ sport             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cycling", "cycling", "track &amp; field", "cycling", "w…</span></span>
+<span><span class="co">#&gt; $ substance_reason  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "non-analytical: refusal to submit to sample collect…</span></span>
+<span><span class="co">#&gt; $ sanction_terms    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-year suspension; loss of results", "4-year suspen…</span></span>
+<span><span class="co">#&gt; $ sanction_date     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-01-10, 2023-01-04, 2022-12-08, 2022-12-05, 202…</span></span>
+<span><span class="co">#&gt; $ support_personnel <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span>
+<span><span class="co">#&gt; $ multiple_sports   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span>
+<span><span class="co">#&gt; $ paralympic        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span></code></pre></div>
 <p>These data have had their names standardized, and all the text has
 been converted to lowercase.</p>
 </div>
@@ -193,12 +234,18 @@ sanction, which can include the following information:</p>
 <li><p>A description of the infraction (if non-analytic)</p></li>
 </ol>
 <p>See the examples below:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">25</span><span class="op">)</span>, </span>
-<span>  <span class="st">"steroid"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<span>  <span class="st">"steroid"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `str_view()` was deprecated in stringr 1.5.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `str_view_all()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[6] │</span> androgenic anabolic <span style="color: #00BBBB;">&lt;steroid&gt;</span></span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>  <span class="st">"non-analytical"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="st">"non-analytical"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[1] │</span> <span style="color: #00BBBB;">&lt;non-analytical&gt;</span>: refusal to submit to sample collection</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[8] │</span> <span style="color: #00BBBB;">&lt;non-analytical&gt;</span>: refusal to submit to sample collection</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[9] │</span> <span style="color: #00BBBB;">&lt;non-analytical&gt;</span>: 3 whereabouts failures; tampering</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="sanction-type">Sanction type<a class="anchor" aria-label="anchor" href="#sanction-type"></a>
@@ -211,7 +258,7 @@ in the <code>substance_reason</code> column.</p>
 <code>non-analytical</code> and <code>analytical</code></p>
 <p>I’ll save this variable in the <code>usada_sanction_types</code>
 dataset.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sanction_types</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="va">tidy_usada_sports</span>,</span>
 <span>    sanction_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">substance_reason</span>, </span>
@@ -222,7 +269,12 @@ dataset.</p>
 <span>    <span class="op">)</span> </span>
 <span>  <span class="op">)</span></span>
 <span><span class="va">usada_sanction_types</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sanction_type</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sanction_type</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">#&gt;   sanction_type      n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> analytical       514</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> non-analytical   175</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -230,19 +282,21 @@ dataset.</p>
 </h3>
 <p>Now I can filter <code>usada_sanction_types</code> to the
 <code>analytical</code> sanctions in <code>sanction_type</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
-<span>        <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>        <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 514</span></span></code></pre></div>
 <p>This is the same number of <code>"analytical"</code> values in
 <code>sanction_type</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="non-analytic-sanctions">Non-analytic sanctions<a class="anchor" aria-label="anchor" href="#non-analytic-sanctions"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
 <span>  <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"non-analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 175</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="single-vs--multiple-substances">Single vs. multiple substances<a class="anchor" aria-label="anchor" href="#single-vs--multiple-substances"></a>
@@ -250,26 +304,39 @@ dataset.</p>
 <p>To identify single vs. multiple substances, first I’ll identify the
 multiple substances using a regular expression, then I’ll negate the
 regular expression for the single substances.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_substance_types</span> <span class="op">&lt;-</span> <span class="va">usada_sanction_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>multiple_substances <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,</span>
 <span>    <span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span><span class="cn">FALSE</span>,</span>
 <span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">multiple_substances</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">multiple_substances</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">#&gt;   multiple_substances     n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> FALSE                 508</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> TRUE                  181</span></span></code></pre></div>
 <p>Now I’ll divide these into single and multiple analytic
 substances:</p>
 <div class="section level4">
 <h4 id="multiple-analytic-substances">Multiple analytic substances<a class="anchor" aria-label="anchor" href="#multiple-analytic-substances"></a>
 </h4>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multiple_analytic_subs</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_substances</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">multiple_analytic_subs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, name <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">Count</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">Count</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
+<span><span class="co">#&gt;   Count     n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     1   128</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     2    10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     3     5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     4     3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span>     6     1</span></span></code></pre></div>
 <p>Above is a ‘count of counts’, which tells me most of the multiple
 substance combinations occur only once.</p>
 </div>
@@ -277,12 +344,41 @@ substance combinations occur only once.</p>
 <h4 id="single-analytic-substances">Single analytic substances<a class="anchor" aria-label="anchor" href="#single-analytic-substances"></a>
 </h4>
 <p>Below is a count of the single analytic substances:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_subs</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_substances</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">single_analytic_subs</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 114 × 2</span></span></span>
+<span><span class="co">#&gt;    substance_reason                                           n</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> androgenic anabolic steroid                               54</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cannabinoids                                              41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> non-analytical: refusal to submit to sample collection    39</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> ostarine                                                  38</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> non-analytical: 3 whereabouts failures                    24</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> methylhexaneamine                                         20</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> clomiphene                                                17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> stanozolol                                                11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> furosemide                                                10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> non-analytical                                             9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> spironolactone                                             8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 1,3-dimethylbutylamine (dmba)                              7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> erythropoietin (epo)                                       7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> testosterone                                               7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> amphetamine                                                6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> canrenone                                                  6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> dehydroepiandrosterone (dhea)                              6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> dimethylbutylamine (dmba)                                  6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> gw1516                                                     6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> higenamine                                                 6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> non-analytical: use (iv)                                   6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> anastrozole                                                5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> clenbuterol                                                5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> hydrochlorothiazide                                        5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> meldonium                                                  5</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 89 more rows</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -290,71 +386,320 @@ substance combinations occur only once.</p>
 </h3>
 <p>To identify the <a href="https://www.wada-ama.org/en/prohibited-list#search-anchor" class="external-link">WADA
 banned substances</a>, I’ve written
-<code>classify_wada_substances()</code>, a function that scans the
+<code><a href="../reference/classify_wada_substances.html">classify_wada_substances()</a></code>, a function that scans the
 <code>substance_reason</code> column and identifies any substances found
 on the <a href="https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf" class="external-link">WADA
 list</a>. See Appendix (bottom) for more information.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">classified_single_aaf_substance</span> <span class="op">&lt;-</span> <span class="fu">classify_wada_substances</span><span class="op">(</span></span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">classified_single_aaf_substance</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify_wada_substances.html">classify_wada_substances</a></span><span class="op">(</span></span>
 <span>  usada_data <span class="op">=</span> <span class="va">single_analytic_subs</span>, </span>
 <span>  subs_column <span class="op">=</span> <span class="va">substance_reason</span><span class="op">)</span> </span>
 <span><span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_group</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_group</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 2</span></span></span>
+<span><span class="co">#&gt;    substance_group                         n</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> S1 ANABOLIC AGENTS                    167</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #BB0000;">NA</span>                                     99</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> S6 STIMULANTS                          73</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> S8 CANNABINOIDS                        41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> S4 HORMONE AND METABOLIC MODULATORS    38</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> S5 DIURETICS/MASKING AGENTS            37</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> S2 PEP HORMONES/G FACTORS/MIMETICS     21</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> S3 BETA-2 AGONISTS                     15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> S9 GLUCOCORTICOIDS                      6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> M1 MANIPULATION OF BLOOD                5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> S7 NARCOTICS                            5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> P1 BETA-BLOCKERS                        1</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="s1-anabolic-agents">S1 ANABOLIC AGENTS<a class="anchor" aria-label="anchor" href="#s1-anabolic-agents"></a>
 </h4>
 <p>The S1 substances are below:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s1_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s1_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 112 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s1_substances`                                                  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> androgenic anabolic steroid                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> androgenic anabolic steroids                                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> anabolic agent                                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> anabolic agents                                                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> anabolic steroid                                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> anabolic steroids                                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> androstenedione                                                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> metabolites of androstenedione                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 1-androstenediol (5α-androst-1-ene-3β,17β-diol)                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 1-androstenedione                                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> 1-androstenedione (5α-androst-1-ene-3,17-dione)                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> 1-androsterone (3α-hydroxy-5α-androst-1-ene-17-one)                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> androstendione                                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> androstenedione                                                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> 1-testosterone (17β-hydroxy-5α-androst-1-en-3-one)                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> bolasterone                                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> boldione                                                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> calusterone                                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> clostebol                                                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> danazol ([1,2]oxazolo[4',5':2,3]pregna-4-en-20-yn-17α-ol)                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> dehydrochlormethyltestosterone (4-chloro-17β-hydroxy17α-methylandrosta-1,4-d…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> desoxymethyltestosterone (17α-methyl-5α-androst2-en-17β-ol and 17α-methyl-5α…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> dhcmt                                                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> di‐hydroxy‐lgd‐4033                                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> drostanolone                                                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 87 more rows</span></span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [3] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [8] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[10] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[13] │</span> <span style="color: #00BBBB;">&lt;anabolic agent&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[14] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[23] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[25] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[27] │</span> <span style="color: #00BBBB;">&lt;stanozolol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[31] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[39] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[41] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[42] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[43] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[45] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[48] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[49] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[50] │</span> <span style="color: #00BBBB;">&lt;stanozolol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[53] │</span> <span style="color: #00BBBB;">&lt;dehydrochloromethyltestosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhcmt&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[54] │</span> <span style="color: #00BBBB;">&lt;stanozolol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[59] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 147 more</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s2-peptide-hormones-growth-factors-related-substances-and-mimetics">S2 PEPTIDE HORMONES, GROWTH FACTORS, RELATED SUBSTANCES, AND
 MIMETICS<a class="anchor" aria-label="anchor" href="#s2-peptide-hormones-growth-factors-related-substances-and-mimetics"></a>
 </h4>
 <p>The S2 substances are below:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s2_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s2_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 85 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s2_substances`                            </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> alexamorelin                                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> anamorelin                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> aod-9604                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> argon                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> asialo epo                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> buserelin                                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> carbamylated epo (cepo)                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> chorionic gonadotrophin (cg)                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cjc-1293                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cjc-1295                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> cnto-530                                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> cobalt                                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> corticorelin                                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> corticotrophins                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> daprodustat (gsk1278863)                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> darbepoetins (depo)                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> deslorelin                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> epo based constructs                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> epo-fc, methoxy polyethylene glycol-epoetin beta (cera)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> epo-mimetic agents and their constructs                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> erythropoietin-receptor agonists                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> epo                                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> (epo)                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> erythropoietin                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> erythropoietins                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 60 more rows</span></span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s2_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s2_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [33] │</span> <span style="color: #00BBBB;">&lt;ibutamoren&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [57] │</span> <span style="color: #00BBBB;">&lt;growth hormone&gt;</span> releasing peptide 2 (<span style="color: #00BBBB;">&lt;ghrp-2&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [88] │</span> <span style="color: #00BBBB;">&lt;ghrp-6&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[127] │</span> <span style="color: #00BBBB;">&lt;ipamorelin&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[132] │</span> <span style="color: #00BBBB;">&lt;ibutamoren&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[148] │</span> recombinant human <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (rhu<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[163] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[201] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[300] │</span> <span style="color: #00BBBB;">&lt;growth hormone&gt;</span>-releasing hexapeptide</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[311] │</span> <span style="color: #00BBBB;">&lt;ibutamoren&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[315] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[318] │</span> <span style="color: #00BBBB;">&lt;ghrp-2&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[321] │</span> <span style="color: #00BBBB;">&lt;human growth hormone&gt;</span> (<span style="color: #00BBBB;">&lt;hgh&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[375] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[378] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[381] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[389] │</span> <span style="color: #00BBBB;">&lt;human growth hormone&gt;</span> (<span style="color: #00BBBB;">&lt;hgh&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[391] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[416] │</span> non-analytical: purchase (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[421] │</span> <span style="color: #00BBBB;">&lt;erythropoietin&gt;</span> (<span style="color: #00BBBB;">&lt;epo&gt;</span>)</span></span>
+<span><span class="co">#&gt; ... and 1 more</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s3-beta-2-agonists">S3 BETA-2 AGONISTS<a class="anchor" aria-label="anchor" href="#s3-beta-2-agonists"></a>
 </h4>
 <p>The S3 substances are below:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s3_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s3_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 16 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s3_substances`  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> fenoterol                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> formoterol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> higenamine                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> indacaterol                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> non-selective beta-2 agonists</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> olodaterol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> optical isomers              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> procaterol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> reproterol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> salbutamol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> salmeterol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> selective beta-2 agonists    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> terbutaline                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> tretoquinol (trimetoquinol)  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> tulobuterol                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> vilanterol</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s3_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s3_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [83] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[126] │</span> <span style="color: #00BBBB;">&lt;vilanterol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[130] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;vilanterol&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[131] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[136] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[154] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[191] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;vilanterol&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[199] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[206] │</span> <span style="color: #00BBBB;">&lt;higenamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[232] │</span> <span style="color: #00BBBB;">&lt;vilanterol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[236] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;higenamine&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[297] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;vilanterol&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[305] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;vilanterol&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[306] │</span> non-analytical: use (<span style="color: #00BBBB;">&lt;vilanterol&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[462] │</span> <span style="color: #00BBBB;">&lt;vilanterol&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s4-hormone-and-metabolic-modulators">S4 HORMONE AND METABOLIC MODULATORS<a class="anchor" aria-label="anchor" href="#s4-hormone-and-metabolic-modulators"></a>
 </h4>
 <p>The S4 substances are below:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s4_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s4_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 55 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s4_substances`                                                  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 2-(2-methyl-4-((4-methyl-2-(4-(trifluoromethyl)phenyl)thiazol-5-yl)methylthi…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2-androstenol (5α-androst-2-en-17-ol)                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 2-androstenone (5α-androst-2-en-17-one)                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 3-androstenol (5α-androst-3-en-17-ol)                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 3-androstenone (5α-androst-3-en-17-one)                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 4-androstene-3,6,17 trione (6-oxo)                                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> ace-031                                                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> acetic acid                                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> activators of the amp-activated protein kinase (ampk)                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> activin a-neutralizing antibodies                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> activin receptor iib competitors                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> agents preventing activin receptor iib activation                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> agents reducing or ablating myostatin expression                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> aicar                                                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> aminoglutethimide                                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> anastrozole                                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> androsta-1,4,6-triene-3,17-dione (androstatrienedione)                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> androsta-3,5-diene-7,17-dione (arimistane)                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> androsta-3,5-diene-7,17-dione                                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> androsta                                                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> anti-activin receptor iib antibodies                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> anti-estrogenic substances                                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> aromatase inhibitors                                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> bimagrumab                                                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> clomifene                                                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 30 more rows</span></span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s4_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s4_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [16] │</span> <span style="color: #00BBBB;">&lt;tamoxifen&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [20] │</span> <span style="color: #00BBBB;">&lt;clomiphene&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [21] │</span> <span style="color: #00BBBB;">&lt;meldonium&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [26] │</span> <span style="color: #00BBBB;">&lt;meldonium&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [35] │</span> <span style="color: #00BBBB;">&lt;clomiphene&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [47] │</span> <span style="color: #00BBBB;">&lt;meldonium&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [63] │</span> <span style="color: #00BBBB;">&lt;gw1516&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [64] │</span> <span style="color: #00BBBB;">&lt;tamoxifen&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [67] │</span> <span style="color: #00BBBB;">&lt;anastrozole&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [69] │</span> <span style="color: #00BBBB;">&lt;gw1516&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [71] │</span> <span style="color: #00BBBB;">&lt;anastrozole&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [78] │</span> <span style="color: #00BBBB;">&lt;anastrozole&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [80] │</span> <span style="color: #00BBBB;">&lt;clomiphene&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [89] │</span> non-analytical: possession (<span style="color: #00BBBB;">&lt;exemestane&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[114] │</span> <span style="color: #00BBBB;">&lt;clomiphene&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[115] │</span> <span style="color: #00BBBB;">&lt;gw1516&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[119] │</span> <span style="color: #00BBBB;">&lt;tamoxifen&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[137] │</span> <span style="color: #00BBBB;">&lt;androsta-3,5-diene-7,17-dione&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[139] │</span> <span style="color: #00BBBB;">&lt;clomiphene&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[182] │</span> <span style="color: #00BBBB;">&lt;anastrozole&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 18 more</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s5-diureticsmasking-agents">S5 DIURETICS/MASKING AGENTS<a class="anchor" aria-label="anchor" href="#s5-diureticsmasking-agents"></a>
 </h4>
 <p>The S5 substances are below:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s5_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s5_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 39 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s5_substances`          </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> acetazolamide                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> acetazolamide                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> albumin                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> amiloride                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> bendroflumethiazide                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> bumetanide                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> canrenone                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> canrenone                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> canrenone                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> canrenone                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> chlorothiazide                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> chlortalidone                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> chlorthalidone                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> desmopressin                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> dextran                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> etacrynic acid                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> finasteride                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> furosemide                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> furosemide                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> glycerol                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> hydrochlorothiazide                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> hydrochlorothiazide                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> hydroxyethyl starch                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> indapamide                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> intravenous administration of albumin</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 14 more rows</span></span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s5_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s5_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">  [6] │</span> <span style="color: #00BBBB;">&lt;furosemide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [19] │</span> <span style="color: #00BBBB;">&lt;furosemide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [24] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [36] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [37] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span> (hctz)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [38] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [44] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span> (hctz)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [68] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [74] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span> (hctz)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [75] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[105] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[108] │</span> <span style="color: #00BBBB;">&lt;furosemide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[111] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[120] │</span> <span style="color: #00BBBB;">&lt;furosemide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[162] │</span> <span style="color: #00BBBB;">&lt;acetazolamide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[178] │</span> <span style="color: #00BBBB;">&lt;canrenone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[192] │</span> <span style="color: #00BBBB;">&lt;spironolactone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[193] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[194] │</span> <span style="color: #00BBBB;">&lt;hydrochlorothiazide&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[209] │</span> <span style="color: #00BBBB;">&lt;furosemide&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 17 more</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -364,21 +709,56 @@ MIMETICS<a class="anchor" aria-label="anchor" href="#s2-peptide-hormones-growth-
 <h4 id="m1-manipulation-of-blood">M1 MANIPULATION OF BLOOD<a class="anchor" aria-label="anchor" href="#m1-manipulation-of-blood"></a>
 </h4>
 <p>The M1 substances are below:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m1_method</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m1_method</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::m1_method`                                                      </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> allogenic (homologous)                                                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> autologous                                                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> blood transfusion                                                            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> efaproxiral (rsr13)                                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> enhancing delivery of oxygen                                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> enhancing transport                                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> enhancing uptake                                                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> haemoglobin-based blood substitutes                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> efaproxiral                                                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> heterologous blood                                                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> intravascular manipulation of the blood or blood components by physical or c…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> microencapsulated haemoglobin products                                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> modified haemoglobin products                                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> perfluorochemicals                                                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> red blood cell products</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">m1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">m1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[207] │</span> non-analytical: <span style="color: #00BBBB;">&lt;blood transfusion&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[395] │</span> <span style="color: #00BBBB;">&lt;efaproxiral&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[454] │</span> <span style="color: #00BBBB;">&lt;blood transfusion&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[504] │</span> <span style="color: #00BBBB;">&lt;blood transfusion&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[505] │</span> <span style="color: #00BBBB;">&lt;blood transfusion&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="m2-chemical-and-physical-manipulation">M2 CHEMICAL AND PHYSICAL MANIPULATION<a class="anchor" aria-label="anchor" href="#m2-chemical-and-physical-manipulation"></a>
 </h4>
 <p>The M2 substances are below:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m2_method</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m2_method</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 1</span></span></span>
+<span><span class="co">#&gt;   `dopingdata::m2_method`                </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> alter                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> altering                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> attempting to alter                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> attempting to tamper                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> intravenous infusions and/or injections</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> proteases                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> tamper                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> tampering                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> urine substitution and/or adulteration</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
 <span>  pattern <span class="op">=</span> <span class="va">m2_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -386,10 +766,17 @@ MIMETICS<a class="anchor" aria-label="anchor" href="#s2-peptide-hormones-growth-
 <h4 id="m3-gene-and-cell-doping">M3 GENE AND CELL DOPING<a class="anchor" aria-label="anchor" href="#m3-gene-and-cell-doping"></a>
 </h4>
 <p>The M3 substances are below:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m3_method</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">m3_method</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 1</span></span></span>
+<span><span class="co">#&gt;   `dopingdata::m3_method`             </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> gene editing agents                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> normal or genetically modified cells</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> nucleic acid analogues              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> polymers of nucleic acids</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
 <span>  pattern <span class="op">=</span> <span class="va">m3_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -404,23 +791,93 @@ MIMETICS<a class="anchor" aria-label="anchor" href="#s2-peptide-hormones-growth-
 e.g. <code>d-</code> and <code>l-</code> where relevant, are
 prohibited.</em></p>
 <p>The S6 substances are below:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s6_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s6_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 97 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s6_substances`                    </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1,3-dimethylbutylamine                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 3-methylhexan-2-amine (1,2-dimethylpentylamine)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 4-methylhexan-2-amine (methylhexaneamine)      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4-methylpentan-2-amine (1,3-dimethylbutylamine)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 4-phenylpiracetam (carphedon)                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 5-methylhexan-2-amine (1,4-dimethylpentylamine)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> adderall                                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> adrafinil                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> adrenaline                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> amfepramone                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> amfetamine                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> amfetaminil                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> amiphenazole                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> amphetamine                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> benfluorex                                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> benzfetamine                                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> benzoylecgonine                                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> benzylpiperazine                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> bromantan                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> carphedon                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> cathine                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> cathinone                                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> clobenzorex                                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> cocaine                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> cocaine                                        </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 72 more rows</span></span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s6_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s6_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">  [2] │</span> <span style="color: #00BBBB;">&lt;5-methylhexan-2-amine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">  [5] │</span> <span style="color: #00BBBB;">&lt;amphetamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [18] │</span> <span style="color: #00BBBB;">&lt;adderall&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [29] │</span> <span style="color: #00BBBB;">&lt;phentermine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [32] │</span> <span style="color: #00BBBB;">&lt;amphetamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [40] │</span> <span style="color: #00BBBB;">&lt;modafinil&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [51] │</span> <span style="color: #00BBBB;">&lt;cocaine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [91] │</span> <span style="color: #00BBBB;">&lt;phentermine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[107] │</span> <span style="color: #00BBBB;">&lt;5-methylhexan-2-amine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[140] │</span> <span style="color: #00BBBB;">&lt;octopamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[160] │</span> <span style="color: #00BBBB;">&lt;heptaminol&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[167] │</span> <span style="color: #00BBBB;">&lt;cocaine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[174] │</span> <span style="color: #00BBBB;">&lt;1,4‐dimethylpentylamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[179] │</span> <span style="color: #00BBBB;">&lt;1,3-dimethylbutylamine&gt;</span> (dmba)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[190] │</span> <span style="color: #00BBBB;">&lt;methylphenidate&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[224] │</span> <span style="color: #00BBBB;">&lt;amphetamine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[242] │</span> <span style="color: #00BBBB;">&lt;dimethylbutylamine&gt;</span> (dmba)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[245] │</span> <span style="color: #00BBBB;">&lt;modafinil&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[261] │</span> <span style="color: #00BBBB;">&lt;dimethylbutylamine&gt;</span> (dmba)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[266] │</span> <span style="color: #00BBBB;">&lt;amphetamine&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 53 more</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s7-narcotics">S7 NARCOTICS<a class="anchor" aria-label="anchor" href="#s7-narcotics"></a>
 </h4>
 <p>The S7 substances are below:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s7_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s7_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s7_substances`</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> buprenorphine              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> dextromoramide             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> diamorphine (heroin)       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> fentanyl                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> hydromorphone              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> methadone                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> morphine                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> nicomorphine               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> oxycodone                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> oxymorphone                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> pentazocine                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> pethidine</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s7_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s7_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[289] │</span> <span style="color: #00BBBB;">&lt;oxycodone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[386] │</span> <span style="color: #00BBBB;">&lt;fentanyl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[478] │</span> nor<span style="color: #00BBBB;">&lt;oxycodone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[498] │</span> <span style="color: #00BBBB;">&lt;fentanyl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[499] │</span> <span style="color: #00BBBB;">&lt;fentanyl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s8-cannabinoids">S8 CANNABINOIDS<a class="anchor" aria-label="anchor" href="#s8-cannabinoids"></a>
@@ -429,23 +886,75 @@ prohibited.</em></p>
 e.g. cannabis, hashish and marijuana; Synthetic cannabinoids
 e.g. Δ9-tetrahydrocannabinol (THC) and other cannabimimetics.</em></p>
 <p>The S8 substances are below:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s8_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s8_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 1</span></span></span>
+<span><span class="co">#&gt;   `dopingdata::s8_substances`  </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> cannabimimetics              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> cannabinoids                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> cannabis                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hashish                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> marijuana                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> natural cannabinoids         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> synthetic cannabinoids       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> δ9-tetrahydrocannabinol (thc)</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s8_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s8_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">  [7] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [11] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [15] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [17] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [34] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [52] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [56] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [58] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [62] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [93] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [94] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [95] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [98] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[129] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[133] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[151] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[152] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[159] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[172] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[180] │</span> <span style="color: #00BBBB;">&lt;cannabinoids&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 21 more</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="s9-glucocorticoids">S9 GLUCOCORTICOIDS<a class="anchor" aria-label="anchor" href="#s9-glucocorticoids"></a>
 </h4>
 <p>The S9 substances are below:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s9_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s9_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 11 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::s9_substances`</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> betamethasone              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> budesonide                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cortisone                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> deflazacort                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> dexamethasone              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> fluticasone                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> hydrocortisone             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> methylprednisolone         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> prednisolone               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> prednisone                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> triamcinolone</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">s9_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">s9_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[168] │</span> <span style="color: #00BBBB;">&lt;dexamethasone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[293] │</span> <span style="color: #00BBBB;">&lt;prednisone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[302] │</span> <span style="color: #00BBBB;">&lt;methylprednisolone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[335] │</span> <span style="color: #00BBBB;">&lt;methylprednisolone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[369] │</span> <span style="color: #00BBBB;">&lt;dexamethasone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[451] │</span> <span style="color: #00BBBB;">&lt;methylprednisolone&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="p1-beta-blockers-prohibited-in-competition-only">P1 BETA BLOCKERS (prohibited In-Competition only)<a class="anchor" aria-label="anchor" href="#p1-beta-blockers-prohibited-in-competition-only"></a>
@@ -468,12 +977,35 @@ blue apnoea, spearfishing, static apnoea, target shooting, and variable
 weight apnoea</li>
 </ul>
 <p>The S8 substances are below:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">p1_substances</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">p1_substances</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 19 × 1</span></span></span>
+<span><span class="co">#&gt;    `dopingdata::p1_substances`</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> acebutolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> alprenolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> atenolol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> betaxolol                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> bisoprolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> bunolol                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> carteolol                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> carvedilol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> celiprolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> esmolol                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> labetalol                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> metipranolol               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> metoprolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> nadolol                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> oxprenolol                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> pindolol                   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> propranolol                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> sotalol                    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> timolol</span></span></code></pre></div>
 <p>Check matches:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">classified_single_aaf_substance</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
-<span>  pattern <span class="op">=</span> <span class="va">p1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  pattern <span class="op">=</span> <span class="va">p1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[226] │</span> <span style="color: #00BBBB;">&lt;metoprolol&gt;</span></span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -481,40 +1013,90 @@ weight apnoea</li>
 </h3>
 <p>The substances that were not classified using the standard WADA list
 will be stored in <code>unclass_single_aaf_substances</code>.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unclass_single_aaf_substances</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">unclass_single_aaf_substances</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 18 × 2</span></span></span>
+<span><span class="co">#&gt;    substance_reason                                            n</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> non-analytical: refusal to submit to sample collection     39</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> non-analytical: 3 whereabouts failures                     24</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> non-analytical                                              9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> non-analytical: use (iv)                                    6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> non-analytical: failure to appear to sample collection      3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> non-analytical: possession (peptides)                       3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> non-analytical positive                                     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> non-analytical: complicity                                  2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> non-analytical: use                                         2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3 whereabouts failures                                      1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> elevated t/e                                                1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> non-analytical: distributing                                1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> non-analytical: evading sample collection                   1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> non-analytical: intravenous infusion                        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> non-analytical: refusal to submit to sample: collection     1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> non-analytical: use (igf-1)                                 1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> non-analytical: use (intravenous infusion)                  1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> non-analytical:: use (peptides)                             1</span></span></code></pre></div>
 <p>I can use some additional regular expressions with the
-<code>classify_substance()</code> function.</p>
+<code><a href="../reference/classify_substance.html">classify_substance()</a></code> function.</p>
 <div class="section level4">
 <h4 id="elevated-te-3-whereabouts-failures">
 <code>"elevated t/e"</code> &amp;
 <code>3 whereabouts failures</code><a class="anchor" aria-label="anchor" href="#elevated-te-3-whereabouts-failures"></a>
 </h4>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">classify_substance</span><span class="op">(</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/classify_substance.html">classify_substance</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">unclass_single_aaf_substances</span>, </span>
 <span>  subs_col <span class="op">=</span> <span class="va">substance_reason</span>, </span>
 <span>  subs <span class="op">=</span> <span class="st">"elevated t/e"</span>, </span>
 <span>  var <span class="op">=</span> <span class="st">"analytic"</span>,</span>
 <span>  val <span class="op">=</span> <span class="st">"S1 ANABOLIC AGENTS"</span>,</span>
 <span>  wb <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">classify_substance</span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/classify_substance.html">classify_substance</a></span><span class="op">(</span></span>
 <span>  subs_col <span class="op">=</span> <span class="va">substance_reason</span>, </span>
 <span>  subs <span class="op">=</span> <span class="st">"3 whereabouts failures"</span>, </span>
 <span>  var <span class="op">=</span> <span class="st">"non_analytic"</span>,</span>
 <span>  val <span class="op">=</span> <span class="st">"3 whereabouts failures"</span>,</span>
 <span>  wb <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">analytic</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">non_analytic</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">analytic</span>, <span class="va">non_analytic</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">analytic</span>, <span class="va">non_analytic</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 26 × 5</span></span></span>
+<span><span class="co">#&gt;    athlete           sanction_date substance_reason              analy…¹ non_a…²</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> gormley, isabel   2022-04-19    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> rodriguez, yair   2020-12-03    3 whereabouts failures        <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> bey, kamal        2020-10-30    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> diaz, nick        2018-04-09    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> goodwin, marquise 2017-08-15    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> rollins, brianna  2017-04-20    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> bough, gino       2016-07-25    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> field, emily      2015-06-08    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> north, jonathan   2015-01-22    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> erickson, sarah   2014-10-13    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> ives, kevin       2014-07-08    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> hicks, jeremy     2014-06-20    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> dixon, reginald   2014-06-06    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> koon, paul        2014-04-28    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> davis, walter     2014-04-21    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> crawford, shawn   2013-04-18    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> lock, jane        2012-04-20    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> kochem, matt      2012-04-13    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> thompson, lenroy  2012-02-26    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">20</span> arias, luis       2012-02-24    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">21</span> goff, tyler       2010-09-13    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">22</span> jelks, mark       2010-08-30    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">23</span> barnette, brandon 2010-08-25    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">24</span> o'bee, kirk       2002-07-18    elevated t/e                  S1 ANA… <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">25</span> ives, kevin       2014-07-08    non-analytical: 3 whereabout… <span style="color: #BB0000;">NA</span>      3 wher…</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 1 more row, and abbreviated variable names ¹​analytic, ²​non_analytic</span></span></span></code></pre></div>
 <p>I can use these to recode the original values–start with the
 <code>3 whereabouts failures</code></p>
 <p><code>yair rodriguez</code> should be non-analytical, so we can
 create a tiny tibble to bind back to <code>usada_substance_types</code>
 (after removing <code>rodriguez, yair</code>)</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get rodriguez, yair (3 whereabouts failures)</span></span>
 <span><span class="va">miss_classified_sanction_type</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">==</span> <span class="st">"rodriguez, yair"</span> <span class="op">&amp;</span> </span>
@@ -528,10 +1110,14 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">miss_classified_sanction_type</span><span class="op">)</span></span>
 <span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">==</span> <span class="st">"rodriguez, yair"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt;   athlete         sanction_date substance_reason       sanction_type </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> rodriguez, yair 2020-12-03    3 whereabouts failures non-analytical</span></span></code></pre></div>
 <p>Now we can address the <code>elevated t/e</code> (I classify this as
 <code>"S1 ANABOLIC AGENTS"</code>)</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">classified_single_aaf_substance</span> <span class="op">&lt;-</span> <span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    substance_group <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
@@ -539,50 +1125,72 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span></span>
 <span><span class="va">classified_single_aaf_substance</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="st">"kirk"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 4</span></span></span>
+<span><span class="co">#&gt;   athlete     sanction_date substance_reason     sanction_type</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> o'bee, kirk 2010-10-06    erythropoietin (epo) analytical   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> o'bee, kirk 2002-07-18    elevated t/e         analytical</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="export-sanction-data">Export sanction data<a class="anchor" aria-label="anchor" href="#export-sanction-data"></a>
 </h3>
-<p>Export analytic sanctions:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"/"</span><span class="op">)</span></span>
-<span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/create.html" class="external-link">dir_create</a></span><span class="op">(</span><span class="va">new_pth</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, </span>
-<span>                    <span class="st">"usada_sanction_types.csv"</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span></span></code></pre></div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanction_types</span>, file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"usada_sanction"</span><span class="op">)</span></span></code></pre></div>
+<p>Export analytic sanctions (<code>usada_sanction_types</code>):</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_sanction_types</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_sanction_types</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_sanction_types ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"types"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; ├── usada_sanction_types.csv</span></span>
+<span><span class="co">#&gt; └── usada_substance_types.csv</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="export-substance-data">Export substance data<a class="anchor" aria-label="anchor" href="#export-substance-data"></a>
 </h3>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="va">tdy_stmp</span>, <span class="st">"/"</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">"usada_substance_types.csv"</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span></span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_substance_types</span>, file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"usada_substance_types"</span><span class="op">)</span></span></code></pre></div>
+<p>Export <code>usada_substance_types</code></p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_substance_types</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_substance_types</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_substance_types ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"usada_substance_types"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── usada_substance_types.csv</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="export-classified-single-substances">Export classified (single) substances<a class="anchor" aria-label="anchor" href="#export-classified-single-substances"></a>
 </h3>
-<p>Export classified single substances:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">new_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, <span class="va">tdy_stmp</span>, <span class="st">"/"</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">new_pth</span>, </span>
-<span>                  <span class="fu"><a href="../reference/dtstamp.html">dtstamp</a></span><span class="op">(</span>side <span class="op">=</span> <span class="st">"r"</span><span class="op">)</span>, <span class="st">"classified_single_aaf_substance.csv"</span><span class="op">)</span></span>
-<span><span class="va">file_pth</span></span></code></pre></div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">vroom</span><span class="fu">::</span><span class="fu"><a href="https://vroom.r-lib.org/reference/vroom_write.html" class="external-link">vroom_write</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">classified_single_aaf_substance</span>, </span>
-<span>  file <span class="op">=</span> <span class="va">file_pth</span>, delim <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<p>Export classified single substances
+(<code>classified_single_aaf_substance</code>):</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="va">new_pth</span>, regexp <span class="op">=</span> <span class="st">"classified_single_aaf_substance"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">classified_single_aaf_substance</span>, </span>
+<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: classified_single_aaf_substance</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: classified_single_aaf_substance ... done</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, regexp <span class="op">=</span> <span class="st">"classified_single_aaf_substance"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; └── classified_single_aaf_substance.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="appendix">Appendix<a class="anchor" aria-label="anchor" href="#appendix"></a>
@@ -592,6 +1200,167 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 </h3>
 <p>A copy of the original WADA substances is available in
 <code>dopingdata::WADA</code></p>
+<table class="table  lightable-minimal" style='font-family: "Trebuchet MS", verdana, sans-serif; margin-left: auto; margin-right: auto;'>
+<caption>
+counts of substances per group in dopingdata::WADA
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+groups
+</th>
+<th style="text-align:left;">
+type
+</th>
+<th style="text-align:right;">
+Substance Count
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+S1 ANABOLIC AGENTS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED AT ALL TIMES
+</td>
+<td style="text-align:right;">
+75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S6 STIMULANTS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED IN-COMPETITION
+</td>
+<td style="text-align:right;">
+74
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S2 PH, GF, RS, MIMETICS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED AT ALL TIMES
+</td>
+<td style="text-align:right;">
+72
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S4 HORMONE AND METABOLIC MOD.
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED AT ALL TIMES
+</td>
+<td style="text-align:right;">
+52
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S5 DIURETICS AND MASKING AGENTS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED AT ALL TIMES
+</td>
+<td style="text-align:right;">
+28
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P1 BETA-BLOCKERS
+</td>
+<td style="text-align:left;">
+SUBSTANCES PROHIBITED IN PARTICULAR SPORTS
+</td>
+<td style="text-align:right;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S3 BETA-2 AGONISTS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED AT ALL TIMES
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M1 MANIPULATION OF BLOOD
+</td>
+<td style="text-align:left;">
+PROHIBITED METHODS
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S7 NARCOTICS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED IN-COMPETITION
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S9 GLUCOCORTICOIDS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED IN-COMPETITION
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M2 CHEMICAL AND PHYSICAL MANIP
+</td>
+<td style="text-align:left;">
+PROHIBITED METHODS
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S8 CANNABINOIDS
+</td>
+<td style="text-align:left;">
+SUBSTANCES &amp; METHODS PROHIBITED IN-COMPETITION
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+M3 GENE AND CELL DOPING
+</td>
+<td style="text-align:left;">
+PROHIBITED METHODS
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

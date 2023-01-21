@@ -46,7 +46,10 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/check_rtxt.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/create_dir_date.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/classify_substance.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/classify_wada_substances.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/create_regex_wb.html</loc>
@@ -55,10 +58,13 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/dtstamp.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_data_file.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/export_extdata.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_version.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_path.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/guess_basename.html</loc>
