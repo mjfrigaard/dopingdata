@@ -5,6 +5,13 @@ str_view_all(hangu_filler, 'ㅤ', match = TRUE, html = TRUE)
 str_view_all(left_to_right_mark, '‎', match = TRUE, html = TRUE)
 ```
 
+```{r}
+"#2b2b2b"
+"#006fe7"
+"#02577A"
+```
+
+
 
 ## Import recent data 
 

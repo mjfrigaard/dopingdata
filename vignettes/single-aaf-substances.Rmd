@@ -1,10 +1,10 @@
 ---
-title: "AAF substances sanctions"
+title: "Single AAF substances"
 output: 
   rmarkdown::html_vignette:
     df_print: kable
 vignette: >
-  %\VignetteIndexEntry{AAF substances sanctions}
+  %\VignetteIndexEntry{Single AAF substances}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -48,11 +48,20 @@ library(anytime)
 
 ## Motivation 
 
-This vignette covers classification of single analytic substances (adverse analytic findings) in the [USADA sanction table](https://www.usada.org/testing/results/sanctions/). 
+This vignette covers the classification of adverse analytic findings for a single banned substance in the [USADA sanction table](https://www.usada.org/testing/results/sanctions/). 
 
 ## Data versioning 
 
-`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've organized the raw data in the `inst/extdata` folder by date (`YYYY-MM-DD`), but I also have a helper function for getting the recent version:
+`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've separated the raw (`_raw`) and processed (`_pro`) data in the `inst/` folder: 
+
+```{r}
+fs::dir_tree("../inst/extdata", recurse = FALSE)
+```
+
+
+
+
+by date (`YYYY-MM-DD`), but I also have a helper function for getting the recent version:
 
 ```{r tdy_stmp}
 get_recent("../inst/extdata/", full = TRUE)
@@ -121,7 +130,7 @@ dplyr::glimpse(tidy_usada_sports)
 
 These data have had their names standardized, and all the text has been converted to lowercase. 
 
-## Sanctions
+## AAFs vs ADRVs
 
 The sanctions are divided into two categories: 
 
@@ -129,9 +138,7 @@ The sanctions are divided into two categories:
 
 - `non-analytic`: [Non-Analytical Anti-doping Rule Violation](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/) ADRV; *a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.*. 
 
-### Substances vs Reasons
-
-The sanctions in the WADA data due to analytic findings (or *Adverse Analytical Finding (AAF)*), and others are due to other reasons (i.e. 'non-analytical' or 'non-analytic' sanctions).
+### `substance_reason`
 
 The `substance_reason` column contains the details of the sanction, which can include the following information: 
 
@@ -192,129 +199,167 @@ dplyr::filter(usada_sanction_types,
   nrow()
 ```
 
-## Single vs. multiple substances 
+## Single vs. multipl substances 
 
-To identify single vs. multiple substances, first I'll identify the multiple substances using a regular expression, then I'll negate the regular expression for the single substances. 
+How can I identify the single vs. multiple substances? 
 
-```{r usada_substance_types}
-usada_substance_types <- usada_sanction_types |> 
-  dplyr::mutate(multiple_substances = case_when(
-    stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ TRUE,
-    !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~FALSE,
-    TRUE ~ NA)) 
-usada_substance_types |> 
-  dplyr::count(multiple_substances, sort = TRUE)
+Let's take a look at four different sanctions in `sanction_type_example`:
+
+```{r sanction_type_example, echo=FALSE}
+sanction_type_example <- tibble::tibble(
+             sport = c("swimming","track & field",
+                       "triathlon","track & field"),
+  substance_reason = c("non-analytical: 3 whereabouts failures","cannabinoids",
+                       "androgenic anabolic steroid; cannabinoids; anastrozole; clomiphene; gw1516",
+                       "non-analytical: tampering, administration (iv), and trafficking (testosterone)"),
+     sanction_type = c("non-analytical","analytical",
+                       "analytical","non-analytical"))
+sanction_type_example
 ```
 
-Now I'll divide these into single and multiple analytic substances: 
+We can see two analytic and two non-analytic sanctions, and each one has a single or multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), so I can use a regular expression to separate the items. 
+
+```{r test-multiple_sr-sep}
+dplyr::mutate(sanction_type_example, 
+  multiple_sr = case_when(
+    # identify the multiple_sr substances using a regular expression
+    stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ TRUE,
+    # negate the regular expression for the single substances
+    !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~FALSE,
+    TRUE ~ NA)) |> 
+  janitor::tabyl(multiple_sr, sanction_type)
+```
+
+
+The `multiple_sr` identifier can be used to separate sanctions with multiple substance/reasons from sanctions with a single substance or reason. 
+
 
 ### Multiple analytic substances
 
-```{r multiple_analytic_subs}
-multiple_analytic_subs <- usada_substance_types |> 
-  dplyr::filter(multiple_substances == TRUE) 
+With the new `multiple_sr` indicator, I can separate `usada_substance_types` into single or multiple analytic substances. 
 
-multiple_analytic_subs |> 
+```{r usada_substance_types}
+usada_substance_types <- usada_sanction_types |> 
+  dplyr::mutate(multiple_sr = case_when(
+    # identify the multiple_sr substances using a regular expression
+    stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ TRUE,
+    # negate the regular expression for the single substances
+    !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~FALSE,
+    TRUE ~ NA)) 
+usada_substance_types |> 
+  dplyr::count(multiple_sr, sort = TRUE)
+```
+
+How many different combinations of multiple substances are there?
+
+```{r multiple_analytic_subs}
+usada_substance_types |> 
+  dplyr::filter(multiple_sr == TRUE) |> 
   dplyr::count(substance_reason, sort = TRUE, name = "Count") |> 
   count(Count, sort = TRUE)
 ```
 
-Above is a 'count of counts', which tells me most of the multiple substance combinations occur only once. 
+Above is a 'count of counts', which tells me most of the multiple substance combinations occur only once.
 
-### Single analytic substances
+## Single analytic substances
 
-Below is a count of the single analytic substances: 
+This vignette is going to focus on the sanctions with a single substance listed (we will deal with multiple substances next). 
 
 ```{r single_analytic_subs}
 single_analytic_subs <- usada_substance_types |> 
-  dplyr::filter(multiple_substances == FALSE) 
-
-single_analytic_subs |> 
-  dplyr::count(substance_reason, sort = TRUE)
+  dplyr::filter(multiple_sr == FALSE) 
 ```
 
+Below is a count of the single analytic substances occurring more than 5 times in the data: 
+
+```{r tabyl-single_analytic_subs}
+single_analytic_subs |> 
+  janitor::tabyl(substance_reason) |> 
+  janitor::adorn_pct_formatting() |> 
+  dplyr::arrange(desc(n)) |> 
+  dplyr::filter(n > 5)
+```
 
 ## Classifying substances 
 
-To identify the [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor), I've written `classify_wada_substances()`, a function that scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). See Appendix (bottom) for more information. 
+To identify the [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor), I've written `classify_wada_substances()`, a function that scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). See the Appendix (bottom) for more information. 
 
+### How it works (S1 ANABOLIC AGENTS example)
 
-```{r classified_single_aaf_substance}
-classified_single_aaf_substance <- classify_wada_substances(
-  usada_data = single_analytic_subs, 
-  subs_column = substance_reason) 
-classified_single_aaf_substance |> 
-  dplyr::count(substance_group, sort = TRUE)
-```
-
-### S1 ANABOLIC AGENTS
-
-The S1 substances are below: 
+`dopingdata` stores vectors with each substance group in the WADA list (S1 substances are below): 
 
 ```{r s1_substances}
-tibble::tibble(dopingdata::s1_substances)
+head(dopingdata::s1_substances, 10)
 ```
 
-Check matches: 
+These vectors are also stored as regular expressions, which we can use to match the `substance_reason` column on:
 
 ```{r veiw-s1}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = single_analytic_subs$substance_reason, 
   pattern = s1_regex, match = TRUE)
 ```
 
+`classify_wada_substances()` creates a `substance_group` variable with each of the WADA classifications (these are stored in `dopingdata::wada_classes`)
+
+```{r show-dopingdata-wada_classes}
+dopingdata::wada_classes
+```
+
+
+### `tidy_single_aafs`
+
+The output from `classify_wada_substances()` is stored in `tidy_single_aafs`
+
+```{r tidy_single_aafs}
+tidy_single_aafs <- classify_wada_substances(
+  usada_data = single_analytic_subs, 
+  subs_column = substance_reason) 
+```
+
+What `substance_group`'s appear the most?
+
+```{r}
+tidy_single_aafs |> 
+  janitor::tabyl(substance_group) |> 
+  janitor::adorn_pct_formatting() |> 
+  dplyr::arrange(desc(n)) 
+```
+
+
 ### S2 PEPTIDE HORMONES, GROWTH FACTORS, RELATED SUBSTANCES, AND MIMETICS
 
-The S2 substances are below:
-
-```{r s2_substances}
-tibble::tibble(dopingdata::s2_substances)
-```
-Check matches: 
+The S2 substances matches are below:
 
 ```{r veiw-s2}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s2_regex, match = TRUE)
 ```
 
 ### S3 BETA-2 AGONISTS
 
-The S3 substances are below:
+The S3 substance matches are below:
 
-```{r s3_substances}
-tibble::tibble(dopingdata::s3_substances)
-```
-Check matches: 
 
 ```{r veiw-s3}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s3_regex, match = TRUE)
 ```
 
 ### S4 HORMONE AND METABOLIC MODULATORS
 
-The S4 substances are below:
-
-```{r s4_substances}
-tibble::tibble(dopingdata::s4_substances)
-```
-Check matches: 
+The S4 substance matches are below:
 
 ```{r veiw-s4}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s4_regex, match = TRUE)
 ```
 
 ### S5 DIURETICS/MASKING AGENTS
 
-The S5 substances are below:
-
-```{r s5_substances}
-tibble::tibble(dopingdata::s5_substances)
-```
-Check matches: 
+The S5 substance matches are below
 
 ```{r veiw-s5}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s5_regex, match = TRUE)
 ```
 
@@ -322,43 +367,28 @@ stringr::str_view_all(string = classified_single_aaf_substance$substance_reason,
 
 ### M1 MANIPULATION OF BLOOD
 
-The M1 substances are below:
-
-```{r m1_method}
-tibble::tibble(dopingdata::m1_method)
-```
-Check matches: 
+The M1 method matches are below:
 
 ```{r veiw-m1}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = m1_regex, match = TRUE)
 ```
 
 ### M2 CHEMICAL AND PHYSICAL MANIPULATION
 
-The M2 substances are below:
-
-```{r m2_method}
-tibble::tibble(dopingdata::m2_method)
-```
-Check matches: 
+The M2 method matches are below:
 
 ```{r veiw-m2}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = m2_regex, match = TRUE)
 ```
 
 ### M3 GENE AND CELL DOPING
 
-The M3 substances are below:
-
-```{r m3_method}
-tibble::tibble(dopingdata::m3_method)
-```
-Check matches: 
+The M3 method matches are below:
 
 ```{r veiw-m3}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = m3_regex, match = TRUE)
 ```
 
@@ -368,33 +398,19 @@ stringr::str_view_all(string = classified_single_aaf_substance$substance_reason,
 
 *All S6 STIMULANTS, including all optical isomers, e.g. `d-` and `l-` where relevant, are prohibited.*
 
-The S6 substances are below:
-
-```{r s6_substances}
-tibble::tibble(dopingdata::s6_substances)
-```
-
-
-Check matches: 
+The S6 substance matches are below:
 
 ```{r veiw-s6}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s6_regex, match = TRUE)
 ```
 
 ### S7 NARCOTICS
 
-The S7 substances are below:
-
-```{r s7_substances}
-tibble::tibble(dopingdata::s7_substances)
-```
-
-
-Check matches: 
+The S7 substance matches are below:
 
 ```{r veiw-s7}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s7_regex, match = TRUE)
 ```
 
@@ -402,33 +418,19 @@ stringr::str_view_all(string = classified_single_aaf_substance$substance_reason,
 
 *The following cannabinoids are prohibited: Natural cannabinoids, e.g. cannabis, hashish and marijuana; Synthetic cannabinoids e.g. Δ9-tetrahydrocannabinol (THC) and other cannabimimetics.*
 
-The S8 substances are below:
-
-```{r s8_substances}
-tibble::tibble(dopingdata::s8_substances)
-```
-
-
-Check matches: 
+The S8 substance matches are below:
 
 ```{r veiw-s8}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s8_regex, match = TRUE)
 ```
 
 ### S9 GLUCOCORTICOIDS
 
-The S9 substances are below:
-
-```{r s9_substances}
-tibble::tibble(dopingdata::s9_substances)
-```
-
-
-Check matches: 
+The S9 substance matches are below:
 
 ```{r veiw-s9}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = s9_regex, match = TRUE)
 ```
 
@@ -445,17 +447,10 @@ stringr::str_view_all(string = classified_single_aaf_substance$substance_reason,
 + skiing/snowboarding (fis) in ski jumping, freestyle aerials/halfpipe and snowboard halfpipe/big air
 + underwater sports (cmas) in constant-weight apnoea with or without fins, dynamic apnoea with and without fins, free immersion apnoea, jump blue apnoea, spearfishing, static apnoea, target shooting, and variable weight apnoea
 
-The S8 substances are below:
-
-```{r p1_substances}
-tibble::tibble(dopingdata::p1_substances)
-```
-
-
-Check matches: 
+The S8 substance matches are below:
 
 ```{r veiw-p1}
-stringr::str_view_all(string = classified_single_aaf_substance$substance_reason, 
+stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
   pattern = p1_regex, match = TRUE)
 ```
 
@@ -464,7 +459,7 @@ stringr::str_view_all(string = classified_single_aaf_substance$substance_reason,
 The substances that were not classified using the standard WADA list will be stored in `unclass_single_aaf_substances`.
 
 ```{r unclass_single_aaf_substances}
-unclass_single_aaf_substances <- classified_single_aaf_substance |> 
+unclass_single_aaf_substances <- tidy_single_aafs |> 
   filter(is.na(substance_group)) 
 unclass_single_aaf_substances |> 
   count(substance_reason, sort = TRUE)
@@ -498,7 +493,7 @@ I can use these to recode the original values--start with the `3 whereabouts fai
 
 ```{r miss_classified_sanction_type}
 # get rodriguez, yair (3 whereabouts failures)
-miss_classified_sanction_type <- classified_single_aaf_substance |> 
+miss_classified_sanction_type <- tidy_single_aafs |> 
   filter(athlete == "rodriguez, yair" & 
             sanction_date == lubridate::as_date("2020-12-03")) |> 
   dplyr::mutate(sanction_type = if_else(sanction_type == "analytical", 
@@ -516,17 +511,17 @@ usada_substance_types |>
 Now we can address the `elevated t/e` (I classify this as `"S1 ANABOLIC AGENTS"`)
 
 ```{r miss_classified_sanction_s1}
-classified_single_aaf_substance <- classified_single_aaf_substance |> 
+tidy_single_aafs <- tidy_single_aafs |> 
   dplyr::mutate(
     substance_group = case_when(
       stringr::str_detect(substance_reason, "elevated t/e") ~ "S1 ANABOLIC AGENTS")) 
 
-classified_single_aaf_substance |> 
+tidy_single_aafs |> 
   dplyr::filter(str_detect(athlete, "kirk")) |> 
   dplyr::select(athlete, sanction_date, substance_reason, sanction_type)
 ```
 
-## Export sanction data
+## Export sanction types
 
 Export analytic sanctions (`usada_sanction_types`):
 
@@ -544,7 +539,7 @@ fs::dir_tree('../inst/extdata/', regexp = "types")
 ```
 
 
-## Export substance data
+## Export substance types
 
 Export `usada_substance_types`
 
@@ -561,20 +556,20 @@ fs::dir_tree('../inst/extdata/', regexp = "usada_substance_types")
 ```
 
 
-## Export classified (single) substances 
+## Export tidy classified (single) substances 
 
-Export classified single substances (`classified_single_aaf_substance`):
+Export classified single substances (`tidy_single_aafs`):
 
-```{r export_extdata-classified_single_aaf_substance}
+```{r export_extdata-tidy_single_aafs}
 export_extdata(
-  x = classified_single_aaf_substance, 
+  x = tidy_single_aafs, 
   inst_path = "../inst/", 
   raw = FALSE
 )
 ```
 
-```{r vrfy-classified_single_aaf_substance}
-fs::dir_tree("../inst/extdata/", regexp = "classified_single_aaf_substance")
+```{r vrfy-tidy_single_aafs}
+fs::dir_tree("../inst/extdata/", regexp = "tidy_single_aafs")
 ```
 
 # Appendix 

@@ -1,10 +1,10 @@
 ---
-title: "ADRV substance sanctions"
+title: "Single ADRV sanctions"
 output: 
   rmarkdown::html_vignette:
     df_print: kable
 vignette: >
-  %\VignetteIndexEntry{ADRV substance sanctions}
+  %\VignetteIndexEntry{Single ADRV sanctions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

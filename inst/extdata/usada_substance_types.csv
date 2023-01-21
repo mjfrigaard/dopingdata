@@ -1,4 +1,4 @@
-athlete,sport,substance_reason,sanction_terms,sanction_date,support_personnel,multiple_sports,paralympic,sanction_type,multiple_substances
+athlete,sport,substance_reason,sanction_terms,sanction_date,support_personnel,multiple_sports,paralympic,sanction_type,multiple_sr
 "montañez barroso, elias",cycling,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2023-01-10,FALSE,FALSE,FALSE,non-analytical,FALSE
 "ruiz-gutierrez, noslen",cycling,dexamethasone; phentermine; 19-noretiocholanolone (19-ne); 19-norandrosterone (19-na); anabolic agent,4-year suspension; loss of results,2023-01-04,FALSE,FALSE,FALSE,analytical,TRUE
 "roberts, gil",track & field,andarine; ostarine,16-month suspension; loss of results,2022-12-08,FALSE,FALSE,FALSE,analytical,TRUE

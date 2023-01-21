@@ -39,6 +39,7 @@ Imports:
     palmerpenguins,
     pkgdown,
     polite,
+    preferably,
     purrr,
     reactable,
     readr,
