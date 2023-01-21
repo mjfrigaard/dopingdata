@@ -8,10 +8,10 @@ str_view_all(left_to_right_mark, '‎', match = TRUE, html = TRUE)
 
 ## Import recent data 
 
-To get the most recent data file, I can use `get_recent_data_file()` **in the console**.
+To get the most recent data file, I can use `get_recent_path()` **in the console**.
 
-```{r console-get_recent_data_file, eval=FALSE}
-get_recent_data_file(folder = "inst/extdata/raw/", type = "csv")
+```{r console-get_recent_path, eval=FALSE}
+get_recent_path(folder = "inst/extdata/raw/", type = "csv")
 ✔ import code pasted to clipboard!
 ✔ use: readr::read_csv('inst/extdata/raw/2023-01-18/2023-01-18-usada_data_raw.csv')
 ```

@@ -54,12 +54,14 @@ This vignette covers how format and wrangle the sanction dates in the [USADA san
 
 This package uses data from a table that gets updated regularly. To keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`), but I have a helper function for getting the recent version:
 
-```{r tdy_stmp}
-tdy_stmp <- get_recent_version("../inst/extdata/raw")
-tdy_stmp
+```{r stmps}
+get_recent("../inst/extdata/raw")
+get_recent("../inst/extdata/wada/", full = TRUE)
 ```
 
-Now I can use `tdy_stmp` whenever I need to use find the data version! See below:
+Now I can use `get_recent` whenever I need to use find the most recently modified file in a folder!
+
+See examples below:
 
 ## Outline 
 
@@ -69,28 +71,32 @@ This vignette assumes the following:
 
   - See the `scrape_usada_sanctions()` function and `scraping-usada.Rmd` vignette for more information
   
-    ```{r raw-usada_data, echo=FALSE}
-    fs::dir_tree(paste0("../inst/extdata/raw/", tdy_stmp))
+  - The raw sanction data is in the `inst/extdata/raw` folder:
+  
+    ```{r raw-usada_sanctions, echo=FALSE}
+    fs::dir_tree("../inst/extdata/raw/", regexp = "sanctions")
     ```
 
-   - These data have had all the column names formatted with `janitor::clean_names()`, and all the text has been converted to lowercase 
+   - The processed data have had all the column names formatted with `janitor::clean_names()`, and all the text has been converted to lowercase 
 
+    ```{r pro-usada_sanctions, echo=FALSE}
+    fs::dir_tree("../inst/extdata/", regexp = "sanctions")
+    ```
 
 ## Import recent data file 
 
-I've written a custom import function, `get_recent_data_file()`, which helps with locating/importing the most recent USADA data:
+I've written a custom import function, `get_recent_path()`, which helps with locating/importing the most recent USADA data:
 
-``` r
-get_recent_data_file(
-  folder = paste0("../inst/extdata/pro/", tdy_stmp), type = "csv")
+```{r, eval=FALSE}
+get_recent_path("../inst/extdata/", "csv")
 ✔ import code pasted to clipboard!
-✔ use: readr::read_csv('../inst/extdata/pro/2023-01-20/2023-01-20-usada_sanctions_pro.csv')
+✔ use: readr::read_csv('../inst/extdata/usada_sanctions_pro.csv')
 ```
 
-```{r usada_raw}
-usada_raw <- readr::read_csv(
-  '../inst/extdata/pro/2023-01-19/2023-01-19-usada_sanctions_pro.csv')
-dplyr::glimpse(usada_raw)
+```{r usada_sanctions_pro}
+usada_sanctions_pro <- readr::read_csv(
+                          file = '../inst/extdata/usada_sanctions_pro.csv')
+dplyr::glimpse(usada_sanctions_pro)
 ```
 
 
@@ -99,7 +105,7 @@ dplyr::glimpse(usada_raw)
 I need to format the dates in `sanction_announced` as an actual date, but should check to see if they're all in the same format. 
 
 ```{r check-dates}
-dplyr::mutate(usada_raw, 
+dplyr::mutate(usada_sanctions_pro, 
   sanction_announced = lubridate::mdy(sanction_announced)) |> 
   utils::head(25)
 ```
@@ -107,7 +113,7 @@ dplyr::mutate(usada_raw,
 Which ones failed?  Store these in `bad_dates`.
 
 ```{r bad_dates}
-bad_dates <- mutate(usada_raw, 
+bad_dates <- mutate(usada_sanctions_pro, 
   sanction_date = lubridate::mdy(sanction_announced)) |> 
   dplyr::filter(is.na(sanction_date) & !is.na(sanction_announced)) 
 bad_dates |> 
@@ -141,10 +147,10 @@ good_dates <- tidyr::separate_rows(data = bad_dates,
 good_dates |> glimpse()
 ```
 
-Now I want to format the dates in `usada_raw` using `anytime::anydate()`, then filter out the missing `sanction_date`s that didn't parse, remove the `sanction_announced` column, and bind this back to the `good_dates` table with fixed sanction dates.  
+Now I want to format the dates in `usada_sanctions_pro` using `anytime::anydate()`, then filter out the missing `sanction_date`s that didn't parse, remove the `sanction_announced` column, and bind this back to the `good_dates` table with fixed sanction dates.  
 
 ```{r usada_dates}
-usada_dates <- dplyr::mutate(usada_raw, 
+usada_dates <- dplyr::mutate(usada_sanctions_pro, 
     sanction_date = anytime::anydate(sanction_announced)) |> 
   dplyr::filter(!is.na(sanction_date)) |> 
   dplyr::select(-sanction_announced) |> 
@@ -155,25 +161,17 @@ dplyr::glimpse(usada_dates)
 
 ## Export 
 
-Create paths for today's data:
-
-```{r paths-dates}
-new_pth <- paste0("../inst/extdata/der/")
-fs::dir_create(new_pth)
-csv_pth <- paste0(new_pth, "sanction_dates.csv")
-csv_pth
-```
-
-Export the `usada_dates` as .csv and .rds
-
-```{r export-dates, eval=FALSE}
-vroom::vroom_write(x = usada_dates, file = csv_pth, delim = ",")
+```{r export_extdata-usada_dates}
+export_extdata(
+  x = usada_dates, 
+  inst_path = "../inst/", 
+  raw = FALSE)
 ```
 
 Verify
 
 ```{r verify-export}
-fs::dir_tree(new_pth, regexp = "dates")
+fs::dir_tree("../inst/extdata/", regexp = "dates")
 ```
 
 

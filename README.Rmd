@@ -45,14 +45,14 @@ fs::dir_tree("inst/extdata/raw")
 
 ## Processed Data 
 
-The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. Processed datasets have a date (`YYYY-MM-DD`) prefix and `_pro` suffix. 
+The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. All processed datasets have a `_pro` suffix. 
 
 Processed datasets have the same dimensions and structure as the `_raw` data, but they've been formatted for easier wrangling/manipulation. 
 
-Processed datasets are in the `inst/extdata/pro` folder:
+Processed datasets are in the `inst/extdata/` folder:
 
 ```{r pro-data, echo=FALSE}
-fs::dir_tree("inst/extdata/pro/")
+fs::dir_tree("inst/extdata/", regexp = "_pro")
 ```
 
 ## Derived Data 
@@ -67,13 +67,37 @@ The following datasets are derived from the processed data:
 6. Prohibited Associations  
 7. Athletes  
 
-All derived datasets are in the `inst/extdata/der/` folder (and do not have a date prefix or any suffixes).
+All derived datasets are in the `inst/extdata/` folder (and do not have a date prefix or any suffixes).
 
 ### Sanction Dates  
 
+Derived from `usada_sanctions_pro.csv`: 
+
+  - the dates are wrangled and formatted in `vignettes/sanction-dates.Rmd`: 
+   
+    ```{r dates, echo = FALSE}
+    fs::dir_tree("inst/extdata/", regexp = "_dates")
+    ```
+
 ### Sports 
 
+Derived from `usada_dates.csv`:
+
+  - the sports separated and 'tidied' in `vignettes/sanction-sports.Rmd`: 
+   
+    ```{r sports, echo = FALSE}
+    fs::dir_tree("inst/extdata/", regexp = "sports")
+    ```
+
 ### Substances (AAF)
+
+Derived from `tidy_sports.csv`:
+
+  - Adverse analytical findings with a single substance are in `vignettes/sanction-aaf-substances.Rmd`: 
+   
+    ```{r aaf, echo = FALSE}
+    fs::dir_tree("inst/extdata/", regexp = "aaf")
+    ```
 
 ### Non-Analytic Sanctions (ADRV)
 

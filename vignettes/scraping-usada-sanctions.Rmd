@@ -130,9 +130,8 @@ usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
 ```
 
 ```{r hidden-usada_sanctions_raw-import, message=FALSE, warning=FALSE, echo=FALSE}
-# fs::dir_tree("../inst/extdata/raw/")
-usada_sanctions_raw <- readr::read_rds(
-  '../inst/extdata/raw/2023-01-19/2023-01-19-usada_sanctions_raw.rds')
+usada_sanctions_raw <- readr::read_csv(
+  '../inst/extdata/raw/2023-01-20_usada_sanctions_raw.csv')
 ```
 
 What does the raw data look like? 
@@ -171,32 +170,13 @@ If I compare with `waldo::compare()`, I can see the differences:
 waldo::compare(usada_sanctions_lc, usada_sanctions_pro)
 ```
 
-## Export raw data
+## Exporting the raw data
 
-I'll export the raw data into the `inst/extdata/raw/` folder. First create a raw data folder for today's data:
+I'll export the raw data into the `inst/extdata/raw/` folder. I've written a custom function for date-stamping the raw data before exporting: 
 
-``` r
-create_dir_date(dir_path = "../inst/extdata/", dir_name = "raw/")
-✔ Creating folder: ../inst/extdata/raw/2023-01-20/
-✔ path is on clipboard!
-```
-
-Create the file paths for .csv and .rds files. 
-
-```{r output-csv_pth, eval=TRUE}
-csv_pth <- paste0('../inst/extdata/raw/', Sys.Date(), '/', 
-                  dtstamp(side = "r"), 'usada_sanctions_raw.csv')
-csv_pth
-rds_pth <-  paste0('../inst/extdata/raw/', Sys.Date(), '/', 
-                  dtstamp(side = "r"), 'usada_sanctions_raw.rds')
-rds_pth
-```
-
-If these look good, I can run the export functions:
-
-```{r export-raw, eval=FALSE}
-readr::write_csv(x = usada_sanctions_raw, file = csv_pth)
-readr::write_rds(x = usada_sanctions_raw, file = rds_pth)
+```{r export_extdata-raw}
+export_extdata(x = usada_sanctions_raw, 
+  inst_path = "../inst/", raw = TRUE)
 ```
 
 Verify: 
@@ -205,43 +185,17 @@ Verify:
 fs::dir_tree("../inst/extdata/raw/")
 ```
 
-
 ## Export processed data 
 
-I want to export the processed data into a separate folder (`inst/extdata/<today>`), which I can create using `create_dir_date()`
+I want to export the processed data into the `inst/extdata/` folder, which I can create using `export_extdata(raw = FALSE)`
 
-``` r
-create_dir_date(dir_path = "../inst/extdata", dir_name = "pro/")
-✔ Creating folder: ../inst/extdata/pro/2023-01-20/
-✔ path is on clipboard!
-```
-
-Create export processed paths: 
-
-```{r processed-output-dirs, eval=TRUE}
-csv_pro_pth <- paste0('../inst/extdata/pro/',
-                        Sys.Date(),
-                        '/',
-                        dtstamp(side = "r"),
-                        'usada_sanctions_pro.csv')
-csv_pro_pth
-rds_pro_pth <- paste0('../inst/extdata/pro/',
-                        Sys.Date(),
-                        '/',
-                        dtstamp(side = "r"),
-                        'usada_sanctions_pro.rds')
-rds_pro_pth
-```
-
-```{r export-processed, eval=FALSE}
-readr::write_csv(x = usada_sanctions_pro, file = csv_pro_pth)
-readr::write_rds(x = usada_sanctions_pro, file = rds_pro_pth)
+```{r export_extdata-processed}
+export_extdata(x = usada_sanctions_pro, 
+  inst_path = "../inst/", raw = FALSE)
 ```
 
 Verify: 
 
 ```{r processed-verify}
-fs::dir_tree(path = paste0('../inst/extdata/pro/',
-                        Sys.Date(),
-                        '/'), regexp = "sanctions_pro")
+fs::dir_tree(path = '../inst/extdata/', regexp = "sanctions_pro")
 ```

@@ -1,0 +1,509 @@
+athlete,sport,substance_reason,sanction_terms,sanction_date,support_personnel,multiple_sports,paralympic,sanction_type,multiple_substances,substance_group
+"montañez barroso, elias",cycling,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2023-01-10,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"andrew, sidney",cycling,5-methylhexan-2-amine,12-month suspension; loss of results,2022-12-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"scherf, lindsey",track & field,androgenic anabolic steroid,4-year suspension; loss of results,2022-11-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"evans, aja",bobsled,non-analytical: refusal to submit to sample collection,2-year suspension; loss of results,2022-11-18,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"provisor, ben",wrestling,amphetamine,16-month suspension; loss of results,2022-11-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"skoog, arika",boxing,furosemide,1-year suspension; loss of results,2022-10-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"navarrete, rene",weightlifting,cannabinoids,3-month suspension; loss of results,2022-10-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"green, bobby",mixed martial arts,dehydroepiandrosterone (dhea),6-month suspension,2022-10-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"guimarães, catarina",para track & field,non-analytical: use (intravenous infusion),public warning,2022-10-05,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"zaleski dos santos, elizeu",mixed martial arts,ostarine,1-year suspension,2022-09-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"browne, richard",para track & field,cannabinoids,3-month suspension; loss of results,2022-09-07,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"trujillo, nelson",cycling,non-analytical: refusal to submit to sample collection,12-year suspension; loss of results,2022-09-02,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jordan, clint",weightlifting,anabolic agent,4-year suspension; loss of results,2022-09-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"coleman, ellis",wrestling,dehydroepiandrosterone (dhea),24-month suspension; loss of results,2022-08-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"walker, gregory",para track & field,cannabinoids,3-month suspension; loss of results,2022-08-16,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"hattingh, riekert",rugby,tamoxifen,6-month suspension; loss of results,2022-08-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"howes, lucas",cycling,cannabinoids,3-month suspension; loss of results,2022-08-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"johns, miles",mixed martial arts,adderall,public warning,2022-07-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"struxness, wyatt",boccia,furosemide,public warning,2022-07-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pena, felipe",brazilian jiu-jitsu,clomiphene,1-year suspension; loss  of results,2022-06-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"monastyrskyi, andrii",canoe,meldonium,3-year suspension; loss of results,2022-06-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"kynard, erik",track & field,non-analytical: use (iv),6-month suspension,2022-05-27,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"evans-smith, ashlee",mixed martial arts,dehydroepiandrosterone (dhea),14-month suspension,2022-05-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"blanchfield, erin",mixed martial arts,spironolactone,public warning,2022-05-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"downing, tricia",para shooting,androgenic anabolic steroid,2-year suspension,2022-05-09,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"irizarry, ana",track & field,meldonium,3-year suspension; loss of results,2022-05-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"valdes, hanncer",cycling,stanozolol,4-year suspension; loss of results,2022-04-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"graham, taylor",wheelchair tennis,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2022-04-27,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"borrego lee, geony",cycling,phentermine,3-year suspension; loss of results,2022-04-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gormley, isabel",swimming,non-analytical: 3 whereabouts failures,1-year suspension; loss of results,2022-04-19,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"mckay, dryden",ice hockey,ostarine,6-month suspension; loss of results,2022-04-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"summerhill, daniel",cycling,amphetamine,1-year suspension; loss of results,2022-03-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"abers, brian",cycling,ibutamoren,1-year suspension; loss of results,2022-03-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"palmer, ahje",weightlifting,cannabinoids,1-month suspension; loss of results,2022-03-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lazishvili, zviad",mixed martial arts,clomiphene,10-month suspension,2022-02-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bowlby, grace",ice hockey,spironolactone,public warning,2021-12-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lampkin, trey",paralympic judo,hydrochlorothiazide (hctz),public warning,2021-12-07,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"wethington, madeline",ice hockey,spironolactone,public warning,2021-12-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"webb, noah",triathlon,androgenic anabolic steroid,4-year suspension; loss of results,2021-11-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"benoit, ryan",mixed martial arts,modafinil,10-month suspension,2021-11-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jackson, desmond",paralympic track & field,dehydroepiandrosterone (dhea),14-month suspension; loss of results,2021-10-21,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"augusto de freitas, geraldo",mixed martial arts,androgenic anabolic steroid,2-year suspension,2021-10-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mcwhirter, matt",cycling,androgenic anabolic steroid,4-year suspension; loss of results,2021-09-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bontorin, rogerio",mixed martial arts,hydrochlorothiazide (hctz),3-month suspension,2021-09-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"prince, mcaben",cycling,androgenic anabolic steroid,4-year suspension; loss of results,2021-09-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"butterworth, andrew",weightlifting,non-analytical: refusal to submit to sample collection,7-year suspension; loss of results; sanction tolled due to retirement,2021-09-10,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"shakirova, liliya",mixed martial arts,meldonium,2-year suspension,2021-08-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"buckley, christian",weightlifting,ostarine,3-year suspension - loss of results,2021-08-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"compton, katherine",cycling,androgenic anabolic steroid,4-year suspension; loss of results,2021-08-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hancock, regina",weightlifting,stanozolol,4-year suspension; loss of results,2021-08-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"alvis, juancamilo ronderos",mixed martial arts,cocaine,1-month suspension,2021-07-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"richardson, sha'carri",track & field,cannabinoids,1-month suspension; loss of results,2021-07-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"nelson, james",weightlifting,dehydrochloromethyltestosterone (dhcmt),4-year suspension; loss of results,2021-07-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"koch, erik",mixed martial arts,stanozolol,18-month suspension,2021-06-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"sisson, josh",paralympic judo,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2021-06-16,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"montgomery, kahmari",track & field,cannabinoids,1-month suspension; loss of results,2021-06-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"piechota, oskar",mixed martial arts,growth hormone releasing peptide 2 (ghrp-2),22-month suspension,2021-05-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jackson, tate",swimming,cannabinoids,1-month suspension; loss of results,2021-04-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"koehly, rebekah",weightlifting,testosterone,20-month suspension; loss of results,2021-04-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"igbokwe, obichukwu",track & field,dehydrochloromethyltestosterone (dhcmt),30-month suspension; loss of results,2021-04-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"burkett, richard",paralympic archery,testosterone,15-month suspension; loss of results,2021-04-05,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"ellis, james",weightlifting,cannabinoids,6-month suspension; loss of results,2021-03-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"thomas, lorenzo",rugby,gw1516,4-year suspension; loss of results,2021-03-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"azaitar, abu",mixed martial arts,tamoxifen,7-month suspension,2021-02-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ewell, andre",mixed martial arts,ostarine,public warning,2021-01-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"santanna, eduarda neves",mixed martial arts,lgd-4033,1-year suspension,2021-01-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"castro, vinicius moreira",mixed martial arts,anastrozole,public warning,2021-01-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"blocker, jasmine",track & field,spironolactone,public warning,2020-12-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"munsell, megan",weightlifting,gw1516,4-year suspension; loss of results,2020-12-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"williams, susanne",weightlifting,ostarine,4-year suspension; loss of results,2020-12-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pelegrin, robert",cycling,anastrozole,1-year suspension; loss of results,2020-12-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"barriault, marc-andre",mixed martial arts,ostarine,6-month suspension,2020-12-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rodriguez, yair",mixed martial arts,3 whereabouts failures,6-month suspension,2020-12-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pessoa nunes, raphael",mixed martial arts,hydrochlorothiazide (hctz),1-year suspension,2020-11-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fiechter, olivia",squash,spironolactone,public warning,2020-11-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ronson, jesse",mixed martial arts,metandienone,20-month suspension,2020-11-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bey, kamal",wrestling,non-analytical: 3 whereabouts failures,1-year suspension; loss of results,2020-10-30,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"sherman, chase",mixed martial arts,anastrozole,9-month suspension,2020-10-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"martin, jeff",cycling,androgenic anabolic steroid,2-year suspension; loss of results,2020-10-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"millican, morgan",weightlifting,clomiphene,2-year suspension; loss of results,2020-09-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"harroufi, ridouane",track & field,androgenic anabolic steroid,8-year suspension; loss of results,2020-09-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fritzen procopio, lara",mixed martial arts,ostarine,6-month suspension,2020-09-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mccullough, matthew",weightlifting,higenamine,20-month suspension; loss of results,2020-09-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"wood, jonathan",cycling,androgenic anabolic steroid,2-year suspension;  loss of results,2020-09-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fix, daton",wrestling,ostarine,1-year suspension; loss of results,2020-09-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"doskalchuk, oleksandr",mixed martial arts,mesterolone,14-month suspension,2020-09-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gicquel, barbara",cycling,methyltestosterone,1-year suspension; loss of results,2020-08-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"melendez, gilbert",mixed martial arts,ghrp-6,2-year suspension,2020-07-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"woolsey, taff",weightlifting,non-analytical: possession (exemestane),2-year suspension; loss of results,2020-07-22,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"castille, kevin",track & field,19-norandrosterone (19-na),4-year suspension; loss of results,2020-07-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"alonso, leynier",cycling,phentermine,4-year suspension; loss of results,2020-06-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"arruda da silva, bruno",mixed martial arts,boldenone,2-year suspension,2020-06-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"walsh, cole",track & field,cannabinoids,6-month suspension with 3-month deferral; loss of results,2020-06-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gastelum, kelvin",mixed martial arts,cannabinoids,9-month suspension with 5-month deferral,2020-05-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ortiz, robert",weightlifting,cannabinoids,12-month suspension with 6-month deferral; loss of results,2020-05-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"penchel, lucas",mixed martial arts,non-analytical: complicity,2-year suspension,2020-03-23,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"bond, daniel",cycling,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2020-03-18,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jones, addison",weightlifting,cannabinoids,6-month suspension with 3-month deferral; loss of results,2020-03-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"penne, jessica",mixed martial arts,stanozolol,20-month suspension,2020-02-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"de padua, isabela",mixed martial arts,19-norandrosterone (19-na),2-year suspension,2020-02-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"strange, robert",weightlifting,dehydroepiandrosterone (dhea),1-year suspension; loss of results,2020-02-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"prazeres, michel",mixed martial arts,boldenone,2-year suspension,2020-02-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"duarte, kaynan",brazilian jiu-jitsu,ostarine,1-year suspension,2020-02-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"o'malley, sean",mixed martial arts,ostarine,6-month suspension,2020-01-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dumala, samantha",waterskiing,spironolactone,public warning,2020-01-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dreaver, ted",weightlifting,androgenic anabolic steroid,39-month suspension; loss of results,2020-01-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"martinez, cristofer",weightlifting,5-methylhexan-2-amine,2-year suspension; loss of results,2019-12-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"taha, khalid",mixed martial arts,furosemide,1-year suspension,2019-12-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"glasgow, scott",weightlifting,non-analytical: complicity,4-year suspension,2019-12-20,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"merrell, miranda",weightlifting,oxandrolone,2-year suspension; loss of results,2019-12-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cachoeira gomes da silva, priscila",mixed martial arts,hydrochlorothiazide,4-month suspension,2019-12-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gochenour, alexandria",track & field,ostarine,4-year suspension; loss of results,2019-12-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"shafer, janelle",weightlifting,ostarine,4-year suspension; loss of results,2019-12-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"letellier, lawrence",weightlifting,clomiphene,2-year suspension; loss of results,2019-12-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"nunez, erik",weightlifting,gw1516,4-year suspension; loss of results,2019-11-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"anderson, kaley",weightlifting,di‐hydroxy‐lgd‐4033,4-year suspension; loss of results,2019-11-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"nunes souza, istela iane",mixed martial arts,stanozolol,2-year suspension,2019-10-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"y frederico salvador de lemos, giacomo",mixed martial arts,drostanolone,2-year suspension,2019-10-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"arte, john allan",mixed martial arts,tamoxifen,1-year suspension,2019-10-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gatto regonha, melissa",mixed martial arts,furosemide,1-year suspension,2019-10-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"kurth, ty",cycling,testosterone,2-year suspension; loss of results,2019-10-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dwyer, conor",swimming,androgenic anabolic steroid,20-month suspension; loss of results; sanction tolled due to retirement,2019-10-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"allison, kyler",bobsled and skeleton,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results; sanction tolled due to retirement,2019-10-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"davis, todd",track & field,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results,2019-10-04,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"cano, josue",weightlifting,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results; sanction tolled due to retirement,2019-10-03,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"carlberg, angela",weightlifting,vilanterol,public warning,2019-09-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"branch, david",mixed martial arts,ipamorelin,2-year suspension,2019-09-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"frota lima, sarah",mixed martial arts,stanozolol,2-year suspension,2019-09-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"goss, lauren",triathlon,cannabinoids,6-month suspension; loss of results,2019-09-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"licon, william",swimming,non-analytical: use (vilanterol),public warning,2019-08-01,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"schafer, mallory",triathlon,higenamine,10-month suspension,2019-07-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"galloway, jacqueline",taekwondo,ibutamoren,6-month suspension,2019-07-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"amedovski, alen",mixed martial arts,cannabinoids,6-month suspension with 3-month deferral,2019-07-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"warren, darcie",weightlifting,non-analytical: refusal to submit to sample collection,8-year suspension; loss of results,2019-07-11,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"shtyrkov, ivan",mixed martial arts,boldenone,2-year suspension,2019-07-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"le, talina",taekwondo,higenamine,18-month suspension; loss of results,2019-07-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hu, yaozong",mixed martial arts,"androsta-3,5-diene-7,17-dione",10-month suspension,2019-06-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"waterstraat, elizabeth",triathlon,ostarine,6-month suspension; loss of results,2019-05-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"omar, mohamed",weightlifting,clomiphene,2-year suspension; loss of results;,2019-05-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"tisinger-ledkins, janel",racquetball,octopamine,16-month suspension; loss of results,2019-05-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"costa, paulo",mixed martial arts,non-analytical: intravenous infusion,6-month suspension,2019-04-26,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"montano, nicco",mixed martial arts,ostarine,6-month suspension,2019-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"o'malley, sean",mixed martial arts,ostarine,6-month suspension,2019-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"vettori, marvin",mixed martial arts,ostarine,6-month suspension,2019-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mendes, augusto",mixed martial arts,ostarine,6-month suspension,2019-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"harris, walt",mixed martial arts,lgd-4033,4-month suspension,2019-04-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"taisumov, mairbek",mixed martial arts,stanozolol,6-month suspension,2019-04-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dillashaw, tj",mixed martial arts,recombinant human erythropoietin (rhuepo),2-year suspension,2019-04-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"murzakanov, azamat",mixed martial arts,boldenone,2-year suspension,2019-04-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"baratto, joseph",cycling,androgenic anabolic steroid,1-year suspension; loss of results,2019-03-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"logan, devin",skiing,cannabinoids,6-month suspension with 3-month deferral - loss of results,2019-03-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"schenk, cheyenne",weightlifting,cannabinoids,6-month suspension with 3-month deferral - loss of results,2019-02-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"murtazaliev, khalid",mixed martial arts,drostanolone,2-year suspension,2019-02-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"collier, jake",mixed martial arts,higenamine,10-month suspension,2019-02-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"sorensen, ira",cycling,androgenic anabolic steroid,2-year suspension; loss of results,2019-02-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pate, jennifer",cycling,androgenic anabolic steroid,4-year suspension; loss of results,2019-02-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"campbell, rachel",weightlifting,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results; sanction tolled due to retirement,2019-02-07,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"cuicchi, trevor",weightlifting,ostarine,9-month suspension; loss of results,2019-01-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"juneau scott, cory",skateboarding,cannabinoids,6-month suspension with 3-month deferral - loss of results,2019-01-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"brown, robert",weightlifting,heptaminol,9-month suspension; loss of results,2019-01-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pate, david",cycling,androgenic anabolic steroid,4-year suspension; loss of results,2018-12-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"zeng, laura",gymnastics,acetazolamide,6-month suspension; loss of results,2018-12-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lopez, enrique",cycling,erythropoietin (epo),4-year suspension - loss of results,2018-11-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"strickler, steven",cycling,androgenic anabolic steroid,4-year suspension - loss of results,2018-11-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"reyes, polo",mixed martial arts,ostarine,6-month suspension,2018-10-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"tanski, jeff",cycling,androgenic anabolic steroid,4-year suspension - loss of results,2018-10-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"scott, bradley",mixed martial arts,cocaine,2-year suspension; sanction tolled due to retirement,2018-10-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gonzalez, mijail",cycling,dexamethasone,4-year suspension - loss of results,2018-10-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"butterworth, andrew",weightlifting,stanozolol,42-month suspension - loss of results; sanction tolled due to retirement,2018-09-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jones, jon",mixed martial arts,chlorine-substituted anabolic steroid,15-month suspension - loss of results,2018-09-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dudeck, cameron",weightlifting,dhcmt,4-year suspension - loss of results,2018-09-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bedford, stephen",cycling,cannabinoids,6-month suspension with 3-month deferral - loss of results,2018-09-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"francis, victoria",wrestling,ostarine,1-year suspension - loss of results,2018-08-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ortiz, robert",weightlifting,"1,4‐dimethylpentylamine",16-month suspension - loss of results,2018-08-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"malinowski, emily",weightlifting,androgenic anabolic steroids,45-month suspension - loss of results,2018-08-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"payne, demi",track & field,drostanolone,4-year suspension - loss of results,2018-08-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gaskins, joshua",weightlifting,androgenic anabolic steroids,2-year suspension - loss of results,2018-08-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"boss, logan",track & field,canrenone,6-month suspension - loss of results,2018-08-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ssekyaaya, charles",weightlifting,"1,3-dimethylbutylamine (dmba)",9-month suspension - loss of results,2018-08-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ferraro,  anthony",paralympic judo,cannabinoids,6-month suspension with 3-month deferral - loss of results,2018-08-08,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"mazur, bruce",cycling,androgenic anabolic steroids,4-year suspension - loss of results,2018-08-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"casey, jack",swimming,anastrozole,6-month suspension - loss of results,2018-07-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lochte, ryan",swimming,non-analytical: use (iv),14-month suspension,2018-07-23,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"meacham, michael",triathlon,androgenic anabolic steroids,1-year suspension - loss of results,2018-06-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"oleksiejczuk, michał",mixed martial arts,clomiphene,1-year suspension,2018-06-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ainslie, roger",cycling,gw1516,42-month suspension - loss of results,2018-06-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"brown, buster",cycling,androgenic anabolic steroid,2-year suspension - loss of results,2018-06-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gross, scott",cycling,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2018-05-22,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"chipangama, jordan",track & field,meldonium,4-year suspension - loss of results,2018-05-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"colunga, cesar",karate,methylphenidate,4-month suspension - loss of results,2018-05-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"kendall, amanda",swimming,non-analytical: use (vilanterol),3-month suspension - loss of results,2018-05-08,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"dahlkemper, abigail",soccer,spironolactone,public warning,2018-05-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"nogueira, antonio rogerio",mixed martial arts,hydrochlorothiazide,6-month suspension,2018-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"almeida, junior dos santos",mixed martial arts,hydrochlorothiazide,6-month suspension,2018-04-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rivera, jessica",weightlifting,stanozolol,4-year suspension -  loss of results,2018-04-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"miller, barry",cycling,androgenic anabolic steroid,1-year suspension -  loss of results,2018-04-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lima, dylan",cycling,testosterone,3-year suspension - loss of results,2018-04-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"diaz, nick",mixed martial arts,non-analytical: 3 whereabouts failures,1-year supension,2018-04-09,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"britt, teresa",weightlifting,higenamine,2-year suspension - loss of results,2018-04-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rothwell, ben",mixed martial arts,testosterone,2-year suspension,2018-04-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gough, nicholas",triathlon,erythropoietin (epo),4-year suspension - loss of results,2018-04-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rosiek, julie",triathlon,androgenic anabolic steroid,2-year suspension - loss of results,2018-03-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"raymond, abby",weightlifting,ostarine,3-month suspension - loss of results,2018-03-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lemos, amanda",mixed martial arts,stanozolol,2-year suspension,2018-03-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"barnett, josh",mixed martial arts,ostarine,public warning,2018-03-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jarrett, kaitlyn",weightlifting,higenamine,1-year suspension - loss of results,2018-03-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cutelaba, ion",mixed martial arts,non-analytical: blood transfusion,6-month suspension,2018-03-08,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"calvillo, cynthia",mixed martial arts,cannabinoids,6-month suspension,2018-03-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"anyanwu, azunna",mixed martial arts,furosemide,1-year suspension,2018-03-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"tukhugov, zubaira",mixed martial arts,ostarine,2-year suspension,2018-02-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"magomedov, ruslan",mixed martial arts,ostarine,2-year suspension,2018-02-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"wallhead, jim",mixed martial arts,ostarine,9-month suspension,2018-02-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"de tomas, carls john",mixed martial arts,furosemide,1-year suspension,2018-02-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mulheron, james",mixed martial arts,clomiphene,1-year suspension,2018-01-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"less, david",cycling,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2018-01-29,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"webb, craig",cycling,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2018-01-26,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"schumm, jennifer",cycling,testosterone,4-year suspension - loss of results,2018-01-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jackson, sharon",racquetball,spironolactone,public warning,2018-01-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"harrison, marck",boccia,chlorthalidone,public warning,2018-01-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"travis, alyssa",weightlifting,non-analytical: refusal to submit to sample: collection,4-year suspension - loss of results,2018-01-23,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"grayson, lemuel",weightlifting,hydrochlorothiazide,public warning,2018-01-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"beyer, bill",triathlon,testosterone,2-year suspension - loss of results,2018-01-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rivera, francisco",mixed martial arts,clenbuterol,4-year suspension,2018-01-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"oliver, jordan",wrestling,amphetamine,1-year suspension - loss of results,2018-01-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"penne, jessica",mixed martial arts,dehydroepiandrosterone (dhea),18-month suspension,2018-01-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"vennera, james",archery,metoprolol,public warning,2018-01-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"patel, vikas",track & field,non-analytical: ostarine,4-year suspension - loss of results; sanction tolled due to retirement,2017-12-27,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"zoda, michael",weightlifting,non-analytical: possession (peptides),2-year suspension - loss of results,2017-12-20,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"polk, tori",track & field,non-analytical: possession (peptides),2-year suspension - loss of results,2017-12-15,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"henderson, jay",cycling,cannabinoids,6-month suspension with 3-month deferral - loss of results,2017-12-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"boss, logan",track & field,canrenone,public warning,2017-12-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"roberts, lisa",triathlon,vilanterol,public warning - loss of results,2017-11-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"felipe cabral de almeida, carlos",mixed martial arts,stanozolol metabolites,2-year suspension,2017-10-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"taylor, jesse",mixed martial arts,clomiphene,1-year suspension,2017-10-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"vance, shaquille",paralympic track & field,non-analytical: evading sample collection,4 year suspension with 1 year reduction - loss of results,2017-10-10,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"heinzl, sarah",paralympic basketball,non-analytical: use (higenamine),public warning,2017-08-29,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"herbert, zack",weightlifting,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results; sanction tolled due to retirement; unretired - eligible to compete starting 3/7/2020,2017-08-22,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"goodwin, marquise",track & field,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2017-08-15,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"carter, chris",track & field,ostarine,9-month suspension - loss of results,2017-08-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"blazejack, tony",cycling,clenbuterol,4-year suspension - loss of results,2017-08-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"stohr, riley",luge,cannabinoids,6-month suspension - loss of results; sanction tolled due to retirement,2017-07-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cruse, j.c.",bobsled and skeleton,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-07-20,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"mcpherson, scott",track & field,androgenic anabolic steroid,4-year suspension - loss of results; sanction tolled due to retirement,2017-07-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"nguyen, tam",weightlifting,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2017-07-14,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"johnson, gea",cycling,modafinil,21-month suspension - loss of results,2017-07-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"barnes, benjamin",weightlifting,gw1516,4-year suspension - loss of results,2017-06-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gibilaro, ariel",archery,canrenone,public warning,2017-06-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dykes, kelly",weightlifting,ostarine,8-year suspension - loss of results; second violation,2017-06-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"park, peter",paralympic track & field,androgenic anabolic steroid,21-month suspension - loss of results,2017-06-08,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"nackoul, michael",weightlifting,non-analytical: possession (peptides),4-year suspension - loss of results,2017-06-02,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"moore, tyler",weightlifting,ostarine,4-year suspension - loss of results; sanction tolled due to retirement,2017-05-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"creveling, chris",speedskating,clomiphene,4-year suspension - loss of results; sanction tolled due to retirement,2017-05-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gastelum, kelvin",mixed martial arts,cannabinoids,6-month suspension with 3-month deferral,2017-05-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"oliver, imani",track & field,ostarine,1-year suspension - loss of results,2017-05-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"moore, darien",track & field,methandienone,4-year suspension - loss of results,2017-05-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"harvey, scot",cycling,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2017-05-03,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"beckwith-ludlow, molly",track & field,clomiphene,public warning,2017-05-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mir, francisco",mixed martial arts,dehydrochloromethyltestosterone (dhcmt),2-year suspension,2017-04-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rollins, brianna",track & field,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2017-04-20,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"geving, amanda",cycling,acetazolamide,12-month suspension - loss of results,2017-04-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"schrodt, patrick ""dillon""",bobsled and skeleton,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-04-06,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"nicolau pereira, matheus",mixed martial arts,anastrozole,1-year suspension,2017-03-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pires nogueira, leonardo",brazilian jiu-jitsu,clomiphene,2-year suspension - loss of results,2017-03-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"green, roderick","paralympic track & field, paralympic volleyball",ostarine,9-month suspension - loss of results,2017-03-14,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"cosby-toruga, jessica",track & field,androgenic anabolic steroid,6-year suspension - loss of results; second violation; sanction tolled due to retirement,2017-03-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dawson, gabriel",weightlifting,amphetamine,4-year suspension - loss of results,2017-03-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lawlor, tom",mixed martial arts,ostarine,2-year suspension,2017-02-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"harper-nelson, dawn",track & field,hydrochlorothiazide,3-month suspension - loss of results,2017-02-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"olivieri, luis felipe",mixed martial arts,methyltestosterone,2-year suspension,2017-01-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"vrabel, andrew",weightlifting,non-analytical,4-year suspension - loss of results; sanction tolled due to retirement,2017-01-11,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"chan, charis",weightlifting,epitrenbolone,4-year suspension - loss of results,2017-01-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"matsushima, angelique",weightlifting,cannabinoids,6-month suspension with 3-month deferral - loss of results,2017-01-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lesnar, brock",mixed martial arts,clomiphene,1-year suspension,2017-01-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lamour, joseph",team handball,amphetamine,2-year suspension - loss of results,2016-12-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hudson, ryan",weightlifting,stanozolol metabolites,4-year suspension - loss of results,2016-12-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"reyes, brandon",weightlifting,"1,3-dimethylbutylamine (dmba)",6-month suspension - loss of results,2016-12-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"moore, nicole",weightlifting,"1,3-dimethylbutylamine (dmba)",6-month suspension - loss of results,2016-12-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pinney, ryan",paralympic cycling,androgenic anabolic steroid,18-month suspension - loss of results,2016-12-01,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"machida, lyoto",mixed martial arts,7?keto?dhea,18-month suspension,2016-11-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"sullivan, george",mixed martial arts,non-analytical: use (igf-1),1-year suspension,2016-11-08,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"bidlow, cody",track & field,non-analytical:: use (peptides),4-year suspension - loss of results,2016-11-03,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"root, tim",cycling,non-analytical: failure to appear to sample collection,4-year suspension - loss of results,2016-11-02,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"edilov, abdul-kerim",mixed martial arts,meldonium,15 month suspension - loss of results,2016-10-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"danielson, tom",cycling,androgenic anabolic steroid,4-year suspension - loss of results; second violation,2016-10-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"diaz, nate",mixed martial arts,cannabinoids,public warning,2016-10-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"d'aurelio, shawn",cycling,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2016-10-03,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"kimmons, trell",track & field,"1,3-dimethylbutylamine",2-year suspension - loss of results,2016-09-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"schwab, jeff",cycling,androgenic anabolic steroid,2-year suspension - loss of results,2016-09-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rivera, rizelyx",weightlifting,oxycodone,1-year suspension - loss of results,2016-09-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fagua raquira, ana milena",cycling,androgenic anabolic steroid,4-year suspension - loss of results,2016-09-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"denney phillips, jessica","cycling, weightlifting",non-analytical: use (iv),14 month suspension - loss of results,2016-08-24,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"baatz, robert",cycling,androgenic anabolic steroid,2-year suspension - loss of results,2016-08-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"burka gameda, gebo",track & field,prednisone,18-month suspension - loss of results,2016-08-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"verrando-higgins, mary",cycling,metabolites of methyltestosterone,1-year suspension - loss of results,2016-08-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"riggs, crystal",weightlifting,furosemide,6-month suspension - loss of results,2016-08-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cawley, thomas",track & field,non-analytical: use,4-year suspension - loss of results; sanction tolled due to retirement,2016-08-11,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"anderson, robert",paralympic judo,non-analytical: use (vilanterol),3-month suspension - loss of results,2016-08-04,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"palmer, liz",track & field,methandienone metabolite,4-year suspension with 6 month reduction - loss of results,2016-08-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bough, gino",karate,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2016-07-25,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"mendes, chad",mixed martial arts,growth hormone-releasing hexapeptide,2-year suspension - loss of results,2016-07-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"pizza, gregory",track & field,androgenic anabolic steroid,20-month suspension - loss of results,2016-07-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dutta, susan",equestrian,methylprednisolone,public warning - loss of results,2016-07-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"howe, james",taekwondo,cannabinoids,6-month suspension with 3-month deferral - loss of results,2016-07-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"penn, bj",mixed martial arts,non-analytical: use (iv),6-month suspension,2016-06-27,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"tierney, sam",swimming,non-analytical: use (vilanterol),public warning,2016-06-24,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"berry, gwen",track & field,non-analytical: use (vilanterol),3-month suspension - loss of results,2016-06-13,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"means, tim",mixed martial arts,ostarine,6-month suspension - loss of results,2016-06-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"brandao, diego",mixed martial arts,cannabinoids,9-month suspension - loss of results,2016-05-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"faria, breno correina abrantes",brazilian jiu-jitsu - athlete support personnel,non-analytical,4-year suspension - loss of results,2016-05-18,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"lugo, yamile",cycling,androgenic anabolic steroid,4-year suspension with 2-year reduction - loss of results,2016-04-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"romero, yoel",mixed martial arts,ibutamoren,6-month suspension,2016-04-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"de castroverde, landon",weightlifting,non-analytical: refusal to submit to sample collection,4-year suspension - loss of results,2016-04-01,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"paulson, ashley",triathlon,ostarine,6-month suspension - loss of results,2016-03-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cho, chris hyun",weightlifting,dimethylbutylamine,6-month suspension - loss of results,2016-03-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"tibau, gleison",mixed martial arts,erythropoietin (epo),2-year suspension - loss of results,2016-02-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"leeper, blake (patrick)",paralympic track & field,benzoylecgonine,1-year suspension - loss of results,2016-02-01,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"kyle, cicely",weightlifting,androgenic anabolic steroid,2-year suspension - loss of results,2015-12-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"roberto, joseph",weightlifting,ghrp-2,4-year suspension - loss of results,2015-12-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mariita, lilian",track & field,androgenic anabolic steroid,8-year suspension - loss of results,2015-12-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rolo, nelson",cycling,benzoylecgonine,1-year suspension - loss of results,2015-12-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"filipovic, mirko",mixed martial arts,human growth hormone (hgh),2-year suspension - loss of results,2015-11-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"coushay, brian",track & field,amphetamine,2-year suspension - loss of results,2015-10-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mulwitz, lauren",cycling,cannabinoids,6-month suspension with 3-month deferral - loss of results,2015-09-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"field, emily",ice hockey,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2015-06-08,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"pena, felipe",brazilian jiu-jitsu,androgenic anabolic steroid,2-year suspension with 1 year reduction - loss of results,2015-05-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ketema asfaw, atalelech",track & field,ephedrine,2-year suspension - loss of results,2015-03-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"north, jonathan",weightlifting,non-analytical: 3 whereabouts failures,2-year suspension - loss of results; sanction tolled due to retirement; unretired - eligible to compete starting 2/1/2019,2015-01-22,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"poole, quintaveon",track & field,methylhexaneamine,6-month suspension - loss of results,2015-01-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"anderson, kristi",track & field,androgenic anabolic steroid,1-year suspension - loss of results,2014-12-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mcpherson, inika",track & field,benzoylecgonine,21-month suspension - loss of results,2014-12-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"estima, braulio",brazilian jiu-jitsu,methylhexaneamine,2-year suspension - loss of results,2014-11-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"perkins, ravaughn",wrestling,furosemide,6-month suspension - loss of results,2014-10-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"erickson, sarah",ice hockey,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-10-13,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"dana, ryan",weightlifting,androgenic anabolic steroid,21-month suspension - loss of results,2014-10-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"spearmon, jr., wallace",track & field,methylprednisolone,3-month suspension - loss of results,2014-09-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"martin, james",cycling,non-analytical: failure to appear to sample collection,2-year suspension - loss of results,2014-08-19,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"loader, logan",cycling,methylhexaneamine,8-month suspension - loss of results; sanction tolled due to retirement,2014-07-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ives, kevin",bobsled and skeleton,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-07-08,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"hicks, jeremy",track & field,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-06-20,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"dixon, reginald",track & field,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-06-06,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"blanc, obenson",wrestling,ostarine,2-year suspension - loss of results,2014-05-15,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"robertson, todd",cycling,modafinil,8-year suspension - loss of results; second violation,2014-05-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gay, tyson",track & field,androgenic anabolic steroid,2-year suspension with 1 year reduction - loss of results,2014-05-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"koon, paul",boxing,non-analytical: 3 whereabouts failures,2-year suspension - loss of results,2014-04-28,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"davis, walter",track & field,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-04-21,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"lemos garcia, gabrielle",brazilian jiu-jitsu,clomiphene,loss of results,2014-03-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"o'keefe, shannon",bowling,clomiphene,public warning,2014-03-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"beyene, hirut",track & field,methylhexaneamine,4 month suspension - loss of results,2014-02-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"marte, cesar",cycling,modafinil,2-year suspension - loss of results,2014-02-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"baker, daniel",cycling,androgenic anabolic steroid,2-year suspension - loss of results,2014-01-24,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"robles, sarah",weightlifting,androgenic anabolic steroid,2-year suspension - loss of results,2014-01-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"klineman, alexandra",volleyball,androgenic anabolic steroid,13-month suspension - loss of results,2013-12-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"akor, mary",track & field,clenbuterol,2-year suspension - loss of results,2013-12-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rogers, jason",cycling,methylhexaneamine,9-month suspension - loss of results,2013-11-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"morelli, shawn",paralympic cycling,methylhexaneamine,180 day suspension - loss of results,2013-11-15,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"camarena-williams, jillian",track & field,clomiphene,6-month suspension - loss of results,2013-10-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"walden, spencer",track & field,cannabinoids,6-month suspension with 3-month deferral - loss of results,2013-09-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bradley, dominique",wrestling,methylhexaneamine,8-month suspension - loss of results,2013-09-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"aira, yoelkis",cycling,phentermine,2-year suspension - loss of results,2013-09-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ramos, don",weightlifting,androgenic anabolic steroid,2-year suspension - loss of results,2013-08-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"flood, gregory",rowing,glycerol,public warning - loss of results,2013-08-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"petrucci, frank",rowing,glycerol,public warning - loss of results,2013-08-20,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dyer, kristopher",weightlifting,methylhexaneamine,9-month suspension - loss of results,2013-08-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"wilhelm, brian",weightlifting,methylhexaneamine,9-month suspension - loss of results,2013-08-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"teeple, sloan","cycling, triathlon",androgenic anabolic steroid,18-month suspension - loss of results,2013-06-28,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"ostrowski, cameron",track & field,methylhexaneamine,2-year suspension with 1 year reduction - loss of results,2013-06-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"downing, trey",track & field,non-analytical: refusal to submit to sample collection,18-month suspension - loss of results,2013-05-31,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"flanagan, tyler",skiing and snowboarding,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results; sanction tolled,2013-05-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"pol rodriguez, yosmani",cycling,dexamethasone,2-year suspension - loss of results,2013-04-19,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"crawford, shawn",track & field,non-analytical: 3 whereabouts failures,2-year suspension - loss of results,2013-04-18,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"morales, erik",professional boxing,clenbuterol,2-year suspension - loss of results,2013-03-22,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"aldredge, graham",cycling,non-analytical: failure to appear to sample collection,16-month suspension - loss of results,2013-02-22,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jay-rayon, cyril",cycling,modafinil,18-month suspension - loss of results,2012-12-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"vessey, maggie",track & field,canrenone,public warning - loss of results,2012-12-21,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hesch, christian",track & field,non-analytical: use (epo),2-year suspension with 6 month reduction - loss of results,2012-12-14,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"cruz, julio",cycling,methylhexaneamine,6-month suspension - loss of results,2012-09-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dunn anderson, debbie",track & field,androgenic anabolic steroid,2-year suspension - loss of results,2012-09-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"guarini, gabriele",cycling,erythropoietin (epo),2-year suspension - loss of results,2012-09-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lopez, cesar",cycling,cannabinoids,3-month suspension with 3-month deferral - loss of results,2012-08-31,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bascio, monica","paralympic nordic skiing, paralympic cycling",tuaminoheptane,3-month suspension - loss of results,2012-08-15,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"anthony, david",cycling,erythropoietin (epo),2-year suspension - loss of results,2012-07-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fletcher, mark",judo,cannabinoids,3-month suspension - loss of results,2012-07-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ferrari, michele",cycling - athlete support personnel,non-analytical,lifetime suspension,2012-07-10,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"solo, hope",soccer,canrenone,public warning,2012-07-09,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lee, stephany",wrestling,cannabinoids,1-year suspension - loss of results; second violation,2012-06-28,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"madsen, angela","paralympic track & field, paralympic rowing",fentanyl,public warning - loss of results,2012-06-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"stacy, shelby",cycling,methylhexaneamine,6-month suspension - loss of results,2012-06-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lock, jane",judo,non-analytical: 3 whereabouts failures,2-year suspension - loss of results,2012-04-20,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"mendes, patrick",weightlifting,human growth hormone (hgh),2-year suspension - loss of results,2012-04-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"kochem, matt",rowing,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2012-04-13,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"robertson, todd",cycling,erythropoietin (epo),2-year suspension with 9 month reduction - loss of results,2012-03-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rodgers, michael",track & field,methylhexaneamine,9-month suspension - loss of results,2012-03-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"thompson, lenroy",boxing,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2012-02-26,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"arias, luis",boxing,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2012-02-24,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"brandt-sorenson, nick",cycling,efaproxiral,2-year suspension - loss of results,2012-01-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"bates, jessie",taekwondo,methylhexaneamine,1-year suspension with 2-month reduction - loss of results,2011-12-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"allen, damon",boxing,furosemide,6-month suspension - loss of results,2011-11-29,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"spuehler, pamela",field hockey,canrenone,2-month suspension - loss of results,2011-11-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"diamond, michael",cycling,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2011-11-18,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"tadd, nathaniel",taekwondo,methylhexaneamine,2-year suspension - loss of results; sanction was tolled due to whereabouts compliance failure,2011-11-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"kieser, frederic",track & field,methylhexaneamine,8-month suspension - loss of results,2011-10-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"miller, michael",cycling,methylhexaneamine,8 month suspension - loss of results,2011-10-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"duhon, byron",track & field,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2011-10-25,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"papp, joseph",cycling,non-analytical: distributing,lifetime suspension with reduction to 8-year suspension - loss of results; second violation,2011-10-21,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jager, kathleen",track & field,androgenic anabolic steroid,2-year suspension - loss of results,2011-10-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hunter, michael",boxing,cannabinoids,3-month suspension with 3-month deferral - loss of results,2011-10-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lorenz, john",wrestling,clomiphene,2-year suspension - loss of results,2011-10-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dibuono, matthew",track & field,androgenic anabolic steroid,4-year suspension - loss of results,2011-10-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hernandez, roger",cycling,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2011-10-06,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"shumaker, stephen",track & field,androgenic anabolic steroid,2-year suspension - loss of results,2011-09-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"clinger, david",cycling,clenbuterol,lifetime suspension - loss of results; second violation,2011-08-12,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"dodson, amy","paralympic track & field, paralympic triathlon",oxilofrine,6-month suspension - loss of results,2011-07-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"brown, matthew",paralympic track & field,cannabinoids,3-month suspension with 3-month deferral - loss of results,2011-07-18,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"reis, fernando",weightlifting,methylhexaneamine,6-month suspension - loss of results,2011-07-14,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jones, harrison",diving,cannabinoids,1-year suspension - loss of results,2011-06-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"zajicek, philip",cycling,non-analytical: purchase (epo),lifetime suspension - loss of results; second violation,2011-06-10,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"nguyen, jonathan",taekwondo,methylhexaneamine,6-month suspension - loss of results,2011-05-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"freeman, thomas",track & field,cannabinoids,1-year suspension - loss of results; second violation,2011-05-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cannell, peter",cycling,drostanolone,2-year suspension - loss of results,2011-04-08,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"merritt, lashawn",track & field,androgenic anabolic steroid,21-month suspension - loss of results,2010-10-18,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"o'bee, kirk",cycling,erythropoietin (epo),lifetime - loss of results; second violation,2010-10-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"mahoney, sean",swimming,methylhexaneamine,6-month suspension - loss of results,2010-10-01,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"goff, tyler",speedskating,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2010-09-13,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"lukezic, chris",track & field,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-09-02,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jelks, mark",track & field,non-analytical: 3 whereabouts failures,2-year suspension - loss of results,2010-08-30,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"barnette, brandon",roller sports,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2010-08-25,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"wilmoth, joel",paralympic rugby,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-08-09,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"devine, matthew",weightlifting,androgenic anabolic steroid,2-year suspension - loss of results,2010-07-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cochran, jerren",boxing,furosemide,2-year suspension - loss of results,2010-06-11,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gomez, jesus",boxing,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-06-10,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"jones, randy",bobsled and skeleton,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-04-26,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"jones, harrison",diving,cannabinoids,3-month suspension with 3-month deferral - loss of results,2010-04-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"zirbel, tom",cycling,androgenic anabolic steroid,2-year sanction with 30% reduction - loss of results,2010-04-02,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"barnwell, val",track & field,testosterone prohormones,2-year suspension - loss of results,2010-03-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ross, duane",track & field,non-analytical positive,2-year suspension - loss of results,2010-02-05,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"cox, crystal",track & field,non-analytical: use,4-year suspension - loss of results; second violation,2010-01-29,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"ellenwood, garfield",track & field,non-analytical,2-year suspension - loss of results,2010-01-28,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"o'neil, joshua",judo,methylphenidate metabolite ritalinic acid,2-year suspension - loss of results,2009-12-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"williams, kenneth",cycling,androgenic anabolic steroid,2-year suspension - loss of results  suspension extended 103 days,2009-12-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"manning, joy",team handball,cannabinoids,2-year suspension - loss of results,2009-09-07,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hamilton, tyler",cycling,androgenic anabolic steroid,8-year suspension - loss of results; second violation,2009-06-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"lee, stephany",wrestling,cannabinoids,3-month suspension with 3-month deferral - loss of results,2009-05-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"freeman, thomas",track & field,cannabinoids,3-month suspension with 3-month deferral - loss of results,2009-04-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"burns, samuel",rowing,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2009-04-10,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"vaden, jordan",track & field,stanozolol metabolites,2-year suspension - loss of results,2009-02-06,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"sagmeister, leann",paralympic track & field,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2009-01-29,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"pope, mitchell",track & field,boldenone metabolite,2-year suspension - loss of results,2009-01-23,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"leogrande, kayle",cycling,non-analytical: use (epo),2-year suspension - loss of results,2008-12-01,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"graham, trevor",track & field - athlete support personnel,non-analytical,lifetime suspension,2008-07-15,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"alfred, stephen",cycling,non-analytical: refusal to submit to sample collection,lifetime suspension; third violation,2008-02-05,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"bell, kenwood (kenta)",track & field,methylprednisolone,3-month suspension with 3-month deferral - loss of results,2007-07-30,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"papp, joseph",cycling,non-analytical positive,2-year suspension - loss of results,2007-05-25,FALSE,FALSE,FALSE,non-analytical,FALSE,NA
+"korchemny, remi",track & field - athlete support personnel,non-analytical,lifetime suspension,2007-03-12,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"hamilton, tyler","cycling, triathlon",blood transfusion,2-year suspension - loss of results,2006-02-11,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"zajicek, philip",cycling,cathine (norpseudoephedrine),public warning - loss of results,2004-10-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"cox, crystal",track & field,ephedrine,public warning - loss of results,2002-10-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"o'bee, kirk",cycling,elevated t/e,1-year suspension - loss of results,2002-07-18,FALSE,FALSE,FALSE,analytical,FALSE,S1 ANABOLIC AGENTS
+"dees, tony",track & field,19-norandrosterone (19-na)and 19-noretiocholanolone,lifetime suspension - loss of results; second violation,2001-09-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ngetich, eliud",track & field,nandrolone,1-year suspension; loss of results,2022-01-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"gehm, zach",track & field,"1,4‐dimethylpentylamine (1,4‐dmpa)",2-year suspension; loss of results; additional 3 months of suspension,2021-05-17,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"hudson, ryan",weightlifting,dehydrochloromethyltestosterone (dhcmt),8-year suspension; loss of results,2020-11-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"paparella, flavia",cycling,vilanterol,6-month suspension; loss of results - sanction reduced,2021-01-05,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"murdock, vince",mixed martial arts,gw1516,20-month suspension - sanction reduced,2020-08-26,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"rante, danielle",weightlifting,19-norandrosterone (19-na),4-year suspension; loss of results - sanction reduced,2022-11-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"werdum, fabricio",mixed martial arts,trenbolone,2-year suspension - sanction reduced,2020-01-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"jones, stirley",paralympic track & field,stanozolol,4-year suspension; loss of results,2019-12-16,FALSE,FALSE,TRUE,analytical,FALSE,NA
+"hay, amy",weightlifting,ostarine,2-year suspension; loss of results; sanction reduced; unretired - eligible to compete starting 07/25/2020,2019-12-16,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"orbon, joane",karate,lgd-4033,9-month suspension; loss of results,2019-09-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"ribas, amanda",mixed martial arts,ostarine,2-year suspension - sanction reduced,2019-05-03,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"miyao, paulo",brazilian jiu-jitsu,clomiphene,2-year suspension - loss of results; additional 3 months of suspension - loss of results,2018-11-27,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"garcia del moral, luis",cycling - athlete support personnel,non-analytical,5-year suspension,2018-10-26,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"celaya lazama, pedro",cycling - athlete support personnel,non-analytical,lifetime suspension,2018-10-24,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"marti, jose",cycling - athlete support personnel,non-analytical,15-year suspension,2018-10-24,TRUE,FALSE,FALSE,non-analytical,FALSE,NA
+"bailey, ryan","bobsled and skeleton, track & field","1,3-dimethylbutylamine (dmba)",2-year suspension with 161 day credit - loss of results,2017-12-01,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"thomas, tammy",cycling,norbolethone,lifetime ban - loss of results - sanction reduced,2017-02-13,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"tovar, oscar",cycling,androgenic anabolic steroid,2-year suspension - loss of results - additional results disqualified,2016-10-04,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"fischbach, dylan",paralympic basketball,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results - additional results disqualified,2016-04-11,FALSE,FALSE,TRUE,non-analytical,FALSE,NA
+"lea, robert",cycling,noroxycodone,6-month suspension - loss of results,2016-02-25,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"oliveira, flavia",cycling,oxilofrine,18-month suspension - loss of results,2010-12-10,FALSE,FALSE,FALSE,analytical,FALSE,NA
+"allison, kyler",bobsled,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results; sanction tolled due to retirement,2019-10-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"allison, kyler",skeleton,non-analytical: refusal to submit to sample collection,4-year suspension; loss of results; sanction tolled due to retirement,2019-10-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"cruse, j.c.",bobsled,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-07-20,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"cruse, j.c.",skeleton,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-07-20,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"schrodt, patrick ""dillon""",bobsled,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-04-06,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"schrodt, patrick ""dillon""",skeleton,dimethylbutylamine (dmba),16-month suspension - loss of results,2017-04-06,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"green, roderick",paralympic track & field,ostarine,9-month suspension - loss of results,2017-03-14,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"green, roderick",paralympic volleyball,ostarine,9-month suspension - loss of results,2017-03-14,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"denney phillips, jessica",cycling,non-analytical: use (iv),14 month suspension - loss of results,2016-08-24,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"denney phillips, jessica",weightlifting,non-analytical: use (iv),14 month suspension - loss of results,2016-08-24,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"ives, kevin",bobsled,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-07-08,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"ives, kevin",skeleton,non-analytical: 3 whereabouts failures,1-year suspension - loss of results,2014-07-08,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"teeple, sloan",cycling,androgenic anabolic steroid,18-month suspension - loss of results,2013-06-28,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"teeple, sloan",triathlon,androgenic anabolic steroid,18-month suspension - loss of results,2013-06-28,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"flanagan, tyler",skiing,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results; sanction tolled,2013-05-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"flanagan, tyler",snowboarding,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results; sanction tolled,2013-05-09,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"bascio, monica",paralympic nordic skiing,tuaminoheptane,3-month suspension - loss of results,2012-08-15,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"bascio, monica",paralympic cycling,tuaminoheptane,3-month suspension - loss of results,2012-08-15,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"madsen, angela",paralympic track & field,fentanyl,public warning - loss of results,2012-06-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"madsen, angela",paralympic rowing,fentanyl,public warning - loss of results,2012-06-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"dodson, amy",paralympic track & field,oxilofrine,6-month suspension - loss of results,2011-07-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"dodson, amy",paralympic triathlon,oxilofrine,6-month suspension - loss of results,2011-07-22,FALSE,TRUE,TRUE,analytical,FALSE,NA
+"jones, randy",bobsled,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-04-26,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"jones, randy",skeleton,non-analytical: refusal to submit to sample collection,2-year suspension - loss of results,2010-04-26,FALSE,TRUE,FALSE,non-analytical,FALSE,NA
+"hamilton, tyler",cycling,blood transfusion,2-year suspension - loss of results,2006-02-11,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"hamilton, tyler",triathlon,blood transfusion,2-year suspension - loss of results,2006-02-11,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"bailey, ryan",bobsled,"1,3-dimethylbutylamine (dmba)",2-year suspension with 161 day credit - loss of results,2017-12-01,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"bailey, ryan",skeleton,"1,3-dimethylbutylamine (dmba)",2-year suspension with 161 day credit - loss of results,2017-12-01,FALSE,TRUE,FALSE,analytical,FALSE,NA
+"bailey, ryan",track & field,"1,3-dimethylbutylamine (dmba)",2-year suspension with 161 day credit - loss of results,2017-12-01,FALSE,TRUE,FALSE,analytical,FALSE,NA

@@ -1,4 +1,4 @@
-#' Return the most recent modification time for folder and files
+#' Return the most recent modification date
 #'
 #' @param pth path to file or folder
 #' @param full return datetime (instead of date)
@@ -13,18 +13,16 @@
 #' @importFrom dplyr slice
 #' @importFrom purrr set_names
 #' @importFrom dplyr slice
+#' @import glue
 #'
 #' @return vrsn character vector of date or datetime
-#' @export get_recent_version
+#' @export get_recent
 #'
 #' @examples
-#' get_recent_version("wrong")
-#' get_recent_version("inst/extdata/")
-#' get_recent_version("inst/extdata/raw", full = TRUE)
-get_recent_version <- function(pth = ".", full = FALSE) {
-  require(fs)
-  require(stringr)
-  require(purrr)
+#' get_recent("wrong")
+#' get_recent("inst/extdata/")
+#' get_recent("inst/extdata/raw", full = TRUE)
+get_recent <- function(pth = ".", full = FALSE) {
   if (fs::dir_exists(pth) == FALSE) {
     cli::cli_abort("Sorry--this is not a valid file path")
   } else {
@@ -40,13 +38,13 @@ get_recent_version <- function(pth = ".", full = FALSE) {
   }
 
    if (full == TRUE) {
-     cli::cli_alert_success("Here is the recent datetime:")
      vrsn <- purrr::set_names(now_stmp,
-                    nm = 'now_stmp')
+                    nm = 'dtstmp')
+     cli::cli_alert_success("The last modified datetime in '{pth}': {vrsn}")
    } else {
-     cli::cli_alert_success("Here is the recent date:")
      vrsn <- purrr::set_names(tdy_stmp,
-                    nm = 'tdy_stmp')
+                    nm = 'dstmp')
+     cli::cli_alert_success("The last modified date in '{pth}': {vrsn}")
    }
   return(vrsn)
 }

@@ -1,8 +1,8 @@
 #' Insert date/time stamp
 #'
 #' @param include_time logical, include time?
-#' @param side include a hyphen (-) on the 'left' or 'right' side (default is
-#'     'none')
+#' @param side include an underscore (_) on the 'left' or 'right' side
+#'     (default is 'none')
 #'
 #' @return polished date (or date and time) stamp
 #' @export dtstamp
@@ -39,9 +39,9 @@ dtstamp <- function(include_time = FALSE, side = "none") {
     }
     # hyphen
     if (side == "l") {
-      polished <- base::paste0("-", stamp)
+      polished <- base::paste0("_", stamp)
     } else if (side == "r") {
-      polished <- base::paste0(stamp, "-")
+      polished <- base::paste0(stamp, "_")
     } else {
       polished <- stamp
     }

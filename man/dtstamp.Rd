@@ -9,8 +9,8 @@ dtstamp(include_time = FALSE, side = "none")
 \arguments{
 \item{include_time}{logical, include time?}
 
-\item{side}{include a hyphen (-) on the 'left' or 'right' side (default is
-'none')}
+\item{side}{include an underscore (_) on the 'left' or 'right' side
+(default is 'none')}
 }
 \value{
 polished date (or date and time) stamp

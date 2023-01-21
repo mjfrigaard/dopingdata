@@ -21,6 +21,7 @@ Imports:
     fs,
     ggplot2,
     ggthemes,
+    glue,
     golem (>= 0.3.5),
     haven,
     hms,

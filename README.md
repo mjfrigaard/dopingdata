@@ -38,40 +38,24 @@ The raw data is then saved in the `inst/extdata/raw` folder. Raw
 datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix.
 
     #> inst/extdata/raw
-    #> ├── 2023-01-19
-    #> │   ├── 2023-01-19-usada_prohib_assoc_raw.csv
-    #> │   ├── 2023-01-19-usada_prohib_assoc_raw.rds
-    #> │   ├── 2023-01-19-usada_sanctions_raw.csv
-    #> │   └── 2023-01-19-usada_sanctions_raw.rds
-    #> └── 2023-01-20
-    #>     ├── 2023-01-20-usada_prohib_assoc_raw.csv
-    #>     ├── 2023-01-20-usada_prohib_assoc_raw.rds
-    #>     ├── 2023-01-20-usada_sanctions_raw.csv
-    #>     └── 2023-01-20-usada_sanctions_raw.rds
+    #> ├── 2023-01-20_usada_prohib_assoc_raw.csv
+    #> └── 2023-01-20_usada_sanctions_raw.csv
 
 ## Processed Data
 
 The processed datasets are created from the scraped raw data and are
 structured for different purposes. In all cases, the vignettes contain
-the steps and custom functions used to harvest each dataset. Processed
-datasets have a date (`YYYY-MM-DD`) prefix and `_pro` suffix.
+the steps and custom functions used to harvest each dataset. All
+processed datasets have a `_pro` suffix.
 
 Processed datasets have the same dimensions and structure as the `_raw`
 data, but they’ve been formatted for easier wrangling/manipulation.
 
-Processed datasets are in the `inst/extdata/pro` folder:
+Processed datasets are in the `inst/extdata/` folder:
 
-    #> inst/extdata/pro/
-    #> ├── 2023-01-19
-    #> │   ├── 2023-01-19-usada_proh_assoc_pro.csv
-    #> │   ├── 2023-01-19-usada_proh_assoc_pro.rds
-    #> │   ├── 2023-01-19-usada_sanctions_pro.csv
-    #> │   └── 2023-01-19-usada_sanctions_pro.rds
-    #> └── 2023-01-20
-    #>     ├── 2023-01-20-usada_proh_assoc_pro.csv
-    #>     ├── 2023-01-20-usada_proh_assoc_pro.rds
-    #>     ├── 2023-01-20-usada_sanctions_pro.csv
-    #>     └── 2023-01-20-usada_sanctions_pro.rds
+    #> inst/extdata/
+    #> ├── usada_prohib_assoc_pro.csv
+    #> └── usada_sanctions_pro.csv
 
 ## Derived Data
 
@@ -85,14 +69,37 @@ The following datasets are derived from the processed data:
 6.  Prohibited Associations  
 7.  Athletes
 
-All derived datasets are in the `inst/extdata/der/` folder (and do not
-have a date prefix or any suffixes).
+All derived datasets are in the `inst/extdata/` folder (and do not have
+a date prefix or any suffixes).
 
 ### Sanction Dates
 
+Derived from `usada_sanctions_pro.csv`:
+
+- the dates are wrangled and formatted in
+  `vignettes/sanction-dates.Rmd`:
+
+      #> inst/extdata/
+      #> └── usada_dates.csv
+
 ### Sports
 
+Derived from `usada_dates.csv`:
+
+- the sports separated and ‘tidied’ in `vignettes/sanction-sports.Rmd`:
+
+      #> inst/extdata/
+      #> └── tidy_sports.csv
+
 ### Substances (AAF)
+
+Derived from `tidy_sports.csv`:
+
+- Adverse analytical findings with a single substance are in
+  `vignettes/sanction-aaf-substances.Rmd`:
+
+      #> inst/extdata/
+      #> └── classified_single_aaf_substance.csv
 
 ### Non-Analytic Sanctions (ADRV)
 

@@ -13,13 +13,13 @@
 #' @importFrom clipr write_clip
 #'
 #' @return path to recent data file
-#' @export get_recent_data_file
+#' @export get_recent_path
 #'
 #' @examples # not run
-#' get_recent_data_file(folder = "inst/extdata/", type = "txt")
-#' get_recent_data_file(folder = "inst/extdata/", type = "csv")
-#' get_recent_data_file(folder = "inst/extdata/", type = "tsv")
-get_recent_data_file <- function(folder, type) {
+#' get_recent_path(folder = "inst/extdata/", type = "txt")
+#' get_recent_path(folder = "inst/extdata/", type = "csv")
+#' get_recent_path(folder = "inst/extdata/", type = "tsv")
+get_recent_path <- function(folder, type) {
   if (!fs::dir_exists(folder)) {
     cli::cli_alert_warning("folder does not exist!")
   } else {

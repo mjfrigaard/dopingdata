@@ -52,32 +52,30 @@ This vignette covers the `sports` listed in the [USADA sanctions table](https://
 
 ## Data versioning 
 
-This package uses data from a table that gets updated regularly. To keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`), but I have a helper function for getting the recent version:
+`dopingdata` uses data from a tables that get updated regularly, so to keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`). I also a helper function for finding the date of the most recent file:
 
 ```{r tdy_stmp}
-tdy_stmp <- get_recent_version("../inst/extdata/raw")
-tdy_stmp
+get_recent("../inst/extdata/raw")
 ```
-
-Now I can use `tdy_stmp` whenever I need to use find the data version! See below:
 
 
 ## Outline 
 
 This vignette assumes the following: 
 
-1. **Scrape the website:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` and `inst/extdata/pro/` folders 
+1. **Harvest the data:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` and `inst/extdata/pro/` folders 
 
   - See the `scrape_usada_sanctions()` function and `scraping-usada-sanctions.Rmd` vignette for more information
   
     ```{r raw-usada-sanctions, echo=FALSE}
-    fs::dir_tree(paste0("../inst/extdata/raw/", tdy_stmp), regexp = "sanctions")
+    fs::dir_tree("../inst/extdata/raw/", 
+      regexp = "sanctions")
     ```
-
-   - These data have had all the column names formatted with `janitor::clean_names()`, and all the text has been converted to lowercase 
+    
+  - These data have had all the column names formatted with `janitor::clean_names()`, and all the text has been converted to lowercase  
    
     ```{r pro-usada-sanctions, echo=FALSE}
-    fs::dir_tree(paste0("../inst/extdata/pro/", tdy_stmp), regexp = "sanctions")
+    fs::dir_tree("../inst/extdata/", regexp = "sanctions_pro")
     ```
     
 2. **Fix the dates:** The dates in this table have been formatted and wrangled 
@@ -86,20 +84,20 @@ This vignette assumes the following:
   
     ```{r usada_dates, echo=FALSE}
     fs::dir_tree(
-      path = "../inst/extdata/der/", 
+      path = "../inst/extdata/", 
       regexp = "dates")
     ```
 
 ### Data 
 
-I'm going to locate the most recently wrangled data file from the `inst/extdata/pro/` folder:
+I'm going to locate the most recently wrangled data file from the `inst/extdata/` folder:
 
-``` r
-get_recent_data_file(
-  folder = paste0("../inst/extdata/der/", tdy_stmp), 
+```{r get_recent_path-sports, eval=FALSE}
+get_recent_path(
+  folder = "../inst/extdata/", 
   type = "csv")
 ✔ import code pasted to clipboard!
-✔ use: readr::read_csv('../inst/extdata/der/sanction_dates.csv')
+✔ use: readr::read_csv('../inst/extdata/usada_dates.csv')
 ```
 
 The path on the clipboard is the exported data from `vignettes/sanction-dates.Rmd` (if not, please head over to that vignette and fix the dates before moving forward).
@@ -107,7 +105,7 @@ The path on the clipboard is the exported data from `vignettes/sanction-dates.Rm
 
 ```{r sanctions}
 sanctions <- readr::read_csv(
-  file = '../inst/extdata/der/sanction_dates.csv')
+  file = '../inst/extdata/usada_dates.csv')
 dplyr::glimpse(sanctions)
 ```
 
@@ -302,30 +300,26 @@ tidy_sports |>
   dplyr::filter(n > 1)
 ```
 
-```{r}
+```{r check-tidy_sports}
 dplyr::glimpse(tidy_sports)
 ```
 
 
 Ready to export!
 
-```{r vroom_write-tidy_sports}
-new_pth <- "../inst/extdata/der/"
-fs::dir_create(new_pth)
-csv_pth <- paste0(new_pth, "tidy_sports.csv")
-csv_pth
-```
+## Export `tidy_sports`
 
-Export `tidy_sports`
-
-```{r export-sports, eval=FALSE}
-vroom::vroom_write(x = tidy_sports, file = csv_pth, delim = ",")
+```{r export-sports, eval=TRUE}
+export_extdata(
+  x = tidy_sports, 
+  inst_path = "../inst/", 
+  raw = FALSE)
 ```
 
 Verify 
 
 ```{r}
-fs::dir_tree(new_pth, regexp = "tidy_sports|dates")
+fs::dir_tree("../inst/extdata/", regexp = "tidy_sports|dates")
 ```
 
 ***CHECK:***  Can I can see the `dates` and `sports` data in the data folder?
