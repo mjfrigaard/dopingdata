@@ -13,15 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# `dopingdata`
+# dopingdata
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of `dopingdata` is to provide datasets from the [United States Anti-Doping Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency) for exploration, modeling, and visualizations. 
-
-The datasets in this package are derived from from the [USADA website](https://www.usada.org/) and the [World Anti-Doping Agency (WADA) banned substances list](https://www.wada-ama.org/en/prohibited-list?q=). 
-
+`dopingdata` contains data from the [United States Anti-Doping Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency) for exploration, modeling, and visualizations. The datasets in this package are derived from from the [USADA website](https://www.usada.org/) and the [World Anti-Doping Agency (WADA) banned substances list](https://www.wada-ama.org/en/prohibited-list?q=).
 
 ## Installation
 
@@ -32,80 +30,88 @@ You can install the development version of `dopingdata` like so:
 devtools::install_github("mjfrigaard/dopingdata")
 ```
 
-## Harvesting Data 
+## Raw Data
 
-Each dataset was ha**rvest**ed using the [`rvest`](https://rvest.tidyverse.org/) and [`xml2`](https://xml2.r-lib.org/) packages, but using manners (with the [`polite`](https://dmi3kno.github.io/polite/) package). See the `Scraping USADA sanctions` and `Scraping USADA prohibited associations` vignettes for more information. 
+Each dataset was ha**rvest**ed using the [`rvest`](https://rvest.tidyverse.org/) and [`xml2`](https://xml2.r-lib.org/) packages, but using manners (with the [`polite`](https://dmi3kno.github.io/polite/) package).
 
-The raw data is then saved in the `inst/extdata/raw` folder. Raw datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix.
+-   All raw datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix
+    -   See the `scraping-usada-sanctions.Rmd` and `scraping-usada-proh-assoc.Rmd` vignettes for more information
+
+    -   The raw data is then saved in the `inst/extdata/raw` folder
 
 ```{r raw-data, echo=FALSE}
 fs::dir_tree("inst/extdata/raw")
 ```
 
+## Processed Data
 
-## Processed Data 
+Processed datasets have the same dimensions and structure as the `_raw` data, but they've been formatted for easier wrangling/manipulation
 
-The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. All processed datasets have a `_pro` suffix. 
+-   All processed datasets have a `_pro` suffix
 
-Processed datasets have the same dimensions and structure as the `_raw` data, but they've been formatted for easier wrangling/manipulation. 
+    -   Processed data have all had the column names formatted with `janitor::clean_names()`
 
-Processed datasets are in the `inst/extdata/` folder:
+    -   All of the text has been converted to lowercase
+
+    -   See the `scraping-usada-sanctions.Rmd` and `scraping-usada-proh-assoc.Rmd` vignettes for more information
+
+    -   Processed datasets are in the `inst/extdata/` folder:
 
 ```{r pro-data, echo=FALSE}
 fs::dir_tree("inst/extdata/", regexp = "_pro")
 ```
 
-## Derived Data 
+## Derived Data
 
-The following datasets are derived from the processed data: 
+Additional datasets derived from the from the processed data and live in the `inst/extdata/` folder (and do not have a date prefix or any suffixes).
 
-1. Sanction Dates  
-2. Sports  
-3. Substances (AAF)  
-4. Non-Analytic Sanctions (ADRV)   
-5. Sanction Terms  
-6. Prohibited Associations  
-7. Athletes  
+### Sanction Dates
 
-All derived datasets are in the `inst/extdata/` folder (and do not have a date prefix or any suffixes).
+The `sanction_announced` initially includes two dates (original, updated) for a selection of athletes. These observations are wrangled and formatted into dates. Derived from the `usada_sanctions_pro.csv` data.
 
-### Sanction Dates  
+-   See the `vignettes/sanction-dates.Rmd` vignette for more information:
 
-Derived from `usada_sanctions_pro.csv`: 
-
-  - the dates are wrangled and formatted in `vignettes/sanction-dates.Rmd`: 
-   
     ```{r dates, echo = FALSE}
     fs::dir_tree("inst/extdata/", regexp = "_dates")
     ```
 
-### Sports 
+### Sports
 
-Derived from `usada_dates.csv`:
+The **`sport`** column has been 'tidied' and athletes/support personnel listed with more than one sport have been repeated in the data. These data are derived from the `usada_dates.csv` data.
 
-  - the sports separated and 'tidied' in `vignettes/sanction-sports.Rmd`: 
-   
+-   the sports separated and 'tidied' in `vignettes/sanction-sports.Rmd`:
+
     ```{r sports, echo = FALSE}
     fs::dir_tree("inst/extdata/", regexp = "sports")
     ```
 
-### Substances (AAF)
+### Adverse Analytical Findings (AAF)
 
-Derived from `tidy_sports.csv`:
+The **Single Substance Violations** (i.e., Adverse Analytical Finding, AAF) are derived from `tidy_sports.csv`:
 
-  - Adverse analytical findings with a single substance are in `vignettes/sanction-aaf-substances.Rmd`: 
-   
+-   Adverse analytical finding (AAF) sanctions with a single substance are in `vignettes/single-aaf-substances.Rmd`:
+
     ```{r aaf, echo = FALSE}
     fs::dir_tree("inst/extdata/", regexp = "aaf")
     ```
 
-### Non-Analytic Sanctions (ADRV)
+The **Multiple Substance Violations** (i.e., Adverse Analytical Finding, AAF) are derived from
+
+-   Adverse analytical finding (AAF) sanctions with multiple substance are in `vignettes/multiple-aaf-substances.Rmd`:
+
+### Non-Analytical Anti-doping Rule Violation (ADRV)
+
+The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
+
+The **Multiple Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
 
 ### Sanction terms
 
-### Prohibited Associations  
+The type and length of suspension is derived from
 
-### Athletes  
+### Prohibited Associations
+
+The prohibited associations are derived from the `usada_prohib_assoc_pro.csv` data.
 
 ## WADA data
 
@@ -115,9 +121,6 @@ This package also includes a list of the [World Anti-Doping Agency (WADA)](https
 fs::dir_tree("inst/extdata/wada/")
 ```
 
-### More WADA Resources on banned substances 
+### More WADA Resources on banned substances
 
-- [USADA - UFC](https://ufc.usada.org/wp-content/uploads/UFC-Prohibited-List.pdf)
-
-
-
+-   [USADA - UFC](https://ufc.usada.org/wp-content/uploads/UFC-Prohibited-List.pdf)

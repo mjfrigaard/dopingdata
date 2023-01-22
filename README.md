@@ -1,17 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `dopingdata`
+# dopingdata
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `dopingdata` is to provide datasets from the [United States
-Anti-Doping
+`dopingdata` contains data from the [United States Anti-Doping
 Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency)
-for exploration, modeling, and visualizations.
-
-The datasets in this package are derived from from the [USADA
+for exploration, modeling, and visualizations. The datasets in this
+package are derived from from the [USADA
 website](https://www.usada.org/) and the [World Anti-Doping Agency
 (WADA) banned substances
 list](https://www.wada-ama.org/en/prohibited-list?q=).
@@ -25,33 +23,45 @@ You can install the development version of `dopingdata` like so:
 devtools::install_github("mjfrigaard/dopingdata")
 ```
 
-## Harvesting Data
+## Raw Data
 
 Each dataset was ha**rvest**ed using the
 [`rvest`](https://rvest.tidyverse.org/) and
 [`xml2`](https://xml2.r-lib.org/) packages, but using manners (with the
-[`polite`](https://dmi3kno.github.io/polite/) package). See the
-`Scraping USADA sanctions` and `Scraping USADA prohibited associations`
-vignettes for more information.
+[`polite`](https://dmi3kno.github.io/polite/) package).
 
-The raw data is then saved in the `inst/extdata/raw` folder. Raw
-datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix.
+- All raw datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix
+  - See the `scraping-usada-sanctions.Rmd` and
+    `scraping-usada-proh-assoc.Rmd` vignettes for more information
+
+  - The raw data is then saved in the `inst/extdata/raw` folder
+
+<!-- -->
 
     #> inst/extdata/raw
     #> ├── 2023-01-20_usada_prohib_assoc_raw.csv
-    #> └── 2023-01-20_usada_sanctions_raw.csv
+    #> ├── 2023-01-20_usada_sanctions_raw.csv
+    #> ├── 2023-01-21_usada_prohib_assoc_raw.csv
+    #> └── 2023-01-21_usada_sanctions_raw.csv
 
 ## Processed Data
 
-The processed datasets are created from the scraped raw data and are
-structured for different purposes. In all cases, the vignettes contain
-the steps and custom functions used to harvest each dataset. All
-processed datasets have a `_pro` suffix.
-
 Processed datasets have the same dimensions and structure as the `_raw`
-data, but they’ve been formatted for easier wrangling/manipulation.
+data, but they’ve been formatted for easier wrangling/manipulation
 
-Processed datasets are in the `inst/extdata/` folder:
+- All processed datasets have a `_pro` suffix
+
+  - Processed data have all had the column names formatted with
+    `janitor::clean_names()`
+
+  - All of the text has been converted to lowercase
+
+  - See the `scraping-usada-sanctions.Rmd` and
+    `scraping-usada-proh-assoc.Rmd` vignettes for more information
+
+  - Processed datasets are in the `inst/extdata/` folder:
+
+<!-- -->
 
     #> inst/extdata/
     #> ├── usada_prohib_assoc_pro.csv
@@ -59,55 +69,66 @@ Processed datasets are in the `inst/extdata/` folder:
 
 ## Derived Data
 
-The following datasets are derived from the processed data:
-
-1.  Sanction Dates  
-2.  Sports  
-3.  Substances (AAF)  
-4.  Non-Analytic Sanctions (ADRV)  
-5.  Sanction Terms  
-6.  Prohibited Associations  
-7.  Athletes
-
-All derived datasets are in the `inst/extdata/` folder (and do not have
-a date prefix or any suffixes).
+Additional datasets derived from the from the processed data and live in
+the `inst/extdata/` folder (and do not have a date prefix or any
+suffixes).
 
 ### Sanction Dates
 
-Derived from `usada_sanctions_pro.csv`:
+The `sanction_announced` initially includes two dates (original,
+updated) for a selection of athletes. These observations are wrangled
+and formatted into dates. Derived from the `usada_sanctions_pro.csv`
+data.
 
-- the dates are wrangled and formatted in
-  `vignettes/sanction-dates.Rmd`:
+- See the `vignettes/sanction-dates.Rmd` vignette for more information:
 
       #> inst/extdata/
       #> └── usada_dates.csv
 
 ### Sports
 
-Derived from `usada_dates.csv`:
+The **`sport`** column has been ‘tidied’ and athletes/support personnel
+listed with more than one sport have been repeated in the data. These
+data are derived from the `usada_dates.csv` data.
 
 - the sports separated and ‘tidied’ in `vignettes/sanction-sports.Rmd`:
 
       #> inst/extdata/
       #> └── tidy_sports.csv
 
-### Substances (AAF)
+### Adverse Analytical Findings (AAF)
 
-Derived from `tidy_sports.csv`:
+The **Single Substance Violations** (i.e., Adverse Analytical Finding,
+AAF) are derived from `tidy_sports.csv`:
 
-- Adverse analytical findings with a single substance are in
-  `vignettes/sanction-aaf-substances.Rmd`:
+- Adverse analytical finding (AAF) sanctions with a single substance are
+  in `vignettes/single-aaf-substances.Rmd`:
 
       #> inst/extdata/
-      #> └── classified_single_aaf_substance.csv
+      #> └── tidy_single_aafs.csv
 
-### Non-Analytic Sanctions (ADRV)
+The **Multiple Substance Violations** (i.e., Adverse Analytical Finding,
+AAF) are derived from
+
+- Adverse analytical finding (AAF) sanctions with multiple substance are
+  in `vignettes/multiple-aaf-substances.Rmd`:
+
+### Non-Analytical Anti-doping Rule Violation (ADRV)
+
+The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical
+Anti-doping Rule Violation, ADRV) are derived from
+
+The **Multiple Substance, Non-Analytic Violations** (i.e.,
+Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
 
 ### Sanction terms
 
+The type and length of suspension is derived from
+
 ### Prohibited Associations
 
-### Athletes
+The prohibited associations are derived from the
+`usada_prohib_assoc_pro.csv` data.
 
 ## WADA data
 

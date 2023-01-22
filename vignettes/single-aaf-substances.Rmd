@@ -146,7 +146,7 @@ The `substance_reason` column contains the details of the sanction, which can in
 
 2. A description of the infraction (if non-analytic)  
 
-See the examples below:
+We will use regular expressions to identify the type of substance behind the sanction. See the examples below:
 
 ```{r steroid-view}
 stringr::str_view_all(head(tidy_usada_sports$substance_reason, 25), 
@@ -199,7 +199,7 @@ dplyr::filter(usada_sanction_types,
   nrow()
 ```
 
-## Single vs. multipl substances 
+## Single vs. multiple substances 
 
 How can I identify the single vs. multiple substances? 
 
@@ -318,141 +318,13 @@ tidy_single_aafs <- classify_wada_substances(
 
 What `substance_group`'s appear the most?
 
-```{r}
+```{r tabyl-substance_group}
 tidy_single_aafs |> 
   janitor::tabyl(substance_group) |> 
   janitor::adorn_pct_formatting() |> 
   dplyr::arrange(desc(n)) 
 ```
 
-
-### S2 PEPTIDE HORMONES, GROWTH FACTORS, RELATED SUBSTANCES, AND MIMETICS
-
-The S2 substances matches are below:
-
-```{r veiw-s2}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s2_regex, match = TRUE)
-```
-
-### S3 BETA-2 AGONISTS
-
-The S3 substance matches are below:
-
-
-```{r veiw-s3}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s3_regex, match = TRUE)
-```
-
-### S4 HORMONE AND METABOLIC MODULATORS
-
-The S4 substance matches are below:
-
-```{r veiw-s4}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s4_regex, match = TRUE)
-```
-
-### S5 DIURETICS/MASKING AGENTS
-
-The S5 substance matches are below
-
-```{r veiw-s5}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s5_regex, match = TRUE)
-```
-
-## PROHIBITED METHODS
-
-### M1 MANIPULATION OF BLOOD
-
-The M1 method matches are below:
-
-```{r veiw-m1}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = m1_regex, match = TRUE)
-```
-
-### M2 CHEMICAL AND PHYSICAL MANIPULATION
-
-The M2 method matches are below:
-
-```{r veiw-m2}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = m2_regex, match = TRUE)
-```
-
-### M3 GENE AND CELL DOPING
-
-The M3 method matches are below:
-
-```{r veiw-m3}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = m3_regex, match = TRUE)
-```
-
-## SUBSTANCES & METHODS PROHIBITED IN-COMPETITION
-
-### S6 STIMULANTS
-
-*All S6 STIMULANTS, including all optical isomers, e.g. `d-` and `l-` where relevant, are prohibited.*
-
-The S6 substance matches are below:
-
-```{r veiw-s6}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s6_regex, match = TRUE)
-```
-
-### S7 NARCOTICS
-
-The S7 substance matches are below:
-
-```{r veiw-s7}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s7_regex, match = TRUE)
-```
-
-### S8 CANNABINOIDS
-
-*The following cannabinoids are prohibited: Natural cannabinoids, e.g. cannabis, hashish and marijuana; Synthetic cannabinoids e.g. Δ9-tetrahydrocannabinol (THC) and other cannabimimetics.*
-
-The S8 substance matches are below:
-
-```{r veiw-s8}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s8_regex, match = TRUE)
-```
-
-### S9 GLUCOCORTICOIDS
-
-The S9 substance matches are below:
-
-```{r veiw-s9}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = s9_regex, match = TRUE)
-```
-
-### P1 BETA BLOCKERS (prohibited In-Competition only)
-
-*Beta-blockers are prohibited In-Competition only, in the following sports, and also prohibited Out-of-Competition where indicated.*
-
-+ archery (wa)
-+ automobile (fia)
-+ billiards (all disciplines) (wcbs)
-+ darts (wdf)
-+ golf (igf)
-+ shooting (issf, ipc)
-+ skiing/snowboarding (fis) in ski jumping, freestyle aerials/halfpipe and snowboard halfpipe/big air
-+ underwater sports (cmas) in constant-weight apnoea with or without fins, dynamic apnoea with and without fins, free immersion apnoea, jump blue apnoea, spearfishing, static apnoea, target shooting, and variable weight apnoea
-
-The S8 substance matches are below:
-
-```{r veiw-p1}
-stringr::str_view_all(string = tidy_single_aafs$substance_reason, 
-  pattern = p1_regex, match = TRUE)
-```
 
 ## Unclassified substances 
 

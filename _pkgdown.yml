@@ -1,6 +1,5 @@
 url: https://mjfrigaard.github.io/dopingdata/
 template:
-  #package: preferably
   bootstrap: 5
   bootswatch: united
   theme: github-dark
@@ -14,7 +13,6 @@ template:
       google: Fira Sans Condensed
     code_font:
       google: Ubuntu Mono
-    #code_font: {google: "Ubuntu Mono"}
 
 navbar:
  components:

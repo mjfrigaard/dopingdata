@@ -45,3 +45,51 @@ library(readxl)
 library(janitor)
 library(anytime)
 ```
+
+## Motivation 
+
+This vignette covers the non-analytic, single substance violations in the [USADA sanction table](https://www.usada.org/testing/results/sanctions/). 
+
+## Data versioning 
+
+`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've separated the raw (`_raw`) and processed (`_pro`) data in the `inst/` folder: 
+
+```{r}
+fs::dir_tree("../inst/extdata", recurse = FALSE)
+```
+
+
+I also have a helper function for getting the recent version:
+
+```{r tdy_stmp}
+get_recent("../inst/extdata/", full = TRUE)
+get_recent("../inst/extdata/raw", full = TRUE)
+```
+
+
+## Data 
+
+Below I'll import the most recent version of the tidy USADA sports data:
+
+```{r get_recent_path-tidy-sports, eval=FALSE}
+get_recent_path("../inst/extdata/", 
+  type = "csv")
+✔ import code pasted to clipboard!
+✔ use: readr::read_csv('../inst/extdata/tidy_sports.csv')
+```
+
+```{r import-tidy_usada_sports}
+tidy_usada_sports <- readr::read_csv(
+  file = '../inst/extdata/tidy_sports.csv')
+dplyr::glimpse(tidy_usada_sports)
+```
+
+These data have had their names standardized, and all the text has been converted to lowercase. 
+
+## AAFs vs ADRVs
+
+The sanctions are divided into two categories: 
+
+- `analytic`: [Adverse Analytical Finding](https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text), AAF; *An AAF is a report from a WADA-accredited laboratory that identifies the presence of a prohibited substance and/or its metabolites or markers in a sample.* 
+
+- `non-analytic`: [Non-Analytical Anti-doping Rule Violation](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/) ADRV; *a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.*. 
