@@ -74,13 +74,11 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="dopingdata">
-<code>dopingdata</code><a class="anchor" aria-label="anchor" href="#dopingdata"></a>
+<div class="page-header"><h1 id="dopingdata">dopingdata<a class="anchor" aria-label="anchor" href="#dopingdata"></a>
 </h1></div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>The goal of <code>dopingdata</code> is to provide datasets from the <a href="https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency" class="external-link">United States Anti-Doping Agency</a> for exploration, modeling, and visualizations.</p>
-<p>The datasets in this package are derived from from the <a href="https://www.usada.org/" class="external-link">USADA website</a> and the <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">World Anti-Doping Agency (WADA) banned substances list</a>.</p>
+<p><code>dopingdata</code> contains data from the <a href="https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency" class="external-link">United States Anti-Doping Agency</a> for exploration, modeling, and visualizations. The datasets in this package are derived from from the <a href="https://www.usada.org/" class="external-link">USADA website</a> and the <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">World Anti-Doping Agency (WADA) banned substances list</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -90,51 +88,53 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"mjfrigaard/dopingdata"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="harvesting-data">Harvesting Data<a class="anchor" aria-label="anchor" href="#harvesting-data"></a>
+<h2 id="raw-data">Raw Data<a class="anchor" aria-label="anchor" href="#raw-data"></a>
 </h2>
-<p>Each dataset was ha<strong>rvest</strong>ed using the <a href="https://rvest.tidyverse.org/" class="external-link"><code>rvest</code></a> and <a href="https://xml2.r-lib.org/" class="external-link"><code>xml2</code></a> packages, but using manners (with the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>polite</code></a> package). See the <code>Scraping USADA sanctions</code> and <code>Scraping USADA prohibited associations</code> vignettes for more information.</p>
-<p>The raw data is then saved in the <code>inst/extdata/raw</code> folder. Raw datasets have a date (<code>YYYY-MM-DD</code>) prefix and <code>_raw</code> suffix.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/raw</span></span>
+<p>Each dataset was ha<strong>rvest</strong>ed using the <a href="https://rvest.tidyverse.org/" class="external-link"><code>rvest</code></a> and <a href="https://xml2.r-lib.org/" class="external-link"><code>xml2</code></a> packages, but using manners (with the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>polite</code></a> package).</p>
+<ul>
+<li>All raw datasets have a date (<code>YYYY-MM-DD</code>) prefix and <code>_raw</code> suffix
+<ul>
+<li><p>See the <code>scraping-usada-sanctions.Rmd</code> and <code>scraping-usada-proh-assoc.Rmd</code> vignettes for more information</p></li>
+<li><p>The raw data is then saved in the <code>inst/extdata/raw</code> folder</p></li>
+</ul>
+</li>
+</ul>
+<!-- --><div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/raw</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-20_usada_prohib_assoc_raw.csv</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-20_usada_sanctions_raw.csv</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="processed-data">Processed Data<a class="anchor" aria-label="anchor" href="#processed-data"></a>
 </h2>
-<p>The processed datasets are created from the scraped raw data and are structured for different purposes. In all cases, the vignettes contain the steps and custom functions used to harvest each dataset. All processed datasets have a <code>_pro</code> suffix.</p>
-<p>Processed datasets have the same dimensions and structure as the <code>_raw</code> data, but they’ve been formatted for easier wrangling/manipulation.</p>
-<p>Processed datasets are in the <code>inst/extdata/</code> folder:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<p>Processed datasets have the same dimensions and structure as the <code>_raw</code> data, but they’ve been formatted for easier wrangling/manipulation</p>
+<ul>
+<li>
+<p>All processed datasets have a <code>_pro</code> suffix</p>
+<ul>
+<li><p>Processed data have all had the column names formatted with <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code></p></li>
+<li><p>All of the text has been converted to lowercase</p></li>
+<li><p>See the <code>scraping-usada-sanctions.Rmd</code> and <code>scraping-usada-proh-assoc.Rmd</code> vignettes for more information</p></li>
+<li><p>Processed datasets are in the <code>inst/extdata/</code> folder:</p></li>
+</ul>
+</li>
+</ul>
+<!-- --><div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── usada_prohib_assoc_pro.csv</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="derived-data">Derived Data<a class="anchor" aria-label="anchor" href="#derived-data"></a>
 </h2>
-<p>The following datasets are derived from the processed data:</p>
-<ol style="list-style-type: decimal">
-<li>Sanction Dates<br>
-</li>
-<li>Sports<br>
-</li>
-<li>Substances (AAF)<br>
-</li>
-<li>Non-Analytic Sanctions (ADRV)<br>
-</li>
-<li>Sanction Terms<br>
-</li>
-<li>Prohibited Associations<br>
-</li>
-<li>Athletes</li>
-</ol>
-<p>All derived datasets are in the <code>inst/extdata/</code> folder (and do not have a date prefix or any suffixes).</p>
+<p>Additional datasets derived from the from the processed data and live in the <code>inst/extdata/</code> folder (and do not have a date prefix or any suffixes).</p>
 <div class="section level3">
 <h3 id="sanction-dates">Sanction Dates<a class="anchor" aria-label="anchor" href="#sanction-dates"></a>
 </h3>
-<p>Derived from <code>usada_sanctions_pro.csv</code>:</p>
+<p>The <code>sanction_announced</code> initially includes two dates (original, updated) for a selection of athletes. These observations are wrangled and formatted into dates. Derived from the <code>usada_sanctions_pro.csv</code> data.</p>
 <ul>
 <li>
-<p>the dates are wrangled and formatted in <code>vignettes/sanction-dates.Rmd</code>:</p>
+<p>See the <code>vignettes/sanction-dates.Rmd</code> vignette for more information:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre></div>
 </li>
@@ -143,7 +143,7 @@
 <div class="section level3">
 <h3 id="sports">Sports<a class="anchor" aria-label="anchor" href="#sports"></a>
 </h3>
-<p>Derived from <code>usada_dates.csv</code>:</p>
+<p>The <strong><code>sport</code></strong> column has been ‘tidied’ and athletes/support personnel listed with more than one sport have been repeated in the data. These data are derived from the <code>usada_dates.csv</code> data.</p>
 <ul>
 <li>
 <p>the sports separated and ‘tidied’ in <code>vignettes/sanction-sports.Rmd</code>:</p>
@@ -153,32 +153,36 @@
 </ul>
 </div>
 <div class="section level3">
-<h3 id="substances-aaf">Substances (AAF)<a class="anchor" aria-label="anchor" href="#substances-aaf"></a>
+<h3 id="adverse-analytical-findings-aaf">Adverse Analytical Findings (AAF)<a class="anchor" aria-label="anchor" href="#adverse-analytical-findings-aaf"></a>
 </h3>
-<p>Derived from <code>tidy_sports.csv</code>:</p>
+<p>The <strong>Single Substance Violations</strong> (i.e., Adverse Analytical Finding, AAF) are derived from <code>tidy_sports.csv</code>:</p>
 <ul>
 <li>
-<p>Adverse analytical findings with a single substance are in <code>vignettes/sanction-aaf-substances.Rmd</code>:</p>
+<p>Adverse analytical finding (AAF) sanctions with a single substance are in <code>vignettes/single-aaf-substances.Rmd</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── classified_single_aaf_substance.csv</span></span></code></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── tidy_single_aafs.csv</span></span></code></pre></div>
 </li>
+</ul>
+<p>The <strong>Multiple Substance Violations</strong> (i.e., Adverse Analytical Finding, AAF) are derived from</p>
+<ul>
+<li>Adverse analytical finding (AAF) sanctions with multiple substance are in <code>vignettes/multiple-aaf-substances.Rmd</code>:</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="non-analytic-sanctions-adrv">Non-Analytic Sanctions (ADRV)<a class="anchor" aria-label="anchor" href="#non-analytic-sanctions-adrv"></a>
+<h3 id="non-analytical-anti-doping-rule-violation-adrv">Non-Analytical Anti-doping Rule Violation (ADRV)<a class="anchor" aria-label="anchor" href="#non-analytical-anti-doping-rule-violation-adrv"></a>
 </h3>
+<p>The <strong>Single Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from</p>
+<p>The <strong>Multiple Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from</p>
 </div>
 <div class="section level3">
 <h3 id="sanction-terms">Sanction terms<a class="anchor" aria-label="anchor" href="#sanction-terms"></a>
 </h3>
+<p>The type and length of suspension is derived from</p>
 </div>
 <div class="section level3">
 <h3 id="prohibited-associations">Prohibited Associations<a class="anchor" aria-label="anchor" href="#prohibited-associations"></a>
 </h3>
-</div>
-<div class="section level3">
-<h3 id="athletes">Athletes<a class="anchor" aria-label="anchor" href="#athletes"></a>
-</h3>
+<p>The prohibited associations are derived from the <code>usada_prohib_assoc_pro.csv</code> data.</p>
 </div>
 </div>
 <div class="section level2">

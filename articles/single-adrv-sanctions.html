@@ -99,7 +99,97 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor" class="external-link">janitor</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dirk.eddelbuettel.com/code/anytime.html" class="external-link">anytime</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<div class="section level2">
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
+</h2>
+<p>This vignette covers the non-analytic, single substance violations in
+the <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA
+sanction table</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
+</h2>
+<p><code>dopingdata</code> uses data from tables that get updated
+regularly. To keep track of the versions, I’ve separated the raw
+(<code>_raw</code>) and processed (<code>_pro</code>) data in the
+<code>inst/</code> folder:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata"</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata</span></span></span>
+<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">raw</span></span></span>
+<span><span class="co">#&gt; ├── tidy_single_aafs.csv</span></span>
+<span><span class="co">#&gt; ├── tidy_sports.csv</span></span>
+<span><span class="co">#&gt; ├── usada_dates.csv</span></span>
+<span><span class="co">#&gt; ├── usada_prohib_assoc_pro.csv</span></span>
+<span><span class="co">#&gt; ├── usada_sanction_types.csv</span></span>
+<span><span class="co">#&gt; ├── usada_sanctions_pro.csv</span></span>
+<span><span class="co">#&gt; ├── usada_substance_types.csv</span></span>
+<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">wada</span></span></span></code></pre></div>
+<p>I also have a helper function for getting the recent version:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/': 2023-01-22 14:53:16</span></span>
+<span><span class="co">#&gt;                dtstmp </span></span>
+<span><span class="co">#&gt; "2023-01-22 14:53:16"</span></span>
+<span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/raw': 2023-01-22 14:37:51</span></span>
+<span><span class="co">#&gt;                dtstmp </span></span>
+<span><span class="co">#&gt; "2023-01-22 14:37:51"</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+</h2>
+<p>Below I’ll import the most recent version of the tidy USADA sports
+data:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_path</span>(<span class="st">"../inst/extdata/"</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/tidy_sports.csv'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tidy_usada_sports</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="st">'../inst/extdata/tidy_sports.csv'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">689</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="font-weight: bold;">Column specification</span> <span style="color: #00BBBB;">────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Delimiter:</span> ","</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">chr</span>  (4): athlete, sport, substance_reason, sanction_terms</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">lgl</span>  (3): support_personnel, multiple_sports, paralympic</span></span>
+<span><span class="co">#&gt; <span style="color: #0000BB;">date</span> (1): sanction_date</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 689</span></span>
+<span><span class="co">#&gt; Columns: 8</span></span>
+<span><span class="co">#&gt; $ athlete           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "montañez barroso, elias", "ruiz-gutierrez, noslen",…</span></span>
+<span><span class="co">#&gt; $ sport             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cycling", "cycling", "track &amp; field", "cycling", "w…</span></span>
+<span><span class="co">#&gt; $ substance_reason  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "non-analytical: refusal to submit to sample collect…</span></span>
+<span><span class="co">#&gt; $ sanction_terms    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-year suspension; loss of results", "4-year suspen…</span></span>
+<span><span class="co">#&gt; $ sanction_date     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> 2023-01-10, 2023-01-04, 2022-12-08, 2022-12-05, 202…</span></span>
+<span><span class="co">#&gt; $ support_personnel <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span>
+<span><span class="co">#&gt; $ multiple_sports   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span>
+<span><span class="co">#&gt; $ paralympic        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FAL…</span></span></code></pre></div>
+<p>These data have had their names standardized, and all the text has
+been converted to lowercase.</p>
+</div>
+<div class="section level2">
+<h2 id="aafs-vs-adrvs">AAFs vs ADRVs<a class="anchor" aria-label="anchor" href="#aafs-vs-adrvs"></a>
+</h2>
+<p>The sanctions are divided into two categories:</p>
+<ul>
+<li><p><code>analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text" class="external-link">Adverse
+Analytical Finding</a>, AAF; <em>An AAF is a report from a
+WADA-accredited laboratory that identifies the presence of a prohibited
+substance and/or its metabolites or markers in a sample.</em></p></li>
+<li><p><code>non-analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/" class="external-link">Non-Analytical
+Anti-doping Rule Violation</a> ADRV; <em>a non-analytical anti-doping
+rule violation does not stem from a positive urine or blood sample, but
+instead originates from, and is substantiated by, other evidence of
+doping or violations by an athlete or athlete support
+personnel.</em>.</p></li>
+</ul>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
