@@ -4,6 +4,10 @@
 # dopingdata
 
 <!-- badges: start -->
+
+![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+
+<!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
 <!-- badges: end -->
 
 `dopingdata` contains data from the [United States Anti-Doping
@@ -39,10 +43,10 @@ Each dataset was ha**rvest**ed using the
 <!-- -->
 
     #> inst/extdata/raw
-    #> ├── 2023-01-20_usada_prohib_assoc_raw.csv
-    #> ├── 2023-01-20_usada_sanctions_raw.csv
     #> ├── 2023-01-21_usada_prohib_assoc_raw.csv
-    #> └── 2023-01-21_usada_sanctions_raw.csv
+    #> ├── 2023-01-21_usada_sanctions_raw.csv
+    #> ├── 2023-01-22_usada_prohib_assoc_raw.csv
+    #> └── 2023-01-22_usada_sanctions_raw.csv
 
 ## Processed Data
 
@@ -113,17 +117,23 @@ AAF) are derived from
 - Adverse analytical finding (AAF) sanctions with multiple substance are
   in `vignettes/multiple-aaf-substances.Rmd`:
 
+      #> inst/extdata/
+      #> └── tidy_multp_aaf_subs.csv
+
 ### Non-Analytical Anti-doping Rule Violation (ADRV)
 
 The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical
-Anti-doping Rule Violation, ADRV) are derived from
+Anti-doping Rule Violation, ADRV) are derived from the `tidy_sports.csv`
+data.
 
 The **Multiple Substance, Non-Analytic Violations** (i.e.,
-Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
+Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the
+`tidy_sports.csv` data.
 
 ### Sanction terms
 
-The type and length of suspension is derived from
+The type and length of suspension are derived `tidy_single_aafs.csv` and
+`tidy_multp_aaf_subs.csv` data.
 
 ### Prohibited Associations
 

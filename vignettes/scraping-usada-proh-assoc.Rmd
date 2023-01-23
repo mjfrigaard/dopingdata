@@ -128,7 +128,7 @@ usada_prohib_assoc_raw <- rvest::html_table(usada_nodes[[1]])
 
 ```{r import-usada_prohib_assoc_raw, message=FALSE, warning=FALSE, echo=FALSE, results='hide'}
 usada_prohib_assoc_raw <- readr::read_csv(
-  file = "../inst/extdata/raw/2023-01-20_usada_prohib_assoc_raw.csv")
+  file = "../inst/extdata/raw/2023-01-22_usada_prohib_assoc_raw.csv")
 ```
 
 ```{r usada_prohib_assoc_raw}

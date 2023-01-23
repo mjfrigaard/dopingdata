@@ -50,32 +50,13 @@ library(anytime)
 
 This vignette covers the classification of adverse analytic findings for a single banned substance in the [USADA sanction table](https://www.usada.org/testing/results/sanctions/). 
 
-## Data versioning 
-
-`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've separated the raw (`_raw`) and processed (`_pro`) data in the `inst/` folder: 
-
-```{r}
-fs::dir_tree("../inst/extdata", recurse = FALSE)
-```
-
-
-
-
-by date (`YYYY-MM-DD`), but I also have a helper function for getting the recent version:
-
-```{r tdy_stmp}
-get_recent("../inst/extdata/", full = TRUE)
-get_recent("../inst/extdata/raw", full = TRUE)
-```
-
-
 ## Outline 
 
 This vignette assumes the following: 
 
 1. **Harvest the data:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` folder 
 
-  - See the `scrape_usada_sanctions()` function and `scraping-usada.Rmd` vignette for more information
+  - See [`vignettes/scraping-usada-sanctions.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html) for more information
   
     ```{r raw-usada_sanctions, echo=FALSE}
     fs::dir_tree(
@@ -92,7 +73,7 @@ This vignette assumes the following:
 
 2. **Fix the dates:** The dates in this table have been formatted and wrangled 
 
-  - See the  `vignettes/sanction-dates.Rmd` vignette for more information 
+  - See [`vignettes/sanction-dates.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html) for more information 
   
     ```{r usada_dates, echo=FALSE}
     fs::dir_tree(
@@ -102,7 +83,7 @@ This vignette assumes the following:
 
 3. **Tidy the sports:** The `sport` column has been 'tidied' and athletes/support personnel listed with more than one sport have been repeated in the data  
 
-  - See the `vignettes/sports.Rmd` vignette for more information  
+  - See [`vignettes/sanction-sports.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/sanction-sports.html) for more information  
   
     ```{r tidy_usada_sports, echo=FALSE}
     fs::dir_tree(
@@ -110,17 +91,43 @@ This vignette assumes the following:
       regexp = "sports")
     ```
     
+    
+## Data versioning 
+
+`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've separated the raw (`_raw`) and processed (`_pro`) data in the `inst/` folder: 
+
+  - Raw data:   
+    ```{r extdata-raw-tree, echo=FALSE}
+    fs::dir_tree("../inst/extdata/raw/", 
+      recurse = FALSE, regexp = ".csv$")
+    ```
+
+  - Processed data:    
+    ```{r extdata-tree, echo=FALSE}
+    fs::dir_tree("../inst/extdata", 
+      recurse = FALSE, regexp = ".csv$")
+    ```
+
+I also have two helper functions for getting the recent version:
+
+```{r get_recent, eval=FALSE}
+get_recent("../inst/extdata/")
+✔ The last modified date in '../inst/extdata/': 2023-01-23
+       dstmp 
+"2023-01-23" 
+```
+
+```{r get_recent_file, eval=FALSE}
+get_recent_file("../inst/extdata/", type = "csv")
+File last modified: 2023-01-22 19:00:15
+✔ import code pasted to clipboard!
+[1] "../inst/extdata/tidy_sports.csv"
+```
+
 
 ### Data 
 
-Below I'll import the most recent version of the tidy USADA sports data:
-
-```{r get_recent_path-tidy-sports, eval=FALSE}
-get_recent_path("../inst/extdata/", 
-  type = "csv")
-✔ import code pasted to clipboard!
-✔ use: readr::read_csv('../inst/extdata/tidy_sports.csv')
-```
+Below I'll import the most recent version of the tidy USADA sports data (using the path on the clipboard from the `get_recent_file()` function above)
 
 ```{r import-tidy_usada_sports}
 tidy_usada_sports <- readr::read_csv(
@@ -241,9 +248,7 @@ With the new `multiple_sr` indicator, I can separate `usada_substance_types` int
 ```{r usada_substance_types}
 usada_substance_types <- usada_sanction_types |> 
   dplyr::mutate(multiple_sr = case_when(
-    # identify the multiple_sr substances using a regular expression
     stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ TRUE,
-    # negate the regular expression for the single substances
     !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~FALSE,
     TRUE ~ NA)) 
 usada_substance_types |> 
@@ -407,7 +412,7 @@ export_extdata(
 
 
 ```{r vrfy-usada_sanction_types}
-fs::dir_tree('../inst/extdata/', regexp = "types")
+fs::dir_tree('../inst/extdata/', regexp = "sanction_types")
 ```
 
 
@@ -424,7 +429,7 @@ export_extdata(
 ```
 
 ```{r vrfy-usada_substance_types}
-fs::dir_tree('../inst/extdata/', regexp = "usada_substance_types")
+fs::dir_tree('../inst/extdata/', regexp = "substance_types")
 ```
 
 

@@ -131,7 +131,7 @@ usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
 
 ```{r hidden-usada_sanctions_raw-import, message=FALSE, warning=FALSE, echo=FALSE}
 usada_sanctions_raw <- readr::read_csv(
-  '../inst/extdata/raw/2023-01-20_usada_sanctions_raw.csv')
+  '../inst/extdata/raw/2023-01-22_usada_sanctions_raw.csv')
 ```
 
 What does the raw data look like? 

@@ -50,18 +50,6 @@ library(anytime)
 
 This vignette covers how format and wrangle the sanction dates in the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/). 
 
-## Data versioning 
-
-This package uses data from a table that gets updated regularly. To keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`), but I have a helper function for getting the recent version:
-
-```{r stmps}
-get_recent("../inst/extdata/raw")
-get_recent("../inst/extdata/wada/", full = TRUE)
-```
-
-Now I can use `get_recent` whenever I need to use find the most recently modified file in a folder!
-
-See examples below:
 
 ## Outline 
 
@@ -69,7 +57,7 @@ This vignette assumes the following:
 
 1. **Scrape the website:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` folder 
 
-  - See the `scrape_usada_sanctions()` function and `scraping-usada.Rmd` vignette for more information
+  - See [`vignettes/scraping-usada-sanctions.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html) for more information
   
   - The raw sanction data is in the `inst/extdata/raw` folder:
   
@@ -83,15 +71,40 @@ This vignette assumes the following:
     fs::dir_tree("../inst/extdata/", regexp = "sanctions")
     ```
 
+## Data versioning 
+
+This package uses data from a table that gets updated regularly. To keep track of the versions, I've organized the `_raw` and `_pro` data in the `inst/extdata/` folder 
+
+```{r tree-raw, echo=FALSE}
+fs::dir_tree("../inst/extdata/raw/")
+```
+
+```{r tree-extdata, echo=FALSE}
+fs::dir_tree("../inst/extdata/", recurse = FALSE, regexp = "csv")
+```
+
+I also have two helper functions for telling me the recent version:
+
+```{r get_recent, eval=FALSE}
+get_recent("../inst/extdata/")
+✔ The last modified date in '../inst/extdata/': 2023-01-23
+       dstmp 
+"2023-01-23" 
+```
+
+
+```{r get_recent_file, eval=FALSE}
+get_recent_file("../inst/extdata/")
+File last modified: 2023-01-22 18:43:39
+✔ import code pasted to clipboard!
+[1] "../inst/extdata/usada_sanctions_pro.csv"
+```
+
+These are handy whenever I need to find the most recently modified file in a folder!
+
 ## Import recent data file 
 
-I've written a custom import function, `get_recent_path()`, which helps with locating/importing the most recent USADA data:
-
-```{r, eval=FALSE}
-get_recent_path("../inst/extdata/", "csv")
-✔ import code pasted to clipboard!
-✔ use: readr::read_csv('../inst/extdata/usada_sanctions_pro.csv')
-```
+I can paste the import code from above to quickly import the most recent `usada_sanctions_pro.csv` data:
 
 ```{r usada_sanctions_pro}
 usada_sanctions_pro <- readr::read_csv(
@@ -160,6 +173,8 @@ dplyr::glimpse(usada_dates)
 
 
 ## Export 
+
+Export the `usada_dates` to `inst/extdata/`
 
 ```{r export_extdata-usada_dates}
 export_extdata(

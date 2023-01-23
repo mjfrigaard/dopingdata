@@ -38,6 +38,7 @@ Imports:
     modelr,
     palmerpenguins,
     pkgdown,
+    pkgload,
     polite,
     preferably,
     purrr,

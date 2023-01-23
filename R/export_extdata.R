@@ -23,6 +23,8 @@
 #'                      z = c(TRUE, FALSE, NA))
 #' export_extdata(x = df, inst_path = "inst/", raw = TRUE)
 #' export_extdata(x = df, inst_path = "inst/", raw = FALSE)
+#' unlink(paste0("inst/extdata/raw/", as.character(Sys.Date()), "_df.csv"))
+#' unlink(paste0("inst/extdata/", "df.csv"))
 export_extdata <- function(x, inst_path, raw = TRUE) {
   # verify path exists
   if (!fs::dir_exists(inst_path)) {

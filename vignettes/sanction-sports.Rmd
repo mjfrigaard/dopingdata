@@ -50,22 +50,13 @@ library(anytime)
 
 This vignette covers the `sports` listed in the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/). 
 
-## Data versioning 
-
-`dopingdata` uses data from a tables that get updated regularly, so to keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`). I also a helper function for finding the date of the most recent file:
-
-```{r tdy_stmp}
-get_recent("../inst/extdata/raw")
-```
-
-
 ## Outline 
 
 This vignette assumes the following: 
 
 1. **Harvest the data:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` and `inst/extdata/pro/` folders 
 
-  - See the `scrape_usada_sanctions()` function and `scraping-usada-sanctions.Rmd` vignette for more information
+  - See [`vignettes/scraping-usada-sanctions.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html) vignette for more information
   
     ```{r raw-usada-sanctions, echo=FALSE}
     fs::dir_tree("../inst/extdata/raw/", 
@@ -80,7 +71,7 @@ This vignette assumes the following:
     
 2. **Fix the dates:** The dates in this table have been formatted and wrangled 
 
-  - See the  `vignettes/sanction-dates.Rmd` vignette for more information 
+  - See [`vignettes/sanction-dates.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html) for more information 
   
     ```{r usada_dates, echo=FALSE}
     fs::dir_tree(
@@ -88,20 +79,27 @@ This vignette assumes the following:
       regexp = "dates")
     ```
 
-### Data 
+## Data versioning 
 
-I'm going to locate the most recently wrangled data file from the `inst/extdata/` folder:
+`dopingdata` uses data from a tables that get updated regularly, so to keep track of the versions, I've organized the `inst/extdata` folder by date (`YYYY-MM-DD`). I also a helper function for finding the date of the most recent file:
 
-```{r get_recent_path-sports, eval=FALSE}
-get_recent_path(
-  folder = "../inst/extdata/", 
-  type = "csv")
-✔ import code pasted to clipboard!
-✔ use: readr::read_csv('../inst/extdata/usada_dates.csv')
+```{r get_recent, eval=FALSE}
+get_recent("../inst/extdata/raw")
+✔ The last modified date in '../inst/extdata/raw': 2023-01-23
+       dstmp 
+"2023-01-23" 
 ```
 
-The path on the clipboard is the exported data from `vignettes/sanction-dates.Rmd` (if not, please head over to that vignette and fix the dates before moving forward).
+```{r get_recent_file, eval=FALSE}
+get_recent_file("../inst/extdata/")
+File last modified: 2023-01-22 18:51:20
+✔ import code pasted to clipboard!
+[1] "../inst/extdata/usada_dates.csv"
+```
 
+## Data 
+
+The code on the clipboard from `get_recent_file()` allows me to quickly import the most recently wrangled data file from the `inst/extdata/` folder (if not, please head over to that vignette and fix the dates before moving forward):
 
 ```{r sanctions}
 sanctions <- readr::read_csv(
@@ -120,12 +118,12 @@ sanctions |>
 ### `athlete support personnel`
 
 I'll create an identifier for athlete support personnel, `support_personnel`. 
-
 ```{r support_personnel}
 dplyr::mutate(sanctions, 
   # support_personnel
   support_personnel = 
-    dplyr::if_else(condition = stringr::str_detect(sport, "support personnel"), 
+    dplyr::if_else(condition = stringr::str_detect(
+      sport, "support personnel"), 
       true = TRUE, false = FALSE, missing = NA)) |> 
   dplyr::count(sport, support_personnel) |> 
   tidyr::pivot_wider(names_from = support_personnel, values_from = n)

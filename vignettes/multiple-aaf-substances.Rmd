@@ -1,0 +1,409 @@
+---
+title: "Multiple AAF substances"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multiple AAF substances}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(
+  pillar.print_max = 25, 
+  dplyr.print_max = 25,
+  knitr.kable.NA = '',
+  pillar.print_min = 25)
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+```
+
+```{r pkg}
+library(dopingdata)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(forcats)
+library(lubridate)
+library(readr)
+library(readxl)
+library(janitor)
+library(anytime)
+```
+
+## Motivation 
+
+This vignette covers the classification of adverse analytic findings (AAF) for multiple banned substances in the [USADA sanction table](https://www.usada.org/testing/results/sanctions/). 
+
+## Data versioning 
+
+`dopingdata` uses data from tables that get updated regularly. To keep track of the versions, I've separated the raw (`_raw`) and processed (`_pro`) data in the `inst/` folder:
+
+  - Raw data:
+    ```{r raw-tree, echo=FALSE}
+    fs::dir_tree("../inst/extdata/raw/", recurse = FALSE)
+    ```
+
+  - Processed data
+    ```{r extdata-tree, echo=FALSE}
+    fs::dir_tree("../inst/extdata", recurse = FALSE)
+    ```
+
+## Outline 
+
+This vignette assumes the following: 
+
+1. **Harvest the data:** A copy of the [USADA sanctions table](https://www.usada.org/testing/results/sanctions/) has been scraped and lives in the `inst/extdata/raw/` folder 
+
+  - See [`vignettes/scraping-usada.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html) for more information
+  
+    ```{r raw-usada_sanctions, echo=FALSE}
+    fs::dir_tree(
+      "../inst/extdata/raw/", regexp = "sanctions"
+    )
+    ```
+
+  - These data have had all the column names formatted with `janitor::clean_names()`, and all the text has been converted to lowercase 
+    ```{r pro-usada_sanctions, echo=FALSE}
+    fs::dir_tree(
+      "../inst/extdata/", regexp = "sanctions"
+    )
+    ```
+
+2. **Fix the dates:** The dates in this table have been formatted and wrangled 
+
+  - See [`vignettes/sanction-dates.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html) more information 
+  
+    ```{r usada_dates, echo=FALSE}
+    fs::dir_tree(
+      "../inst/extdata/",
+      regexp = "dates")
+    ```
+
+3. **Tidy the sports:** The `sport` column has been 'tidied' and athletes/support personnel listed with more than one sport have been repeated in the data  
+
+  - See [`vignettes/sanction-sports.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/sanction-sports.html) for more information  
+  
+    ```{r tidy_usada_sports, echo=FALSE}
+    fs::dir_tree(
+      "../inst/extdata/", 
+      regexp = "sports")
+    ```
+    
+4. **Tidy the AAF (single substances):** The `sanction_reason` column in `tidy_sports.csv` was used to classify the analytic (i.e, adverse analytic finding) sanctions into `sanction_groups` based on the WADA banned list of substances. 
+
+  - See [`vignettes/single-aaf-substances.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/single-aaf-substances.html) for more information  
+  
+    ```{r tidy_single_aafs, echo=FALSE}
+    fs::dir_tree(
+      "../inst/extdata/", 
+      regexp = "single_aafs")
+    ```
+
+### Data 
+
+This vignette picks up where [`vignettes/single-aaf-substances.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/single-aaf-substances.html) left off (and imports the previous `tidy_single_aafs.csv` dataset)
+
+```{r get_recent, eval=FALSE}
+get_recent("../inst/extdata", "csv")
+✔ The last modified date in '../inst/extdata': 2023-01-23
+       dstmp 
+"2023-01-23" 
+```
+
+```{r import-substance_types}
+substance_types <- readr::read_csv(
+  file = '../inst/extdata/usada_substance_types.csv')
+dplyr::glimpse(substance_types)
+```
+
+### Multiple substances (`multiple_sr`)
+
+The substance_types data has the `multiple_sr` column for identifying if an sanction included more than one substance:
+
+```{r multiple_sr-tabyl}
+substance_types |> 
+  janitor::tabyl(multiple_sr) |> 
+  janitor::adorn_pct_formatting(digits = 0)
+```
+
+## AAF vs. ADRV Sanctions
+
+The sanctions are divided into two categories: 
+
+- `analytic`: [Adverse Analytical Finding](https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text), AAF; *An AAF is a report from a WADA-accredited laboratory that identifies the presence of a prohibited substance and/or its metabolites or markers in a sample.* 
+
+- `non-analytic`: [Non-Analytical Anti-doping Rule Violation](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/) ADRV; *a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.*. 
+
+
+The variable identifying the AAF vs. ADRV sanctions is `sanction_type`, and I breakdown  `multiple_sr` by `sanction_type` below: 
+
+```{r multiple_sr-sanction_type-tabyl}
+substance_types |> 
+  janitor::tabyl(multiple_sr, sanction_type) |> 
+  janitor::adorn_percentages(denominator = "col") |> 
+  adorn_pct_formatting(digits = 0) 
+```
+
+### Multiple analytic substances
+
+Filter `substance_types` into multiple `analytic` substances (`mult_aaf_subs`)
+
+```{r create-mult_aaf_subs}
+mult_aaf_subs <- substance_types |>
+  dplyr::filter(sanction_type == "analytical" & multiple_sr == TRUE)
+mult_aaf_subs |> 
+  dplyr::count(multiple_sr)
+```
+
+Below is a 'count of counts', which tells me most of the multiple substance combinations occur only once. 
+
+```{r count-substance_reason}
+mult_aaf_subs |>
+  dplyr::count(substance_reason, sort = TRUE, name = "Count") |>
+  dplyr::count(Count, sort = TRUE)
+```
+
+## Tidying multiple substances
+
+We're going to separate the multiple [WADA banned substances](https://www.wada-ama.org/en/prohibited-list?q) into a 'tidy' form (one substance per athlete per row), which means the athletes with multiple substances will appear in this dataset more than once.
+
+To tidy the substances with multiple steps, I'll define a regular expression that identifies the separators between each substance (and make sure we're not splitting up the individual substances). The regular expression should (ideally) cover a range of word boundaries, tabs, semicolons, and spaces. 
+
+### Step 1: white space 
+
+I'll start by trimming the white space from `substance_reason`
+
+```{r trim-white-space}
+dplyr::mutate(mult_aaf_subs,
+  substance_reason = stringr::str_trim(substance_reason, "both")) |> 
+  dplyr::select(athlete, substance_reason)
+```
+
+### Step 2: commas in chemical compounds 
+
+I need to be careful using commas, because some of the chemical compounds use commas in their names:
+
+```{r comma-chemical-substances}
+stringr::str_view_all(
+  mult_aaf_subs$substance_reason,
+  pattern = "\\d+,\\d+",
+  match = TRUE
+)
+```
+
+### Step 3: plurals
+
+The pattern above seems to identify most of the separators, but it's separating on `<substance>` **`and`** `its metabolite`:
+
+```{r view-metabolite-metabolites}
+# metabolite/metabolites
+stringr::str_view_all(
+  mult_aaf_subs$substance_reason,
+  "and its metabolites|and its metabolite|its metabolites|its metabolite",
+  match = TRUE
+)
+```
+
+
+I want to include the information on `metabolite`/`metabolites`, so I'll replace this with, `plus it's metabolite/metabolites`:
+
+```{r metabolite-metabolites}
+dplyr::mutate(mult_aaf_subs,
+  substance_reason = stringr::str_replace_all(
+    substance_reason,
+    "and its metabolite|and its metabolites",
+    "(metabolite)"),
+  substance_reason = stringr::str_replace_all(
+    substance_reason,
+    "its metabolite",
+    "(metabolite)")) |>
+  dplyr::select(substance_reason) |> 
+  purrr::as_vector() |> 
+  stringr::str_view_all(pattern = "metabolite", match = TRUE)
+```
+
+### Step 4: conjunctions
+
+I want to create a regular expression that matches on the conjunctions (`and` and `,`) connecting the multiple substances. I'll store the pattern in `multp_subs_regex`.
+
+```{r view-and-comma-boundaries}
+# I'm showing only a sample of 20 to reduce printing
+multp_subs_regex <- "\\b and \\b|\\b, and \\b|, and |\\band\\b|\\b, \\b|, | & |\\b&\\b"
+stringr::str_view_all(
+  sample(mult_aaf_subs$substance_reason, 
+    size = 20, replace = FALSE),
+  pattern = multp_subs_regex,
+  match = TRUE
+)
+```
+
+### Step 5: semicolons
+
+In addition to conjunctions, I also want to match on the semicolons, so I will add this to `multp_subs_regex`. 
+
+```{r view-semicolon-boundaries}
+# I'm showing only a sample of 20 to reduce printing
+stringr::str_view_all(
+  sample(mult_aaf_subs$substance_reason,
+    size = 20,
+    replace = FALSE
+  ),
+  pattern = ";\\b|; \\b|; \\b |; ",
+  match = TRUE
+)
+# add to multp_subs_regex
+multp_subs_regex <-
+  paste0(multp_subs_regex, ";\\b|; \\b|; \\b |; ", collapse = "|")
+```
+
+### Step 6: tab boundaries
+
+The final pattern to add to `multp_subs_regex` is for tab boundaries (`\\t`). 
+
+```{r view-tab-boundaries}
+stringr::str_view_all(
+    mult_aaf_subs$substance_reason,
+  pattern = "\\t| \\t| \\t |\\t ",
+  match = TRUE)
+# add to multp_subs_regex
+multp_subs_regex <- paste0(multp_subs_regex, "\\t| \\t| \\t |\\t ", collapse = "|")
+```
+
+I combine all the steps above into the code chunk below: 
+
+```{r clean-mult_aaf_subs-substance_reason}
+# white space
+mult_aaf_subs <- dplyr::mutate(mult_aaf_subs,
+  substance_reason = stringr::str_trim(
+    substance_reason, 
+    "both"),
+  # plurals
+    substance_reason = stringr::str_replace_all(
+    substance_reason,
+    "and its metabolite|and its metabolites",
+    "(metabolite)"),
+  # plurals
+  substance_reason = stringr::str_replace_all(
+    substance_reason,
+    "its metabolite",
+    "(metabolite)"),
+  # regex
+  substance_reason = stringr::str_remove_all(
+    substance_reason,
+    multp_subs_regex
+  ))
+```
+
+## Classifying multiple substances 
+
+I've written `classify_wada_substances()` to identify sanctions with multiple [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor).
+
+The `classify_wada_substances()` function scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). 
+
+See [`vignettes/single-aaf-substances.Rmd`](https://mjfrigaard.github.io/dopingdata/articles/single-aaf-substances.html) for more information.
+
+### `tidy_multp_aaf_subs`
+
+The output from is stored in `tidy_multp_aaf_subs`:
+
+```{r tidy_multp_aaf_subs}
+tidy_multp_aaf_subs <- classify_wada_substances(
+  usada_data = mult_aaf_subs,
+  subs_column = substance_reason
+)
+tidy_multp_aaf_subs |>
+  janitor::tabyl(substance_group) |> 
+  janitor::adorn_pct_formatting()
+```
+
+### Unclassified substances 
+
+I want to identify any unclassified substances in `tidy_multp_aaf_subs`:
+
+```{r unclassified_multp_analytic_substance}
+tidy_multp_aaf_subs |>
+  dplyr::filter(is.na(substance_group)) |>
+  dplyr::count(substance_reason, sort = TRUE)
+```
+
+I can see this particular `substance_reason` is non-analytical, so I need to reclassify this in the `usada_substance_types.csv` data (which we imported above as `substance_types`). 
+
+We can identify this sanction and athlete below:
+
+```{r identify-reclass}
+dplyr::filter(tidy_multp_aaf_subs, 
+  stringr::str_detect(substance_reason, "^non-anatlyical")) |> 
+  dplyr::select(athlete, substance_reason)
+```
+
+I can recode these in `substance_types` and `tidy_multp_aaf_subs`:
+
+```{r recode-non-analytical}
+reclass_substance_types <- dplyr::mutate(substance_types,
+  sanction_type = dplyr::case_when(
+    stringr::str_detect(
+      substance_reason, "non-anatlyical") ~ "non-analytical",
+    TRUE ~ sanction_type
+  )) 
+
+tidy_multp_aaf_subs <- dplyr::mutate(tidy_multp_aaf_subs,
+  sanction_type = dplyr::case_when(
+    stringr::str_detect(
+      substance_reason, "non-anatlyical") ~ "non-analytical",
+    TRUE ~ sanction_type
+  ))
+```
+
+Check the `sanction_type` in `reclass_substance_types`
+
+```{r reclass_substance_types-sanction_type}
+reclass_substance_types |> 
+  dplyr::filter(stringr::str_detect(athlete, "block, mark")) |> 
+  dplyr::select(athlete, substance_reason, sanction_type)
+```
+
+Check the `sanction_type` in `tidy_multp_aaf_subs`
+
+```{r check-reclass-sanction_type-tidy_multp_aaf_subs}
+tidy_multp_aaf_subs |> 
+  dplyr::filter(stringr::str_detect(athlete, "block, mark")) |> 
+  dplyr::select(athlete, substance_reason, sanction_type)
+```
+
+## Export substance types
+
+Export `substance_types`
+
+```{r export_extdata-substance_types}
+export_extdata(
+  x = substance_types, 
+  inst_path = "../inst/", 
+  raw = FALSE
+)
+```
+
+
+## Export tidy classified (multiple) substances 
+
+Export classified multiple substances (`tidy_multp_aaf_subs`):
+
+```{r export_extdata-tidy_multp_aaf_subs}
+export_extdata(
+  x = tidy_multp_aaf_subs, 
+  inst_path = "../inst/", 
+  raw = FALSE
+)
+```
+

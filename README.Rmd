@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
+![](<https://img.shields.io/badge/lifecycle-experimental-orange.svg>)
+
+<!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
+
 <!-- badges: end -->
 
 `dopingdata` contains data from the [United States Anti-Doping Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency) for exploration, modeling, and visualizations. The datasets in this package are derived from from the [USADA website](https://www.usada.org/) and the [World Anti-Doping Agency (WADA) banned substances list](https://www.wada-ama.org/en/prohibited-list?q=).
@@ -91,23 +95,27 @@ The **Single Substance Violations** (i.e., Adverse Analytical Finding, AAF) are 
 
 -   Adverse analytical finding (AAF) sanctions with a single substance are in `vignettes/single-aaf-substances.Rmd`:
 
-    ```{r aaf, echo = FALSE}
-    fs::dir_tree("inst/extdata/", regexp = "aaf")
+    ```{r single_aafs, echo = FALSE}
+    fs::dir_tree("inst/extdata/", regexp = "single_aafs")
     ```
 
 The **Multiple Substance Violations** (i.e., Adverse Analytical Finding, AAF) are derived from
 
 -   Adverse analytical finding (AAF) sanctions with multiple substance are in `vignettes/multiple-aaf-substances.Rmd`:
 
+    ```{r multiple_aaf, echo=FALSE}
+    fs::dir_tree("inst/extdata/", regexp = "tidy_mult")
+    ```
+
 ### Non-Analytical Anti-doping Rule Violation (ADRV)
 
-The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
+The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the `tidy_sports.csv` data.
 
-The **Multiple Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from
+The **Multiple Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the `tidy_sports.csv` data.
 
 ### Sanction terms
 
-The type and length of suspension is derived from
+The type and length of suspension are derived `tidy_single_aafs.csv` and `tidy_multp_aaf_subs.csv` data.
 
 ### Prohibited Associations
 

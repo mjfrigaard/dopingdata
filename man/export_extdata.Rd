@@ -25,4 +25,6 @@ df <- tibble::tibble(x = 1:3,
                      z = c(TRUE, FALSE, NA))
 export_extdata(x = df, inst_path = "inst/", raw = TRUE)
 export_extdata(x = df, inst_path = "inst/", raw = FALSE)
+unlink(paste0("inst/extdata/raw/", as.character(Sys.Date()), "_df.csv"))
+unlink(paste0("inst/extdata/", "df.csv"))
 }
