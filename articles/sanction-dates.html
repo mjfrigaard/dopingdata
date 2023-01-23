@@ -52,10 +52,12 @@
     <a class="dropdown-item" href="../articles/sanction-dates.html">Sanction Dates</a>
     <h6 class="dropdown-header" data-toc-skip>Sports</h6>
     <a class="dropdown-item" href="../articles/sanction-sports.html">Sanction Sports</a>
-    <h6 class="dropdown-header" data-toc-skip>Single Substance Sanctions</h6>
-    <a class="dropdown-item" href="../articles/single-aaf-substances.html">Single-substance aaf sanctions</a>
-    <h6 class="dropdown-header" data-toc-skip>Single Non-Analytic Sanctions</h6>
+    <h6 class="dropdown-header" data-toc-skip>Adverse Analytical Findings</h6>
+    <a class="dropdown-item" href="../articles/single-aaf-substances.html">Single substance aaf sanctions</a>
+    <a class="dropdown-item" href="../articles/multiple-aaf-substances.html">Multiple substance aaf sanctions</a>
+    <h6 class="dropdown-header" data-toc-skip>Non-Analytic Rule Violations</h6>
     <a class="dropdown-item" href="../articles/single-adrv-sanctions.html">Single ADRV sanctions</a>
+    <h6 class="dropdown-header" data-toc-skip>Multiple ADRV sanctions</h6>
   </div>
 </li>
 <li class="nav-item">
@@ -123,7 +125,8 @@ for more information</p></li>
 folder:</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
 <span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
 <li><p>The processed data have had all the column names formatted with
 <code><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">janitor::clean_names()</a></code>, and all the text has been converted
@@ -144,7 +147,9 @@ keep track of the versions, I’ve organized the <code>_raw</code> and
 <span><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
 <span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
 <span><span class="co">#&gt; ├── 2023-01-22_usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-23_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
 <span><span class="co">#&gt; ├── substance_types.csv</span></span>
 <span><span class="co">#&gt; ├── tidy_multp_aaf_subs.csv</span></span>

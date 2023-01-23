@@ -41,7 +41,7 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Harvesting Data</h6>
@@ -52,10 +52,12 @@
     <a class="dropdown-item" href="../articles/sanction-dates.html">Sanction Dates</a>
     <h6 class="dropdown-header" data-toc-skip>Sports</h6>
     <a class="dropdown-item" href="../articles/sanction-sports.html">Sanction Sports</a>
-    <h6 class="dropdown-header" data-toc-skip>Single Substance Sanctions</h6>
-    <a class="dropdown-item" href="../articles/single-aaf-substances.html">Single-substance aaf sanctions</a>
-    <h6 class="dropdown-header" data-toc-skip>Single Non-Analytic Sanctions</h6>
+    <h6 class="dropdown-header" data-toc-skip>Adverse Analytical Findings</h6>
+    <a class="dropdown-item" href="../articles/single-aaf-substances.html">Single substance aaf sanctions</a>
+    <a class="dropdown-item" href="../articles/multiple-aaf-substances.html">Multiple substance aaf sanctions</a>
+    <h6 class="dropdown-header" data-toc-skip>Non-Analytic Rule Violations</h6>
     <a class="dropdown-item" href="../articles/single-adrv-sanctions.html">Single ADRV sanctions</a>
+    <h6 class="dropdown-header" data-toc-skip>Multiple ADRV sanctions</h6>
   </div>
 </li>
 <li class="nav-item">
@@ -119,7 +121,9 @@ regularly. To keep track of the versions, I’ve separated the raw
 <span><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
 <span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
 <span><span class="co">#&gt; ├── 2023-01-22_usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-23_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
 <li>
 <p>Processed data</p>
@@ -154,7 +158,8 @@ table</a> has been scraped and lives in the
 for more information</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
 <span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
 <li>
 <p>These data have had all the column names formatted with
@@ -409,7 +414,7 @@ separating on <code>&lt;substance&gt;</code>
 <span><span class="co">#&gt; <span style="color: #555555;">[110] │</span> tamoxifen <span style="color: #00BBBB;">&lt;and its metabolite&gt;</span>, anastrozole, letrozole, human chorionic gonadotrophin (hcg), and clomiphene</span></span></code></pre></div>
 <p>I want to include the information on
 <code>metabolite</code>/<code>metabolites</code>, so I’ll replace this
-with, <code>plus it's metabolite/metabolites</code>:</p>
+with, <code>(metabolite)</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">mult_aaf_subs</span>,</span>
 <span>  substance_reason <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span></span>
@@ -456,19 +461,21 @@ multiple substances. I’ll store the pattern in
 <span>  pattern <span class="op">=</span> <span class="va">multp_subs_regex</span>,</span>
 <span>  match <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [3] │</span> clomiphene<span style="color: #00BBBB;">&lt;, &gt;</span>letrozole</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [4] │</span> higenamine<span style="color: #00BBBB;">&lt;, &gt;</span>clomiphene<span style="color: #00BBBB;">&lt;, &gt;</span>dehydrochloromethyltestosterone (dhcmt)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [5] │</span> hydrochlorothiazide<span style="color: #00BBBB;">&lt; &amp; &gt;</span>chlorothiazide</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [2] │</span> clomiphene<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [3] │</span> hydrochlorothiazide<span style="color: #00BBBB;">&lt; &amp; &gt;</span>chlorothiazide</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [5] │</span> androgenic anabolic steroid<span style="color: #00BBBB;">&lt;, &gt;</span> erythropoietin (epo) <span style="color: #00BBBB;">&lt;and&gt;</span> amphetamine</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [6] │</span> androgenic anabolic steroid<span style="color: #00BBBB;">&lt; and &gt;</span>methylphenidate</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"> [7] │</span> methylhexaneamine<span style="color: #00BBBB;">&lt; &amp; &gt;</span>phenpromethamine</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[10] │</span> clenbuterol<span style="color: #00BBBB;">&lt;, &gt;</span>ostarine<span style="color: #00BBBB;">&lt;, and &gt;</span>a tamoxifen metabolite</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[13] │</span> tamoxifen<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite<span style="color: #00BBBB;">&lt;, &gt;</span>anastrozole<span style="color: #00BBBB;">&lt;, &gt;</span>letrozole<span style="color: #00BBBB;">&lt;, &gt;</span>human chorionic gonadotrophin (hcg)<span style="color: #00BBBB;">&lt;, and &gt;</span>clomiphene</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[14] │</span> trenbolone<span style="color: #00BBBB;">&lt;, &gt;</span>epitrenbolone</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[15] │</span> androgenic anabolic steroid<span style="color: #00BBBB;">&lt; &amp; &gt;</span>human chorionic gonadotrophin (hcg)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[16] │</span> oxandrolone<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[17] │</span> 19-norandrosterone (19-na)<span style="color: #00BBBB;">&lt;, &gt;</span>19-noretiocholanolone<span style="color: #00BBBB;">&lt;, and &gt;</span>drostanolone<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolites</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[18] │</span> hydrochlorothiazide<span style="color: #00BBBB;">&lt; &amp; &gt;</span>chlorothiazide</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[19] │</span> rad140<span style="color: #00BBBB;">&lt; and &gt;</span>ibutamoren</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[20] │</span> clomiphene<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;"> [8] │</span> androgenic anabolic steroid<span style="color: #00BBBB;">&lt;, &gt;</span>clomiphene</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [9] │</span> clenbuterol<span style="color: #00BBBB;">&lt;, and &gt;</span>oxandrolone<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[11] │</span> methylphenidate<span style="color: #00BBBB;">&lt; and &gt;</span>its metabolite</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[14] │</span> 19-norandrosterone<span style="color: #00BBBB;">&lt;, &gt;</span>epo<span style="color: #00BBBB;">&lt;, &gt;</span>furosemide</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[15] │</span> 19-norandrosterone (19-na) <span style="color: #00BBBB;">&lt;and&gt;</span> 19-noretiocholanolone</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[16] │</span> rad140<span style="color: #00BBBB;">&lt; and &gt;</span>ibutamoren</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[17] │</span> heptaminol<span style="color: #00BBBB;">&lt;, &gt;</span>1,4‐dimethylpentylamine (1,4‐dmpa)<span style="color: #00BBBB;">&lt;, &gt;</span>octodrine<span style="color: #00BBBB;">&lt;, &gt;</span>ostarine<span style="color: #00BBBB;">&lt;, &gt;</span>di‐hydroxy‐lgd‐4033</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[18] │</span> methylclostebol<span style="color: #00BBBB;">&lt;, &gt;</span>promagnon</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[19] │</span> hydrochlorothiazide<span style="color: #00BBBB;">&lt; and &gt;</span>chlorothiazide</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[20] │</span> ostarine<span style="color: #00BBBB;">&lt;, &gt;</span>s-23</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="step-5-semicolons">Step 5: semicolons<a class="anchor" aria-label="anchor" href="#step-5-semicolons"></a>
@@ -485,12 +492,14 @@ so I will add this to <code>multp_subs_regex</code>.</p>
 <span>  pattern <span class="op">=</span> <span class="st">";\\b|; \\b|; \\b |; "</span>,</span>
 <span>  match <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [1] │</span> ostarine<span style="color: #00BBBB;">&lt;; &gt;</span>lgd‐4033</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [6] │</span> furosemide<span style="color: #00BBBB;">&lt;; &gt;</span>hydrochlorothiazide<span style="color: #00BBBB;">&lt;; &gt;</span>chlorothiazide<span style="color: #00BBBB;">&lt;; &gt;</span>thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [8] │</span> phentermine<span style="color: #00BBBB;">&lt;; &gt;</span>lgd-4033</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[11] │</span> heptaminol<span style="color: #00BBBB;">&lt;; &gt;</span>octodrine</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[13] │</span> ostarine<span style="color: #00BBBB;">&lt;; &gt;</span>lgd-4033</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[20] │</span> 7-keto-dhea<span style="color: #00BBBB;">&lt;; &gt;</span>aod-9064</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [4] │</span> testosterone;<span style="color: #00BBBB;">{\t}</span>nandrolone<span style="color: #00BBBB;">&lt;; &gt;{\t}</span>dehydroepiandrosterone (dhea)<span style="color: #00BBBB;">&lt;; &gt;{\t}</span>somatropin (hgh)<span style="color: #00BBBB;">&lt;; &gt;</span>ipamorelin<span style="color: #00BBBB;">&lt;; &gt;{\t}</span>ghrp-6<span style="color: #00BBBB;">&lt;; &gt;</span>cjc-1295<span style="color: #00BBBB;">&lt;; &gt;</span> igf-1<span style="color: #00BBBB;">&lt;; &gt;</span>human chorionic gonadotropin (hcg)<span style="color: #00BBBB;">&lt;; &gt;</span>anastrozole</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [5] │</span> erythropoietin (epo)<span style="color: #00BBBB;">&lt;; &gt;</span>19‐norandrosterone (19‐na)<span style="color: #00BBBB;">&lt;; &gt;</span>androgenic-anabolic steroids (aas)<span style="color: #00BBBB;">&lt;; &gt;</span>clostebol, testosterone</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [6] │</span> androgenic anabolic steroid<span style="color: #00BBBB;">&lt;; &gt;</span>cannabinoids<span style="color: #00BBBB;">&lt;; &gt;</span>anastrozole<span style="color: #00BBBB;">&lt;; &gt;</span>clomiphene<span style="color: #00BBBB;">&lt;; &gt;</span>gw1516</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [7] │</span> 7-keto-dhea<span style="color: #00BBBB;">&lt;; &gt;</span>aod-9064</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [9] │</span> clomiphene<span style="color: #00BBBB;">&lt;; &gt;</span>oxandrolone<span style="color: #00BBBB;">&lt;; &gt;</span>androgenic anabolic steroid</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[18] │</span> clomiphene<span style="color: #00BBBB;">&lt;; &gt;</span>19-norandrosterone (19-na)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[19] │</span> tamoxifen<span style="color: #00BBBB;">&lt;; &gt;</span>boldenone, methandienone, drostanolone, and clenbuterol</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[20] │</span> ostarine<span style="color: #00BBBB;">&lt;; &gt;</span>gw1516</span></span>
 <span><span class="co"># add to multp_subs_regex</span></span>
 <span><span class="va">multp_subs_regex</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">multp_subs_regex</span>, <span class="st">";\\b|; \\b|; \\b |; "</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span></code></pre></div>
