@@ -217,7 +217,7 @@ stringr::str_view_all(
 ```
 
 
-I want to include the information on `metabolite`/`metabolites`, so I'll replace this with, `plus it's metabolite/metabolites`:
+I want to include the information on `metabolite`/`metabolites`, so I'll replace this with, `(metabolite)`:
 
 ```{r metabolite-metabolites}
 dplyr::mutate(mult_aaf_subs,

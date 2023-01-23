@@ -31,9 +31,13 @@ navbar:
     - text: "Sports"
     - text: Sanction Sports
       href: articles/sanction-sports.html
-    - text: "Single Substance Sanctions"
-    - text: Single-substance aaf sanctions
+    - text: "Adverse Analytical Findings"
+    - text: Single substance aaf sanctions
       href: articles/single-aaf-substances.html
-    - text: "Single Non-Analytic Sanctions"
+    - text: Multiple substance aaf sanctions
+      href: articles/multiple-aaf-substances.html
+    - text: "Non-Analytic Rule Violations"
     - text: Single ADRV sanctions
       href: articles/single-adrv-sanctions.html
+    - text: Multiple ADRV sanctions
+      href:

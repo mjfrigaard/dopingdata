@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-![](<https://img.shields.io/badge/lifecycle-experimental-orange.svg>)
+![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 <!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
 
