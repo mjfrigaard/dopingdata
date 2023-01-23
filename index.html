@@ -77,6 +77,8 @@
 <div class="page-header"><h1 id="dopingdata">dopingdata<a class="anchor" aria-label="anchor" href="#dopingdata"></a>
 </h1></div>
 <!-- badges: start -->
+<p><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></p>
+<!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
 <!-- badges: end -->
 <p><code>dopingdata</code> contains data from the <a href="https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency" class="external-link">United States Anti-Doping Agency</a> for exploration, modeling, and visualizations. The datasets in this package are derived from from the <a href="https://www.usada.org/" class="external-link">USADA website</a> and the <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">World Anti-Doping Agency (WADA) banned substances list</a>.</p>
 <div class="section level2">
@@ -100,10 +102,10 @@
 </li>
 </ul>
 <!-- --><div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/raw</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-20_usada_prohib_assoc_raw.csv</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-21_usada_sanctions_raw.csv</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── 2023-01-22_usada_prohib_assoc_raw.csv</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="processed-data">Processed Data<a class="anchor" aria-label="anchor" href="#processed-data"></a>
@@ -165,19 +167,23 @@
 </ul>
 <p>The <strong>Multiple Substance Violations</strong> (i.e., Adverse Analytical Finding, AAF) are derived from</p>
 <ul>
-<li>Adverse analytical finding (AAF) sanctions with multiple substance are in <code>vignettes/multiple-aaf-substances.Rmd</code>:</li>
+<li>
+<p>Adverse analytical finding (AAF) sanctions with multiple substance are in <code>vignettes/multiple-aaf-substances.Rmd</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── tidy_multp_aaf_subs.csv</span></span></code></pre></div>
+</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="non-analytical-anti-doping-rule-violation-adrv">Non-Analytical Anti-doping Rule Violation (ADRV)<a class="anchor" aria-label="anchor" href="#non-analytical-anti-doping-rule-violation-adrv"></a>
 </h3>
-<p>The <strong>Single Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from</p>
-<p>The <strong>Multiple Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from</p>
+<p>The <strong>Single Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the <code>tidy_sports.csv</code> data.</p>
+<p>The <strong>Multiple Substance, Non-Analytic Violations</strong> (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the <code>tidy_sports.csv</code> data.</p>
 </div>
 <div class="section level3">
 <h3 id="sanction-terms">Sanction terms<a class="anchor" aria-label="anchor" href="#sanction-terms"></a>
 </h3>
-<p>The type and length of suspension is derived from</p>
+<p>The type and length of suspension are derived <code>tidy_single_aafs.csv</code> and <code>tidy_multp_aaf_subs.csv</code> data.</p>
 </div>
 <div class="section level3">
 <h3 id="prohibited-associations">Prohibited Associations<a class="anchor" aria-label="anchor" href="#prohibited-associations"></a>
@@ -189,9 +195,9 @@
 <h2 id="wada-data">WADA data<a class="anchor" aria-label="anchor" href="#wada-data"></a>
 </h2>
 <p>This package also includes a list of the <a href="https://en.wikipedia.org/wiki/World_Anti-Doping_Agency" class="external-link">World Anti-Doping Agency (WADA)</a> banned substances (published online <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">here</a>).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/wada/</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── wada-2019-english-prohibited-list.xlsx</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── wada_2019_english_prohibited_list.pdf</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; inst/extdata/wada/</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ├── wada-2019-english-prohibited-list.xlsx</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; └── wada_2019_english_prohibited_list.pdf</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="more-wada-resources-on-banned-substances">More WADA Resources on banned substances<a class="anchor" aria-label="anchor" href="#more-wada-resources-on-banned-substances"></a>
 </h3>

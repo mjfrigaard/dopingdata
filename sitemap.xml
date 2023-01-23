@@ -16,6 +16,9 @@
     <loc>https://mjfrigaard.github.io/dopingdata/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/multiple-aaf-substances.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html</loc>
   </url>
   <url>
@@ -64,7 +67,7 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_path.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_file.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/guess_basename.html</loc>
@@ -104,5 +107,8 @@
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/setup.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/to-do.html</loc>
   </url>
 </urlset>

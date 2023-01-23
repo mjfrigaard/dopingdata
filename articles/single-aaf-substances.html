@@ -107,37 +107,6 @@ for a single banned substance in the <a href="https://www.usada.org/testing/resu
 table</a>.</p>
 </div>
 <div class="section level3">
-<h3 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
-</h3>
-<p><code>dopingdata</code> uses data from tables that get updated
-regularly. To keep track of the versions, I’ve separated the raw
-(<code>_raw</code>) and processed (<code>_pro</code>) data in the
-<code>inst/</code> folder:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata"</span>, recurse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata</span></span></span>
-<span><span class="co">#&gt; ├── <span style="color: #0000BB; font-weight: bold;">raw</span></span></span>
-<span><span class="co">#&gt; ├── tidy_single_aafs.csv</span></span>
-<span><span class="co">#&gt; ├── tidy_sports.csv</span></span>
-<span><span class="co">#&gt; ├── usada_dates.csv</span></span>
-<span><span class="co">#&gt; ├── usada_prohib_assoc_pro.csv</span></span>
-<span><span class="co">#&gt; ├── usada_sanction_types.csv</span></span>
-<span><span class="co">#&gt; ├── usada_sanctions_pro.csv</span></span>
-<span><span class="co">#&gt; ├── usada_substance_types.csv</span></span>
-<span><span class="co">#&gt; └── <span style="color: #0000BB; font-weight: bold;">wada</span></span></span></code></pre></div>
-<p>by date (<code>YYYY-MM-DD</code>), but I also have a helper function
-for getting the recent version:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/': 2023-01-22 14:53:16</span></span>
-<span><span class="co">#&gt;                dtstmp </span></span>
-<span><span class="co">#&gt; "2023-01-22 14:53:16"</span></span>
-<span><span class="fu"><a href="../reference/get_recent.html">get_recent</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw"</span>, full <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> The last modified datetime in '../inst/extdata/raw': 2023-01-22 14:37:51</span></span>
-<span><span class="co">#&gt;                dtstmp </span></span>
-<span><span class="co">#&gt; "2023-01-22 14:37:51"</span></span></code></pre></div>
-</div>
-<div class="section level3">
 <h3 id="outline">Outline<a class="anchor" aria-label="anchor" href="#outline"></a>
 </h3>
 <p>This vignette assumes the following:</p>
@@ -149,12 +118,12 @@ table</a> has been scraped and lives in the
 </ol>
 <ul>
 <li>
-<p>See the <code>scrape_usada_sanctions()</code> function and
-<code>scraping-usada.Rmd</code> vignette for more information</p>
+<p>See <a href="https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html"><code>vignettes/scraping-usada-sanctions.Rmd</code></a>
+for more information</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-20_usada_sanctions_raw.csv</span></span>
 <span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-22_usada_sanctions_raw.csv</span></span></code></pre>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
 </li>
 <li>
 <p>These data have had all the column names formatted with
@@ -171,8 +140,8 @@ formatted and wrangled</li>
 </ol>
 <ul>
 <li>
-<p>See the <code>vignettes/sanction-dates.Rmd</code> vignette for
-more information</p>
+<p>See <a href="https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html"><code>vignettes/sanction-dates.Rmd</code></a>
+for more information</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
 <span><span class="co">#&gt; └── usada_dates.csv</span></span></code></pre>
 </li>
@@ -185,22 +154,61 @@ sport have been repeated in the data</li>
 </ol>
 <ul>
 <li>
-<p>See the <code>vignettes/sports.Rmd</code> vignette for more
-information</p>
+<p>See <a href="https://mjfrigaard.github.io/dopingdata/articles/sanction-sports.html"><code>vignettes/sanction-sports.Rmd</code></a>
+for more information</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
 <span><span class="co">#&gt; └── tidy_sports.csv</span></span></code></pre>
 </li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="data-versioning">Data versioning<a class="anchor" aria-label="anchor" href="#data-versioning"></a>
+</h3>
+<p><code>dopingdata</code> uses data from tables that get updated
+regularly. To keep track of the versions, I’ve separated the raw
+(<code>_raw</code>) and processed (<code>_pro</code>) data in the
+<code>inst/</code> folder:</p>
+<ul>
+<li>
+<p>Raw data:</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
+<span><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; ├── 2023-01-23_usada_prohib_assoc_raw.csv</span></span>
+<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre>
+</li>
+<li>
+<p>Processed data:</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata</span></span></span>
+<span><span class="co">#&gt; ├── substance_types.csv</span></span>
+<span><span class="co">#&gt; ├── tidy_multp_aaf_subs.csv</span></span>
+<span><span class="co">#&gt; ├── tidy_single_aafs.csv</span></span>
+<span><span class="co">#&gt; ├── tidy_sports.csv</span></span>
+<span><span class="co">#&gt; ├── usada_dates.csv</span></span>
+<span><span class="co">#&gt; ├── usada_prohib_assoc_pro.csv</span></span>
+<span><span class="co">#&gt; ├── usada_sanction_types.csv</span></span>
+<span><span class="co">#&gt; ├── usada_sanctions_pro.csv</span></span>
+<span><span class="co">#&gt; └── usada_substance_types.csv</span></span></code></pre>
+</li>
+</ul>
+<p>I also have two helper functions for getting the recent version:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent</span>(<span class="st">"../inst/extdata/"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>✔ The last modified date <span class="cf">in</span> <span class="st">'../inst/extdata/'</span><span class="sc">:</span> <span class="dv">2023-01-23</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>       dstmp </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">"2023-01-23"</span> </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_file</span>(<span class="st">"../inst/extdata/"</span>, <span class="at">type =</span> <span class="st">"csv"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>File last modified<span class="sc">:</span> <span class="dv">2023-01-22</span> <span class="dv">19</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">15</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"../inst/extdata/tidy_sports.csv"</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h4>
 <p>Below I’ll import the most recent version of the tidy USADA sports
-data:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_recent_path</span>(<span class="st">"../inst/extdata/"</span>, </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"csv"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>✔ import code pasted to clipboard<span class="sc">!</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>✔ use<span class="sc">:</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'../inst/extdata/tidy_sports.csv'</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+data (using the path on the clipboard from the
+<code><a href="../reference/get_recent_file.html">get_recent_file()</a></code> function above)</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_usada_sports</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span></span>
 <span>  file <span class="op">=</span> <span class="st">'../inst/extdata/tidy_sports.csv'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Rows: </span><span style="color: #0000BB;">689</span> <span style="font-weight: bold;">Columns: </span><span style="color: #0000BB;">8</span></span></span>
@@ -255,13 +263,13 @@ sanction, which can include the following information:</p>
 </ol>
 <p>We will use regular expressions to identify the type of substance
 behind the sanction. See the examples below:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">25</span><span class="op">)</span>, </span>
 <span>  <span class="st">"steroid"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: `str_view()` was deprecated in stringr 1.5.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `str_view_all()` instead.</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">[6] │</span> androgenic anabolic <span style="color: #00BBBB;">&lt;steroid&gt;</span></span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tidy_usada_sports</span><span class="op">$</span><span class="va">substance_reason</span>, <span class="fl">10</span><span class="op">)</span>,</span>
 <span>  <span class="st">"non-analytical"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">[1] │</span> <span style="color: #00BBBB;">&lt;non-analytical&gt;</span>: refusal to submit to sample collection</span></span>
@@ -279,7 +287,7 @@ in the <code>substance_reason</code> column.</p>
 <code>non-analytical</code> and <code>analytical</code></p>
 <p>I’ll save this variable in the <code>usada_sanction_types</code>
 dataset.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sanction_types</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="va">tidy_usada_sports</span>,</span>
 <span>    sanction_type <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">substance_reason</span>, </span>
@@ -303,7 +311,7 @@ dataset.</p>
 </h3>
 <p>Now I can filter <code>usada_sanction_types</code> to the
 <code>analytical</code> sanctions in <code>sanction_type</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
 <span>        <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 514</span></span></code></pre></div>
@@ -313,7 +321,7 @@ dataset.</p>
 <div class="section level3">
 <h3 id="non-analytic-sanctions">Non-analytic sanctions<a class="anchor" aria-label="anchor" href="#non-analytic-sanctions"></a>
 </h3>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">usada_sanction_types</span>, </span>
 <span>  <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"non-analytical"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -338,7 +346,7 @@ has a single or multiple substance/reason. Fortunately, the sanctions
 with multiple items are separated by either semicolons (<code>;</code>),
 commas (<code>,</code>), or a conjunction (<code>and</code>), so I can
 use a regular expression to separate the items.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">sanction_type_example</span>, </span>
 <span>  multiple_sr <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="co"># identify the multiple_sr substances using a regular expression</span></span>
@@ -359,12 +367,10 @@ substance or reason.</p>
 <p>With the new <code>multiple_sr</code> indicator, I can separate
 <code>usada_substance_types</code> into single or multiple analytic
 substances.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_substance_types</span> <span class="op">&lt;-</span> <span class="va">usada_sanction_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>multiple_sr <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
-<span>    <span class="co"># identify the multiple_sr substances using a regular expression</span></span>
 <span>    <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span> <span class="cn">TRUE</span>,</span>
-<span>    <span class="co"># negate the regular expression for the single substances</span></span>
 <span>    <span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"; |, | and | &amp; | / "</span><span class="op">)</span> <span class="op">~</span><span class="cn">FALSE</span>,</span>
 <span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
@@ -375,7 +381,7 @@ substances.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> FALSE         508</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> TRUE          181</span></span></code></pre></div>
 <p>How many different combinations of multiple substances are there?</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sr</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, name <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -397,12 +403,12 @@ substance combinations occur only once.</p>
 </h3>
 <p>This vignette is going to focus on the sanctions with a single
 substance listed (we will deal with multiple substances next).</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_subs</span> <span class="op">&lt;-</span> <span class="va">usada_substance_types</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sr</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
 <p>Below is a count of the single analytic substances occurring more
 than 5 times in the data:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_subs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">substance_reason</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html" class="external-link">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -445,7 +451,7 @@ list</a>. See the Appendix (bottom) for more information.</p>
 </h4>
 <p><code>dopingdata</code> stores vectors with each substance group in
 the WADA list (S1 substances are below):</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s1_substances</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "androgenic anabolic steroid"                    </span></span>
 <span><span class="co">#&gt;  [2] "androgenic anabolic steroids"                   </span></span>
@@ -459,7 +465,7 @@ the WADA list (S1 substances are below):</p>
 <span><span class="co">#&gt; [10] "1-androstenedione"</span></span></code></pre></div>
 <p>These vectors are also stored as regular expressions, which we can
 use to match the <code>substance_reason</code> column on:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">single_analytic_subs</span><span class="op">$</span><span class="va">substance_reason</span>, </span>
 <span>  pattern <span class="op">=</span> <span class="va">s1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;"> [3] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
@@ -487,7 +493,7 @@ use to match the <code>substance_reason</code> column on:</p>
 <code>substance_group</code> variable with each of the WADA
 classifications (these are stored in
 <code>dopingdata::wada_classes</code>)</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">wada_classes</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 13 × 1</span></span></span>
 <span><span class="co">#&gt;    Classification                       </span></span>
@@ -512,12 +518,12 @@ classifications (these are stored in
 </h4>
 <p>The output from <code><a href="../reference/classify_wada_substances.html">classify_wada_substances()</a></code> is stored in
 <code>tidy_single_aafs</code></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_single_aafs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify_wada_substances.html">classify_wada_substances</a></span><span class="op">(</span></span>
 <span>  usada_data <span class="op">=</span> <span class="va">single_analytic_subs</span>, </span>
 <span>  subs_column <span class="op">=</span> <span class="va">substance_reason</span><span class="op">)</span> </span></code></pre></div>
 <p>What <code>substance_group</code>’s appear the most?</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_single_aafs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/tabyl.html" class="external-link">tabyl</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/adorn_pct_formatting.html" class="external-link">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -542,7 +548,7 @@ classifications (these are stored in
 </h3>
 <p>The substances that were not classified using the standard WADA list
 will be stored in <code>unclass_single_aaf_substances</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">unclass_single_aaf_substances</span> <span class="op">&lt;-</span> <span class="va">tidy_single_aafs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">unclass_single_aaf_substances</span> <span class="op">|&gt;</span> </span>
@@ -575,7 +581,7 @@ will be stored in <code>unclass_single_aaf_substances</code>.</p>
 <code>"elevated t/e"</code> &amp;
 <code>3 whereabouts failures</code><a class="anchor" aria-label="anchor" href="#elevated-te-3-whereabouts-failures"></a>
 </h4>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/classify_substance.html">classify_substance</a></span><span class="op">(</span></span>
 <span>  df <span class="op">=</span> <span class="va">unclass_single_aaf_substances</span>, </span>
 <span>  subs_col <span class="op">=</span> <span class="va">substance_reason</span>, </span>
@@ -625,7 +631,7 @@ will be stored in <code>unclass_single_aaf_substances</code>.</p>
 <p><code>yair rodriguez</code> should be non-analytical, so we can
 create a tiny tibble to bind back to <code>usada_substance_types</code>
 (after removing <code>rodriguez, yair</code>)</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get rodriguez, yair (3 whereabouts failures)</span></span>
 <span><span class="va">miss_classified_sanction_type</span> <span class="op">&lt;-</span> <span class="va">tidy_single_aafs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">athlete</span> <span class="op">==</span> <span class="st">"rodriguez, yair"</span> <span class="op">&amp;</span> </span>
@@ -646,7 +652,7 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> rodriguez, yair 2020-12-03    3 whereabouts failures non-analytical</span></span></code></pre></div>
 <p>Now we can address the <code>elevated t/e</code> (I classify this as
 <code>"S1 ANABOLIC AGENTS"</code>)</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_single_aafs</span> <span class="op">&lt;-</span> <span class="va">tidy_single_aafs</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    substance_group <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html" class="external-link">case_when</a></span><span class="op">(</span></span>
@@ -666,7 +672,7 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <h3 id="export-sanction-types">Export sanction types<a class="anchor" aria-label="anchor" href="#export-sanction-types"></a>
 </h3>
 <p>Export analytic sanctions (<code>usada_sanction_types</code>):</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">usada_sanction_types</span>, </span>
 <span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
@@ -676,17 +682,16 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_sanction_types ... done</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"types"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"sanction_types"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
-<span><span class="co">#&gt; ├── usada_sanction_types.csv</span></span>
-<span><span class="co">#&gt; └── usada_substance_types.csv</span></span></code></pre></div>
+<span><span class="co">#&gt; └── usada_sanction_types.csv</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="export-substance-types">Export substance types<a class="anchor" aria-label="anchor" href="#export-substance-types"></a>
 </h3>
 <p>Export <code>usada_substance_types</code></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">usada_substance_types</span>, </span>
 <span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
@@ -696,9 +701,10 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_substance_types ... done</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"usada_substance_types"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"substance_types"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
+<span><span class="co">#&gt; ├── substance_types.csv</span></span>
 <span><span class="co">#&gt; └── usada_substance_types.csv</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -706,7 +712,7 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 </h3>
 <p>Export classified single substances
 (<code>tidy_single_aafs</code>):</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">tidy_single_aafs</span>, </span>
 <span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, </span>
@@ -716,7 +722,7 @@ create a tiny tibble to bind back to <code>usada_substance_types</code>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: tidy_single_aafs ... done</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, regexp <span class="op">=</span> <span class="st">"tidy_single_aafs"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
 <span><span class="co">#&gt; └── tidy_single_aafs.csv</span></span></code></pre></div>
