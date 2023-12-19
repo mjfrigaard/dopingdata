@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   scraping-usada-sanctions: scraping-usada-sanctions.html
-last_built: 2023-12-19T21:48Z
+last_built: 2023-12-19T22:03Z
 urls:
   reference: https://mjfrigaard.github.io/dopingdata/reference
   article: https://mjfrigaard.github.io/dopingdata/articles

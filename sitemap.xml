@@ -31,9 +31,6 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/add_match_col.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/add_regex_col.html</loc>
-  </url>
-  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/check_rtxt.html</loc>
   </url>
   <url>
@@ -97,7 +94,7 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/scrape_sanctions.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/sep_cols_mult.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/split_cols.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/theme_ggp2g.html</loc>
