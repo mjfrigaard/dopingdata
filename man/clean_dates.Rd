@@ -9,11 +9,11 @@ clean_dates(df, date_col, split = "updated", pattern = "original")
 \arguments{
 \item{df}{processed USADA dataset with messy dates}
 
-\item{date_col}{sanction date column (usually `sanction_announced`)}
+\item{date_col}{sanction date column (usually \code{sanction_announced})}
 
-\item{split}{regex to pass to split argument of `strsplit()` (defaults to `"updated"`)}
+\item{split}{regex to pass to split argument of \code{strsplit()} (defaults to \code{"updated"})}
 
-\item{pattern}{regex for other non-date pattern (defaults to `"original"`)}
+\item{pattern}{regex for other non-date pattern (defaults to \code{"original"})}
 }
 \value{
 tibble with cleaned dates

@@ -19,6 +19,8 @@ polished date (or date and time) stamp
 Insert date/time stamp
 }
 \examples{
-dtstamp(FALSE)
 dtstamp()
+dtstamp(TRUE)
+dtstamp(FALSE, "r")
+dtstamp(TRUE, "l")
 }

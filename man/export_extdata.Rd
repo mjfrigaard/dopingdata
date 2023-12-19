@@ -2,7 +2,7 @@
 % Please edit documentation in R/export_extdata.R
 \name{export_extdata}
 \alias{export_extdata}
-\title{Export data to `inst/extdata/` or `inst/extdata/raw`}
+\title{Export data to \verb{inst/extdata/} or \code{inst/extdata/raw}}
 \usage{
 export_extdata(x, path = "", raw = TRUE)
 }
@@ -17,7 +17,7 @@ export_extdata(x, path = "", raw = TRUE)
 exported data
 }
 \description{
-Export data to `inst/extdata/` or `inst/extdata/raw`
+Export data to \verb{inst/extdata/} or \code{inst/extdata/raw}
 }
 \examples{
 # df <- tibble::tibble(x = 1:3,

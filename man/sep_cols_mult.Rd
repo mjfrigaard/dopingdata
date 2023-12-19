@@ -7,11 +7,11 @@
 sep_cols_mult(data, col, pattern = "[^[:alnum:]]+", col_prefix)
 }
 \arguments{
-\item{data}{`data.frame` or `tibble`}
+\item{data}{\code{data.frame} or \code{tibble}}
 
 \item{col}{column to separate}
 
-\item{pattern}{regular expression pattern passed to `strsplit()`}
+\item{pattern}{regular expression pattern passed to \code{strsplit()}}
 
 \item{col_prefix}{prefix for new columns}
 }

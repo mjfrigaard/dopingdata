@@ -20,7 +20,7 @@ classify_substance(
 \item{value}{character string of substance group value}
 
 \item{substance_col}{column with substances/reasons for sanctions (assumes
-it's `substance_reason`).}
+it's \code{substance_reason}).}
 
 \item{wb}{logical, include word boundary?}
 }

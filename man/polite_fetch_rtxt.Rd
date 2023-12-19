@@ -7,7 +7,7 @@
 polite_fetch_rtxt(..., user_agent, delay, verbose)
 }
 \arguments{
-\item{...}{arguments passed to `robotstxt::robotstxt()`}
+\item{...}{arguments passed to \code{robotstxt::robotstxt()}}
 
 \item{user_agent}{user agent string}
 

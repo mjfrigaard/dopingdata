@@ -15,19 +15,25 @@ classify_wada_substances(usada_data, subs_column)
 substances dataset with newly classified substances
 }
 \description{
-usada_data should be the table of sanctions from the United
-    States Anti-Doping Agency: https://www.usada.org/news/sanctions. The
-    substance_reason column contains the justification for each sanction.
+usada_data should be the table of sanctions from the
+\link{United States Anti-Doping Agenc}y(https://www.usada.org/news/sanctions).
+The \code{substance_reason} column contains the justification for each sanction.
 
-    In some cases, there are multiple substances/reasons, and these should
-    be identified first.
+\if{html}{\out{<div class="sourceCode">}}\preformatted{In some cases, there are multiple substances/reasons, and these should
+be identified first.
+}\if{html}{\out{</div>}}
 }
 \examples{
-usada_data <- readr::read_csv(
-  "inst/extdata/raw/2023-01-13/2023-01-13-usada_data_raw.csv"
-)
-classify_wada_substances(
+usada_data <- read.delim(
+     system.file("extdata",
+                 "raw",
+                 "2023-12-19",
+                 "2023-12-19-tidy_sports.csv", package = "dopingdata"),
+               sep = ",")
+substances <- classify_wada_substances(
   usada_data = usada_data,
   subs_column = substance_reason
 )
+head(substances[c('substance_group', 'substance_reason')])
+
 }

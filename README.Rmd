@@ -2,8 +2,6 @@
 output: 
   rmarkdown::github_document:
     df_print: tibble
-    toc: true
-    toc_depth: 4
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -18,6 +16,8 @@ knitr::opts_chunk$set(
 options(
   repos = "https://cloud.r-project.org")
 ```
+
+# dopingdata
 
 <!-- badges: start -->
 
@@ -179,11 +179,12 @@ usada_sports <- dplyr::mutate(usada_dates,
       true = TRUE, false = FALSE, missing = NA)) 
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "support personnel")) |> 
   dplyr::count(sport, support_personnel) |> 
   tidyr::pivot_wider(names_from = support_personnel, values_from = n)
 ```
 
-### `track and field` or  `track & field`
+### 'track and field' or 'track & field'
 
 I'm going to convert sports like `track & field` as `track and field` (this will help me  determine which athletes/support personnel are involved in multiple sports). 
 
@@ -193,6 +194,7 @@ usada_sports <- dplyr::mutate(usada_sports,
   sport = stringr::str_replace_all(sport, 'track and field', 'track & field'))
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "track")) |> 
   dplyr::count(sport, support_personnel) |> 
   tidyr::pivot_wider(names_from = support_personnel, values_from = n)
 ```
@@ -214,7 +216,7 @@ usada_sports |>
 ```
 
 
-### `paralympic`
+### 'paralympic'
 
 An identifier for paralympic sports: `paralympic`. 
 
@@ -226,11 +228,12 @@ usada_sports <- dplyr::mutate(usada_sports,
       true = TRUE, false = FALSE, missing = NA)) 
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "paralympic|para")) |> 
   dplyr::count(paralympic, sport) |> 
   tidyr::pivot_wider(names_from = paralympic, values_from = n)
 ```
 
-### `multiple_sports` 
+### Multiple sports
 
 Now we can identify the multiple sports using `and` and `, ` in the regular expression. 
 
@@ -242,6 +245,7 @@ usada_sports <- dplyr::mutate(usada_sports,
       true = TRUE, false = FALSE, missing = NA))
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "and |, ")) |> 
   dplyr::count(multiple_sports, sport) |> 
   tidyr::pivot_wider(names_from = multiple_sports, values_from = n)
 ```
@@ -264,7 +268,7 @@ multp_usada_sports <- usada_sports |>
   dplyr::filter(multiple_sports == TRUE) |> 
   tidyr::separate_rows(sport, sep = "and|, ") |> 
   dplyr::mutate(sport = stringr::str_trim(sport, side = "both"))
-glimpse(multp_usada_sports)
+str(multp_usada_sports)
 ```
 
 To combine these with the single-sport athletes, I'll need to remove the single occurrences of the multiple-sport athletes in `usada_sports` (and replace them with the `tidy_usada_sports`)
@@ -312,7 +316,7 @@ Verify
 fs::dir_tree("data-raw/2023-12-19")
 ```
 
-## Substances 
+## Adverse Analytic Findings 
 
 We'll start by classifying 'adverse analytic findings' for a single banned substance. I've written a `get_recent_file()` function to quickly import .csv files from a specified directory:
 
@@ -332,7 +336,7 @@ The sanctions are divided into two categories:
 
 - `non-analytic`: [Non-Analytical Anti-doping Rule Violation](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/) ADRV; *a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.*. 
 
-##### `substance_reason`
+#### substance/reason
 
 The `substance_reason` column contains the details of the sanction, which can include the following information: 
 
@@ -353,7 +357,7 @@ stringr::str_view(tidy_sports$substance_reason,
 ```
 
 
-### Sanction type
+## Sanction Type
 
 Most of the non-analytic sanctions include the terms `non-analytic`/`non-analytical`/etc., as a prefix in the `substance_reason` column.
 
@@ -376,7 +380,7 @@ usada_substances |>
 
 Now I can filter `usada_substances` to the `analytical` sanctions in `sanction_type`.
 
-### Multiple vs. single substances
+## Substances 
 
 *How can I identify the single vs. multiple substances?*
 
@@ -420,7 +424,7 @@ usada_substances |>
   dplyr::count(substance_cat, sort = TRUE)
 ```
 
-## Single analytic substances
+### Single analytic substances
 
 First we'll focus on the sanctions with a single substance listed (we will deal with multiple substances next).
 
@@ -429,11 +433,11 @@ single_analytic_substances <- usada_substances |>
   dplyr::filter(substance_cat == 'single' & sanction_type == "analytical")
 head(single_analytic_substances)
 ```
-## Classifying substances with `classify_wada_substances()`
+### Classifying substances with `classify_wada_substances()`
 
 To identify the [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor), I've written `classify_wada_substances()`, a function that scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). See the `classify_wada_substances()` documentation for more information.
 
-### How `classify_wada_substances()` works (S1 ANABOLIC AGENTS example)
+#### How `classify_wada_substances()` works (S1 ANABOLIC AGENTS example)
 
 `classify_wada_substances()` creates a `substance_group` variable with each of the WADA classifications (these are stored in `dopingdata::wada_classes`)
 
@@ -465,7 +469,7 @@ single_analytic_substances |>
   dplyr::count(substance_group, sort = TRUE)
 ```
 
-## Unclassified substances
+### Unclassified substances
 
 The substances that were not classified using the standard WADA list can be added with `classify_substance()`
 
@@ -475,7 +479,7 @@ single_analytic_substances |>
   count(substance_reason, sort = TRUE)
 ```
 
-### Re-classify substances 
+#### Re-classifying substances 
 
 `classify_substance()` takes a `df`, `substance`, and `value`:
 

@@ -3,13 +3,15 @@
 #' @param raw_data raw dataset
 #' @param fct include factors?
 #'
-#' @return tibble with standardized names, lowercase text, all character!
+#' @return data with standardized names, lowercase text, etc.
 #'
 #' @export
 #'
 #' @examples
 #' require(palmerpenguins)
-#' process_text(palmerpenguins::penguins_raw)
+#' str(palmerpenguins::penguins_raw)
+#' # compare to
+#' str(process_text(palmerpenguins::penguins_raw))
 process_text <- function(raw_data, fct = FALSE) {
   # convert to data.frame
   raw_data <- as.data.frame(raw_data)

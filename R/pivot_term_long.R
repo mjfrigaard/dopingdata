@@ -6,9 +6,6 @@
 #' @export
 #'
 #' @examples
-#' require(stringr)
-#' require(purrr)
-#' require(tibble)
 #' pivot_term_long(term = "A large size in stockings is hard to sell.")
 pivot_term_long <- function(term, sep = "[^[:alnum:]]+") {
 

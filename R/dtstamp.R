@@ -9,15 +9,16 @@
 #'
 #'
 #' @examples
-#' dtstamp(FALSE)
 #' dtstamp()
+#' dtstamp(TRUE)
+#' dtstamp(FALSE, "r")
+#' dtstamp(TRUE, "l")
 dtstamp <- function(include_time = FALSE, side = "none") {
     # date
     raw_dt <- base::Sys.time()
     chr_raw_dt <- base::as.character(raw_dt)
-    lc_dt <- stringr::str_to_lower(chr_raw_dt)
     date_time <- base::as.character(
-                    stringr::str_split(lc_dt, " ", n = 2,
+                    stringr::str_split(chr_raw_dt, " ", n = 2,
                                         simplify = TRUE))
     # clean date
     dt <- date_time[1]
@@ -25,13 +26,15 @@ dtstamp <- function(include_time = FALSE, side = "none") {
     hms_vector <- base::as.character(
                     stringr::str_split(t, ":", n = 3,
                                         simplify = TRUE))
+    h <- hms_vector[1]
+    m <- hms_vector[2]
+    s <- round(as.numeric(hms_vector[3]), 0)
+    # browser()
     # clean time
-    hms_nmd_vec <- base::paste0("h", hms_vector[1],
-                          "m", hms_vector[2],
-                          "s", hms_vector[3])
+    hms_nmd_vec <- base::paste0(h, m, s)
     # time or date
     if (include_time) {
-        stamp <- base::paste0(dt, "_", hms_nmd_vec)
+        stamp <- base::paste0(dt, "-", toupper(hms_nmd_vec))
     } else {
         stamp <- dt
     }

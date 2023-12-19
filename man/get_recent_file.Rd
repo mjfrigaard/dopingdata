@@ -9,7 +9,7 @@ get_recent_file(path = "default", regex = NULL, ext = ".csv")
 \arguments{
 \item{path}{path to data folder}
 
-\item{regex}{regular expression `pattern` passed to `list.files()`}
+\item{regex}{regular expression \code{pattern} passed to \code{list.files()}}
 
 \item{ext}{file extension. Default is 'csv', accepts: 'rds', 'txt', 'tsv',
 or 'dat'}
@@ -19,8 +19,4 @@ top_pth path the recent file
 }
 \description{
 Return the most data file in folder
-}
-\examples{
-get_recent_file(path = "extdata/raw", regex = "sanc", ext = "csv")
-get_recent_file(regex = "subs", ext = "csv")
 }

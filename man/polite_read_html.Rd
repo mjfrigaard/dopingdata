@@ -16,11 +16,11 @@ polite_read_html(
 \arguments{
 \item{url}{web address for scraping}
 
-\item{...}{arguments passed to `httr::GET()`}
+\item{...}{arguments passed to \code{httr::GET()}}
 
 \item{delay}{scraping delay. Default 5 sec}
 
-\item{user_agent}{user agent string. Default value `paste0("polite ", getOption("HTTPUserAgent"), "bot")`}
+\item{user_agent}{user agent string. Default value \code{paste0("polite ", getOption("HTTPUserAgent"), "bot")}}
 
 \item{force}{force re-download of robots.txt}
 

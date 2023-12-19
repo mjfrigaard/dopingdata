@@ -1,29 +1,8 @@
 
-- [Installation](#installation)
-- [Scraping Sanction Data](#scraping-sanction-data)
-- [Processing Data](#processing-data)
-- [Sanction Dates](#sanction-dates)
-- [Sports](#sports)
-  - [Support personnel](#support-personnel)
-  - [`track and field` or
-    `track & field`](#track-and-field-or-track--field)
-  - [Spelling](#spelling)
-  - [`paralympic`](#paralympic)
-  - [`multiple_sports`](#multiple_sports)
-  - [Tidy sports](#tidy-sports)
-- [Substances](#substances)
-  - [AAFs vs ADRVs](#aafs-vs-adrvs)
-  - [Sanction type](#sanction-type)
-  - [Multiple vs. single substances](#multiple-vs-single-substances)
-- [Single analytic substances](#single-analytic-substances)
-- [Classifying substances with
-  `classify_wada_substances()`](#classifying-substances-with-classify_wada_substances)
-  - [How `classify_wada_substances()` works (S1 ANABOLIC AGENTS
-    example)](#how-classify_wada_substances-works-s1-anabolic-agents-example)
-- [Unclassified substances](#unclassified-substances)
-  - [Re-classify substances](#re-classify-substances)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# dopingdata
+
 <!-- badges: start -->
 
 ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
@@ -46,8 +25,8 @@ challenges I decided to combine the utilities into a package.
 You can install the development version of `dopingdata` like so:
 
 ``` r
-# install.packages("pak")
-pak::pak("mjfrigaard/dopingdata")
+# install.packages("devtools")
+devtools::install_github("mjfrigaard/dopingdata")
 ```
 
 ``` r
@@ -287,25 +266,19 @@ usada_sports <- dplyr::mutate(usada_dates,
       true = TRUE, false = FALSE, missing = NA)) 
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "support personnel")) |> 
   dplyr::count(sport, support_personnel) |> 
   tidyr::pivot_wider(names_from = support_personnel, values_from = n)
-#> # A tibble: 66 × 3
-#>    sport                                           `FALSE` `TRUE`
-#>    <chr>                                             <int>  <int>
-#>  1 archery                                               3     NA
-#>  2 baseball                                              1     NA
-#>  3 bobsled                                               2     NA
-#>  4 bobsled and skeleton                                  4     NA
-#>  5 bobsled and skeleton, track and field                 1     NA
-#>  6 boccia                                                2     NA
-#>  7 bowling                                               1     NA
-#>  8 boxing                                                4     NA
-#>  9 brazilian jiu-jitsu                                  13     NA
-#> 10 brazilian jiu-jitsu - athlete support personnel      NA      1
-#> # ℹ 56 more rows
+#> # A tibble: 4 × 2
+#>   sport                                           `TRUE`
+#>   <chr>                                            <int>
+#> 1 brazilian jiu-jitsu - athlete support personnel      1
+#> 2 cycling - athlete support personnel                  6
+#> 3 track and field - athlete support personnel          6
+#> 4 weightlifting - athlete support personnel            1
 ```
 
-### `track and field` or `track & field`
+### ‘track and field’ or ‘track & field’
 
 I’m going to convert sports like `track & field` as `track and field`
 (this will help me determine which athletes/support personnel are
@@ -317,22 +290,18 @@ usada_sports <- dplyr::mutate(usada_sports,
   sport = stringr::str_replace_all(sport, 'track and field', 'track & field'))
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "track")) |> 
   dplyr::count(sport, support_personnel) |> 
   tidyr::pivot_wider(names_from = support_personnel, values_from = n)
-#> # A tibble: 65 × 3
-#>    sport                                           `FALSE` `TRUE`
-#>    <chr>                                             <int>  <int>
-#>  1 archery                                               3     NA
-#>  2 baseball                                              1     NA
-#>  3 bobsled                                               2     NA
-#>  4 bobsled and skeleton                                  4     NA
-#>  5 bobsled and skeleton, track & field                   1     NA
-#>  6 boccia                                                2     NA
-#>  7 bowling                                               1     NA
-#>  8 boxing                                                4     NA
-#>  9 brazilian jiu-jitsu                                  13     NA
-#> 10 brazilian jiu-jitsu - athlete support personnel      NA      1
-#> # ℹ 55 more rows
+#> # A tibble: 6 × 3
+#>   sport                                           `FALSE` `TRUE`
+#>   <chr>                                             <int>  <int>
+#> 1 bobsled and skeleton, track & field                   1     NA
+#> 2 para track & field                                    3     NA
+#> 3 paralympic track & field                             11     NA
+#> 4 paralympic track & field, paralympic volleyball       1     NA
+#> 5 track & field                                        95     NA
+#> 6 track & field - athlete support personnel            NA      6
 ```
 
 ### Spelling
@@ -356,7 +325,7 @@ usada_sports |>
 #> 2 brazilian jiu-jitsu - athlete support personnel     1
 ```
 
-### `paralympic`
+### ‘paralympic’
 
 An identifier for paralympic sports: `paralympic`.
 
@@ -368,25 +337,29 @@ usada_sports <- dplyr::mutate(usada_sports,
       true = TRUE, false = FALSE, missing = NA)) 
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "paralympic|para")) |> 
   dplyr::count(paralympic, sport) |> 
   tidyr::pivot_wider(names_from = paralympic, values_from = n)
-#> # A tibble: 64 × 3
-#>    sport                                           `FALSE` `TRUE`
-#>    <chr>                                             <int>  <int>
-#>  1 archery                                               3     NA
-#>  2 baseball                                              1     NA
-#>  3 bobsled                                               2     NA
-#>  4 bobsled and skeleton                                  4     NA
-#>  5 bobsled and skeleton, track & field                   1     NA
-#>  6 boccia                                                2     NA
-#>  7 bowling                                               1     NA
-#>  8 boxing                                                4     NA
-#>  9 brazilian jiu-jitsu                                  14     NA
-#> 10 brazilian jiu-jitsu - athlete support personnel       1     NA
-#> # ℹ 54 more rows
+#> # A tibble: 14 × 2
+#>    sport                                           `TRUE`
+#>    <chr>                                            <int>
+#>  1 para shooting                                        1
+#>  2 para track & field                                   3
+#>  3 paralympic archery                                   1
+#>  4 paralympic basketball                                2
+#>  5 paralympic boccia                                    1
+#>  6 paralympic curling                                   1
+#>  7 paralympic cycling                                   4
+#>  8 paralympic judo                                      4
+#>  9 paralympic rugby                                     1
+#> 10 paralympic sailing                                   1
+#> 11 paralympic snowboarding                              1
+#> 12 paralympic table tennis                              1
+#> 13 paralympic track & field                            11
+#> 14 paralympic track & field, paralympic volleyball      1
 ```
 
-### `multiple_sports`
+### Multiple sports
 
 Now we can identify the multiple sports using `and` and `,` in the
 regular expression.
@@ -399,22 +372,18 @@ usada_sports <- dplyr::mutate(usada_sports,
       true = TRUE, false = FALSE, missing = NA))
 
 usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "and |, ")) |> 
   dplyr::count(multiple_sports, sport) |> 
   tidyr::pivot_wider(names_from = multiple_sports, values_from = n)
-#> # A tibble: 64 × 3
-#>    sport                                           `FALSE` `TRUE`
-#>    <chr>                                             <int>  <int>
-#>  1 archery                                               3     NA
-#>  2 baseball                                              1     NA
-#>  3 bobsled                                               2     NA
-#>  4 boccia                                                2     NA
-#>  5 bowling                                               1     NA
-#>  6 boxing                                                4     NA
-#>  7 brazilian jiu-jitsu                                  14     NA
-#>  8 brazilian jiu-jitsu - athlete support personnel       1     NA
-#>  9 canoe                                                 1     NA
-#> 10 cycling                                             125     NA
-#> # ℹ 54 more rows
+#> # A tibble: 6 × 2
+#>   sport                                           `TRUE`
+#>   <chr>                                            <int>
+#> 1 bobsled and skeleton                                 4
+#> 2 bobsled and skeleton, track & field                  1
+#> 3 cycling, triathlon                                   3
+#> 4 cycling, weightlifting                               1
+#> 5 paralympic track & field, paralympic volleyball      1
+#> 6 skiing and snowboarding                              1
 ```
 
 ### Tidy sports
@@ -452,18 +421,17 @@ multp_usada_sports <- usada_sports |>
   dplyr::filter(multiple_sports == TRUE) |> 
   tidyr::separate_rows(sport, sep = "and|, ") |> 
   dplyr::mutate(sport = stringr::str_trim(sport, side = "both"))
-glimpse(multp_usada_sports)
-#> Rows: 23
-#> Columns: 9
-#> $ athlete            <chr> "allison, kyler", "allison, kyler", "blandford, jen…
-#> $ sport              <chr> "bobsled", "skeleton", "cycling", "triathlon", "bob…
-#> $ substance_reason   <chr> "non-analytical: refusal to submit to sample collec…
-#> $ sanction_terms     <chr> "4-year suspension; loss of results; sanction tolle…
-#> $ sanction_announced <chr> "10/09/2019", "10/09/2019", "11/28/2017", "11/28/20…
-#> $ sanction_date      <date> 2019-10-09, 2019-10-09, 2017-11-28, 2017-11-28, 20…
-#> $ support_personnel  <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…
-#> $ paralympic         <lgl> FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…
-#> $ multiple_sports    <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…
+str(multp_usada_sports)
+#> tibble [23 × 9] (S3: tbl_df/tbl/data.frame)
+#>  $ athlete           : chr [1:23] "allison, kyler" "allison, kyler" "blandford, jenna" "blandford, jenna" ...
+#>  $ sport             : chr [1:23] "bobsled" "skeleton" "cycling" "triathlon" ...
+#>  $ substance_reason  : chr [1:23] "non-analytical: refusal to submit to sample collection" "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" ...
+#>  $ sanction_terms    : chr [1:23] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "4-year suspension - loss of results" ...
+#>  $ sanction_announced: chr [1:23] "10/09/2019" "10/09/2019" "11/28/2017" "11/28/2017" ...
+#>  $ sanction_date     : Date[1:23], format: "2019-10-09" "2019-10-09" ...
+#>  $ support_personnel : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#>  $ paralympic        : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...
+#>  $ multiple_sports   : logi [1:23] TRUE TRUE TRUE TRUE TRUE TRUE ...
 ```
 
 To combine these with the single-sport athletes, I’ll need to remove the
@@ -534,7 +502,7 @@ fs::dir_tree("data-raw/2023-12-19")
 #> └── 2023-12-19-usada_dates.csv
 ```
 
-## Substances
+## Adverse Analytic Findings
 
 We’ll start by classifying ‘adverse analytic findings’ for a single
 banned substance. I’ve written a `get_recent_file()` function to quickly
@@ -542,7 +510,7 @@ import .csv files from a specified directory:
 
 ``` r
 get_recent_file("data-raw/2023-12-19/", regex = 'sports', ext = '.csv')
-#> File last changed: 2023-12-19 13:19:11.481125
+#> File last changed: 2023-12-19 14:29:09.367087
 #> File name: 2023-12-19-tidy_sports.csv
 #> ✔ import code pasted to clipboard!
 ```
@@ -568,7 +536,7 @@ The sanctions are divided into two categories:
   substantiated by, other evidence of doping or violations by an athlete
   or athlete support personnel.*.
 
-##### `substance_reason`
+#### substance/reason
 
 The `substance_reason` column contains the details of the sanction,
 which can include the following information:
@@ -592,7 +560,7 @@ stringr::str_view(tidy_sports$substance_reason,
 #> [85] │ non-analytical: <tampering, complicity>
 ```
 
-### Sanction type
+## Sanction Type
 
 Most of the non-analytic sanctions include the terms
 `non-analytic`/`non-analytical`/etc., as a prefix in the
@@ -625,7 +593,7 @@ usada_substances |>
 Now I can filter `usada_substances` to the `analytical` sanctions in
 `sanction_type`.
 
-### Multiple vs. single substances
+## Substances
 
 *How can I identify the single vs. multiple substances?*
 
@@ -682,7 +650,7 @@ usada_substances |>
 #> 2 multiple        184
 ```
 
-## Single analytic substances
+### Single analytic substances
 
 First we’ll focus on the sanctions with a single substance listed (we
 will deal with multiple substances next).
@@ -704,7 +672,7 @@ head(single_analytic_substances)
 #> #   multiple_sports <lgl>, sanction_type <chr>, substance_cat <chr>
 ```
 
-## Classifying substances with `classify_wada_substances()`
+### Classifying substances with `classify_wada_substances()`
 
 To identify the [WADA banned
 substances](https://www.wada-ama.org/en/prohibited-list#search-anchor),
@@ -714,7 +682,7 @@ I’ve written `classify_wada_substances()`, a function that scans the
 list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf).
 See the `classify_wada_substances()` documentation for more information.
 
-### How `classify_wada_substances()` works (S1 ANABOLIC AGENTS example)
+#### How `classify_wada_substances()` works (S1 ANABOLIC AGENTS example)
 
 `classify_wada_substances()` creates a `substance_group` variable with
 each of the WADA classifications (these are stored in
@@ -813,7 +781,7 @@ single_analytic_substances |>
 #> 12 P1 BETA-BLOCKERS                        1
 ```
 
-## Unclassified substances
+### Unclassified substances
 
 The substances that were not classified using the standard WADA list can
 be added with `classify_substance()`
@@ -833,7 +801,7 @@ single_analytic_substances |>
 #> 6 methenolone                           1
 ```
 
-### Re-classify substances
+#### Re-classifying substances
 
 `classify_substance()` takes a `df`, `substance`, and `value`:
 

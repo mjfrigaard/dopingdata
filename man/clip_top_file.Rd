@@ -2,19 +2,19 @@
 % Please edit documentation in R/clip_top_file.R
 \name{clip_top_file}
 \alias{clip_top_file}
-\title{Copy the path to top data file in `extdata/` folder on the clipboard}
+\title{Copy the path to top data file in \verb{extdata/} folder on the clipboard}
 \usage{
 clip_top_file(ext, pth, ctime)
 }
 \arguments{
-\item{ext}{file extension. Default is `'csv'`, accepts: `'rds'`, `'txt'`, `'tsv'`,
-or `'dat'`}
+\item{ext}{file extension. Default is \code{'csv'}, accepts: \code{'rds'}, \code{'txt'}, \code{'tsv'},
+or \code{'dat'}}
 
-\item{pth}{path to `extdata` subfolder}
+\item{pth}{path to \code{extdata} subfolder}
 }
 \value{
 list with extension, path, and modification time for most recent file.
 }
 \description{
-Copy the path to top data file in `extdata/` folder on the clipboard
+Copy the path to top data file in \verb{extdata/} folder on the clipboard
 }

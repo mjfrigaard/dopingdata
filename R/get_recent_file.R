@@ -8,11 +8,8 @@
 #'
 #' @return top_pth path the recent file
 #'
-#' @export get_recent_file
+#' @export
 #'
-#' @examples
-#' get_recent_file(path = "extdata/raw", regex = "sanc", ext = "csv")
-#' get_recent_file(regex = "subs", ext = "csv")
 get_recent_file <- function(path = "default", regex = NULL, ext = ".csv") {
 
   if (path != "default") {

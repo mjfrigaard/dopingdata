@@ -12,12 +12,14 @@ process_text(raw_data, fct = FALSE)
 \item{fct}{include factors?}
 }
 \value{
-tibble with standardized names, lowercase text, all character!
+data with standardized names, lowercase text, etc.
 }
 \description{
 Process raw data
 }
 \examples{
 require(palmerpenguins)
-process_text(palmerpenguins::penguins_raw)
+str(palmerpenguins::penguins_raw)
+# compare to
+str(process_text(palmerpenguins::penguins_raw))
 }

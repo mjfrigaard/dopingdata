@@ -23,15 +23,15 @@ polite_download_file(
 
 \item{destfile}{name of destination file}
 
-\item{...}{additional arguments passed to `download.file`}
+\item{...}{additional arguments passed to \code{download.file}}
 
-\item{quiet}{default value is inverse of  `verbose`}
+\item{quiet}{default value is inverse of  \code{verbose}}
 
 \item{mode}{download mode. Default value is "wb"}
 
-\item{path}{path to save. Default path `downloads/`}
+\item{path}{path to save. Default path \verb{downloads/}}
 
-\item{user_agent}{default value `paste0("polite ", getOption("HTTPUserAgent"))`}
+\item{user_agent}{default value \code{paste0("polite ", getOption("HTTPUserAgent"))}}
 
 \item{delay}{default value equal 5}
 

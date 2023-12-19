@@ -16,8 +16,5 @@ tibble of unique terms and term
 Parse string into individual terms (as tibble)
 }
 \examples{
-require(stringr)
-require(purrr)
-require(tibble)
 pivot_term_long(term = "A large size in stockings is hard to sell.")
 }
