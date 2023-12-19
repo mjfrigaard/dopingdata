@@ -387,15 +387,7 @@ Now I can filter `usada_substances` to the `analytical` sanctions in `sanction_t
 Let's take a look at four different sanctions in `sanction_type_example`:
 
 ```{r sanction_type_example, echo=FALSE}
-sanction_type_example <- tibble::tibble(
-             sport = c("swimming","track & field",
-                       "triathlon","track & field"),
-  substance_reason = c("non-analytical: 3 whereabouts failures","cannabinoids",
-                       "androgenic anabolic steroid; cannabinoids; anastrozole; clomiphene; gw1516",
-                       "non-analytical: tampering, administration (iv), and trafficking (testosterone)"),
-     sanction_type = c("non-analytical","analytical",
-                       "analytical","non-analytical"))
-sanction_type_example
+dopingdata::sanction_type_example
 ```
 
 We can see two analytic and two non-analytic sanctions, and each one has a single or multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), so I can use a regular expression to separate the items.
