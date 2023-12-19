@@ -1,0 +1,98 @@
+
+
+I can use some additional regular expressions with the `classify_substance()` function.
+
+### `"elevated t/e"` & `3 whereabouts failures`
+
+```{r classify_substance-unclassified}
+classify_substance(
+  df = unclass_single_aaf_substances,
+  subs_col = substance_reason,
+  subs = "elevated t/e",
+  var = "analytic",
+  val = "S1 ANABOLIC AGENTS",
+  wb = FALSE) |>
+  classify_substance(
+  subs_col = substance_reason,
+  subs = "3 whereabouts failures",
+  var = "non_analytic",
+  val = "3 whereabouts failures",
+  wb = FALSE) |>
+  dplyr::filter(!is.na(analytic) | !is.na(non_analytic)) |>
+  dplyr::select(athlete, sanction_date, substance_reason, analytic, non_analytic)
+```
+
+I can use these to recode the original values--start with the `3 whereabouts failures`
+
+`yair rodriguez` should be non-analytical, so we can create a tiny tibble to bind back to `usada_substance_types` (after removing `rodriguez, yair`)
+
+```{r miss_classified_sanction_type}
+# get rodriguez, yair (3 whereabouts failures)
+miss_classified_sanction_type <- tidy_single_aafs |>
+  filter(athlete == "rodriguez, yair" &
+            sanction_date == lubridate::as_date("2020-12-03")) |>
+  dplyr::mutate(sanction_type = if_else(sanction_type == "analytical",
+    true = "non-analytical", sanction_type)) |>
+  dplyr::select(-substance_group)
+usada_substance_types <- usada_substance_types |>
+  dplyr::filter(athlete != "rodriguez, yair" &
+            sanction_date != lubridate::as_date("2020-12-03")) |>
+  dplyr::bind_rows(miss_classified_sanction_type)
+usada_substance_types |>
+  dplyr::filter(athlete == "rodriguez, yair") |>
+  dplyr::select(athlete, sanction_date, substance_reason, sanction_type)
+```
+
+Now we can address the `elevated t/e` (I classify this as `"S1 ANABOLIC AGENTS"`)
+
+```{r miss_classified_sanction_s1}
+tidy_single_aafs <- tidy_single_aafs |>
+  dplyr::mutate(
+    substance_group = case_when(
+      stringr::str_detect(substance_reason, "elevated t/e") ~ "S1 ANABOLIC AGENTS"))
+
+tidy_single_aafs |>
+  dplyr::filter(str_detect(athlete, "kirk")) |>
+  dplyr::select(athlete, sanction_date, substance_reason, sanction_type)
+```
+
+
+```{r , include=FALSE, eval=FALSE}
+# tidyr::separate_rows(data = bad_dates,
+#   sanction_announced, sep = "updated") |>
+#   dplyr::mutate(sanction_date = stringr::str_remove_all(sanction_announced, ": ")) |>
+#   dplyr::filter(!stringr::str_detect(sanction_date, "^original")) |>
+#   dplyr::mutate(sanction_date = anytime::anydate(sanction_date)) |>
+#   dplyr::mutate(
+#     sanction_date = dplyr::case_when(
+#       athlete == "ngetich, eliud" ~ lubridate::as_date("2022-01-25"),
+#       TRUE ~ sanction_date
+#     )
+#   ) |>
+#   dplyr::select(athlete, sanction_date, sanction_announced)
+```
+
+```{r invisibles}
+hangu_filler <- 'check out the U+3164 HANGUL FILLER ->ㅤ'
+left_to_right_mark <- 'check out the U+200E LEFT-TO-RIGHT MARK ->‎'
+str_view_all(hangu_filler, 'ㅤ', match = TRUE, html = TRUE)
+str_view_all(left_to_right_mark, '‎', match = TRUE, html = TRUE)
+```
+
+```{r}
+"#2b2b2b"
+"#006fe7"
+"#02577A"
+```
+
+
+
+## Import recent data 
+
+To get the most recent data file, I can use `get_recent_path()` **in the console**.
+
+```{r console-get_recent_path, eval=FALSE}
+get_recent_path(folder = "inst/extdata/raw/", type = "csv")
+✔ import code pasted to clipboard!
+✔ use: readr::read_csv('inst/extdata/raw/2023-01-18/2023-01-18-usada_data_raw.csv')
+```

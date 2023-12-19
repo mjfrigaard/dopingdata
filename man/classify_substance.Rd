@@ -4,20 +4,25 @@
 \alias{classify_substance}
 \title{Classify a specific WADA substance}
 \usage{
-classify_substance(df, subs_col, subs, var, val = "match", wb = TRUE)
+classify_substance(
+  df,
+  substance,
+  value,
+  substance_col = "substance_reason",
+  wb = FALSE
+)
 }
 \arguments{
 \item{df}{data from USADA website}
 
-\item{subs_col}{column with substances/reasons for sanctions}
+\item{substance}{character string of banned WADA substances}
 
-\item{subs}{character string of banned WADA substances}
+\item{value}{character string of substance group value}
 
-\item{var}{name of new variable}
+\item{substance_col}{column with substances/reasons for sanctions (assumes
+it's `substance_reason`).}
 
-\item{val}{variable value when matched}
-
-\item{wb}{include word boundary}
+\item{wb}{logical, include word boundary?}
 }
 \value{
 substance dataset with newly classified substances

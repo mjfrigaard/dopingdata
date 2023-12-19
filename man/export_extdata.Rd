@@ -2,29 +2,29 @@
 % Please edit documentation in R/export_extdata.R
 \name{export_extdata}
 \alias{export_extdata}
-\title{Export data to inst/extdata/}
+\title{Export data to `inst/extdata/` or `inst/extdata/raw`}
 \usage{
-export_extdata(x, inst_path, raw = TRUE)
+export_extdata(x, path = "", raw = TRUE)
 }
 \arguments{
 \item{x}{data to export}
 
-\item{inst_path}{path to 'inst/' folder (and only 'inst/' folder!)}
-
 \item{raw}{logical, is this a raw dataset?}
+
+\item{inst_path}{path to 'inst/' folder (and only 'inst/' folder!)}
 }
 \value{
 exported data
 }
 \description{
-Export data to inst/extdata/
+Export data to `inst/extdata/` or `inst/extdata/raw`
 }
 \examples{
-df <- tibble::tibble(x = 1:3,
-                     y = c("a", "b", "c"),
-                     z = c(TRUE, FALSE, NA))
-export_extdata(x = df, inst_path = "inst/", raw = TRUE)
-export_extdata(x = df, inst_path = "inst/", raw = FALSE)
-unlink(paste0("inst/extdata/raw/", as.character(Sys.Date()), "_df.csv"))
-unlink(paste0("inst/extdata/", "df.csv"))
+# df <- tibble::tibble(x = 1:3,
+#                     y = c("a", "b", "c"),
+#                     z = c(TRUE, FALSE, NA))
+# export_extdata(x = df, inst_path = "inst/", raw = TRUE)
+# export_extdata(x = df, inst_path = "inst/", raw = FALSE)
+# unlink(paste0("inst/extdata/raw/", as.character(Sys.Date()), "_df.csv"))
+# unlink(paste0("inst/extdata/", "df.csv"))
 }

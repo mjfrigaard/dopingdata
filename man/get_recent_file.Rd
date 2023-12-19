@@ -4,12 +4,14 @@
 \alias{get_recent_file}
 \title{Return the most data file in folder}
 \usage{
-get_recent_file(path, type = "csv")
+get_recent_file(path = "default", regex = NULL, ext = ".csv")
 }
 \arguments{
 \item{path}{path to data folder}
 
-\item{type}{file extension. Default is 'csv', accepts: 'rds', 'txt', 'tsv',
+\item{regex}{regular expression `pattern` passed to `list.files()`}
+
+\item{ext}{file extension. Default is 'csv', accepts: 'rds', 'txt', 'tsv',
 or 'dat'}
 }
 \value{
@@ -19,11 +21,6 @@ top_pth path the recent file
 Return the most data file in folder
 }
 \examples{
-require(fs)
-path_files <- fs::dir_ls("inst/extdata/")
-path_files
-get_recent_file("inst/extdata/", "csv")
-# create tmp dir
-fs::dir_create("tmp/")
-get_recent_file("tmp", "csv")
+get_recent_file(path = "extdata/raw", regex = "sanc", ext = "csv")
+get_recent_file(regex = "subs", ext = "csv")
 }

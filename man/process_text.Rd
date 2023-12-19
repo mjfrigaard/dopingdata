@@ -4,10 +4,12 @@
 \alias{process_text}
 \title{Process raw data}
 \usage{
-process_text(raw_data)
+process_text(raw_data, fct = FALSE)
 }
 \arguments{
-\item{raw_data}{}
+\item{raw_data}{raw dataset}
+
+\item{fct}{include factors?}
 }
 \value{
 tibble with standardized names, lowercase text, all character!

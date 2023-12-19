@@ -3,16 +3,6 @@
 #' @param pth path to file or folder
 #' @param full return datetime (instead of date)
 #'
-#' @importFrom fs dir_exists
-#' @importFrom fs dir_info
-#' @importFrom cli cli_abort
-#' @importFrom cli cli_alert_success
-#' @importFrom dplyr select
-#' @importFrom dplyr mutate
-#' @importFrom dplyr arrange
-#' @importFrom dplyr slice
-#' @importFrom purrr set_names
-#' @importFrom dplyr slice
 #' @import glue
 #'
 #' @return vrsn character vector of date or datetime

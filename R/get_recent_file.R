@@ -1,81 +1,79 @@
 #' Return the most data file in folder
 #'
 #' @param path path to data folder
-#' @param type file extension. Default is 'csv', accepts: 'rds', 'txt', 'tsv',
+#' @param regex regular expression `pattern` passed to `list.files()`
+#' @param ext file extension. Default is 'csv', accepts: 'rds', 'txt', 'tsv',
 #'     or 'dat'
-#'
-#' @importFrom fs dir_exists
-#' @importFrom cli cli_alert_warning
-#' @importFrom cli cli_text
-#' @importFrom cli cli_alert_info
-#' @importFrom glue glue
-#' @importFrom fs dir_info
-#' @importFrom dplyr select
-#' @importFrom dplyr arrange
-#' @importFrom dplyr slice
-#' @importFrom tools file_ext
 #'
 #'
 #' @return top_pth path the recent file
+#'
 #' @export get_recent_file
 #'
 #' @examples
-#' require(fs)
-#' path_files <- fs::dir_ls("inst/extdata/")
-#' path_files
-#' get_recent_file("inst/extdata/", "csv")
-#' # create tmp dir
-#' fs::dir_create("tmp/")
-#' get_recent_file("tmp", "csv")
-get_recent_file <- function(path, type = "csv") {
-  if (!fs::dir_exists(path)) {
-    cli::cli_alert_warning("folder does not exist!")
-  }
-  if (type == "csv") {
-    type_regex <- paste0(".", "csv", "$")
-  } else if (type %in% c("rds", "txt", "tsv", "dat")) {
-    type_regex <- switch(type,
-      rds = paste0(".rds$"),
-      txt = paste0(".txt$"),
-      tsv = paste0(".tsv$"),
-      dat = paste0(".dat$"),
-      cli::cli_text("Invalid file type: {type}"),
-      cli::cli_alert_info("Try one of: rds, txt, tsv, or dat")
-    )
+#' get_recent_file(path = "extdata/raw", regex = "sanc", ext = "csv")
+#' get_recent_file(regex = "subs", ext = "csv")
+get_recent_file <- function(path = "default", regex = NULL, ext = ".csv") {
+
+  if (path != "default") {
+    pth <- file.path(path)
   } else {
-    stop(glue::glue("No {type} files in directory"))
+    pth <- file.path(getwd())
   }
 
-  info_tbl <- fs::dir_info(
-    path = path,
-    type = "file",
-    recurse = TRUE,
-    regexp = type_regex
-  )
+  if (!dir.exists(pth)) {
+    cli::cli_abort("Invalid file path: \n {pth}")
+  }
 
-  if (nrow(info_tbl) < 1) {
-    stop(glue::glue("found {nrow(info_tbl)} {type} files in directory"))
+  if (!is.null(regex)) {
+  dir_files_tbl <- fs::dir_info(path = pth) |>
+    dplyr::select(
+      pth = path,
+      ctime = change_time) |>
+    dplyr::mutate(
+      pth = as.character(pth),
+      ext = tools::file_ext(pth)) |>
+    dplyr::filter(
+          stringr::str_detect(pth, regex))
   } else {
-    cols_tbl <- dplyr::select(info_tbl,
-      path, type, mtime = modification_time)
-    sorted_tbl <- dplyr::arrange(.data = cols_tbl, desc(mtime))
-    top_tbl <- dplyr::slice(.data = sorted_tbl, 1)
-    top_pth <- base::as.character(top_tbl[["path"]])
-    top_time <- top_tbl[["mtime"]]
-
-  ext <- tools::file_ext(top_pth)
-  cpy_clip <- switch(ext,
-      csv = paste0("readr::read_csv('", top_pth, "')"),
-      rds = paste0("readr::read_rds('", top_pth, "')"),
-      txt = paste0("readr::read_delim('", top_pth, "', delim = ',')"),
-      tsv = paste0("readr::read_tsv('", top_pth, "')"),
-      dat = paste0("readr::read_tsv('", top_pth, "')"))
-    cli::cli_text(msg = "File last modified: {top_time}")
-      clipr::write_clip(
-        content = cpy_clip,
-        return_new = TRUE,
-        allow_non_interactive = TRUE)
-    cli::cli_alert_success("import code pasted to clipboard!")
+  dir_files_tbl <- fs::dir_info(path = pth) |>
+    dplyr::select(
+      pth = path,
+      ctime = change_time) |>
+    dplyr::mutate(
+      pth = as.character(pth),
+      ext = tools::file_ext(pth))
   }
-  return(top_pth)
+
+  if (nrow(dir_files_tbl) == 0) {
+    cli::cli_abort("Found {nrow(dir_files_tbl)} matching `{regex}` files in: \n '{pth}'")
+  }
+
+  file_extn <- as.character(ext)
+
+  files_tbl <- dplyr::filter(dir_files_tbl,
+    stringr::str_detect(pth, file_extn))
+
+  if (nrow(files_tbl) == 0) {
+    cli::cli_abort("Found {nrow(files_tbl)} files with `{ext}` extension in: \n '{pth}'")
+  }
+
+  sorted_files_tbl <- files_tbl |>
+    dplyr::arrange(dplyr::desc(ctime))
+
+    top_dttm <- max(sorted_files_tbl$ctime)
+
+    recent_tbl <- dplyr::filter(sorted_files_tbl,
+      ctime == lubridate::as_datetime(top_dttm)) |>
+      dplyr::select(
+        max_dttm = ctime,
+        pth,
+        ext
+      )
+
+    clip_top_file(
+      ext = recent_tbl[['ext']],
+      pth = recent_tbl[['pth']],
+      ctime = recent_tbl[['max_dttm']]
+      )
 }

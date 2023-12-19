@@ -39,7 +39,7 @@ classify_wada_substances <- function(usada_data, subs_column) {
       stringr::str_detect({{ subs_column }}, s8_regex) ~ "S8 CANNABINOIDS",
       stringr::str_detect({{ subs_column }}, s9_regex) ~ "S9 GLUCOCORTICOIDS",
       stringr::str_detect({{ subs_column }}, p1_regex) ~ "P1 BETA-BLOCKERS",
-      TRUE ~ NA_character_
+      TRUE ~ "UNCLASSIFIED"
     )
   )
   return(substances)

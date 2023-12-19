@@ -23,32 +23,15 @@ options(
   pillar.print_min = 25)
 library(polite)
 library(dopingdata)
-library(dplyr)
-library(tidyr)
-library(stringr)
-library(forcats)
-library(lubridate)
-library(readr)
-library(readxl)
-library(janitor)
-library(anytime)
 library(robotstxt)
 options(robotstxt_warn = FALSE)
 ```
 
 Packages:
 
-```{r pkg, eval=FALSE, message=FALSE, warning=FALSE}
+```{r pkg, eval=TRUE, message=FALSE, warning=FALSE}
+library(polite)
 library(dopingdata)
-library(dplyr)
-library(tidyr)
-library(stringr)
-library(forcats)
-library(lubridate)
-library(readr)
-library(readxl)
-library(janitor)
-library(anytime)
 library(robotstxt)
 options(robotstxt_warn = FALSE)
 ```
@@ -64,7 +47,7 @@ Because this package is built on top of the efforts of the fine people who colle
 To install this package, run the code below: 
 
 ```{r inst-polite, eval=FALSE}
-remotes::install_github("dmi3kno/polite")
+pak::pak("dmi3kno/polite")
 library(polite)
 ```
 
@@ -110,17 +93,6 @@ I can see the `Allow: /` configuration [gives us access to download](https://kin
 
 Below are the steps used to scrape the sanctions table:
 
-```{r scrape, include=FALSE, eval=FALSE}
-usada_url = "https://www.usada.org/testing/results/sanctions/"
-# extract html
-usada_extraction <- rvest::read_html(usada_url)
-# nodes
-usada_nodes <- rvest::html_nodes(usada_extraction, "table")
-# raw data
-usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]]) |> 
-  tibble::as_tibble()
-```
-
 ```{r polite-scraping, eval=FALSE}
 usada_url = "https://www.usada.org/testing/results/sanctions/"
 usada_nodes <- polite::bow(usada_url) |> 
@@ -129,73 +101,40 @@ usada_nodes <- polite::bow(usada_url) |>
 usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
 ```
 
-```{r hidden-usada_sanctions_raw-import, message=FALSE, warning=FALSE, echo=FALSE}
-usada_sanctions_raw <- readr::read_csv(
-  '../inst/extdata/raw/2023-01-22_usada_sanctions_raw.csv')
+### Exporting raw data 
+
+Some common tasks (like exporting the raw data as a .csv file into a date-stamped folder and file) have been wrapped in functions: 
+
+
+```{r usada_sanctions_raw, echo=FALSE, message=FALSE, warning=FALSE}
+usada_sanctions_raw <- read.csv("../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
+```
+
+```{r eval=TRUE}
+export_data(
+  x = usada_sanctions_raw, 
+  path = "../dev")
+```
+
+There's also an `export_extdata()` function if you're storing the data in a package: 
+
+```{r}
+export_extdata(
+  x = usada_sanctions_raw, 
+  path = "dev", 
+  raw = TRUE)
+```
+
+
+```{r}
+dir("../inst/extdata/", recursive = TRUE)
 ```
 
 What does the raw data look like? 
 
-```{r glimpse-usada_sanctions_raw}
-dplyr::glimpse(usada_sanctions_raw)
+```{r import-usada_sanctions_raw}
+usada_sanctions_raw <- read.csv("../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
+str(usada_sanctions_raw)
 ```
 
-You can also use the `scrape_usada_sanctions()` function. 
-
-## Process text 
-
-The raw HTML table needs some reformatting/restructuring before I can build any visualizations or models. I'll start by standardizing the names and making all the text lowercase. 
-
-```{r clean_names-str_to_lower}
-usada_sanctions_lc <- janitor::clean_names(usada_sanctions_raw) |> 
-                     purrr::map_df(.f = str_to_lower)
-glimpse(usada_sanctions_lc)
-```
-
-This takes care of the column names and case, but what about all the invisible characters? (wait, what is a [invisible character???](https://invisible-characters.com/)).
-
-For cleaning text, we can use the `process_text()` function, which adds a few steps: 
-
-1. replaces carriage returns (`\\r`) and newlines (`\\n`) with white space  
-2. converts **all** variables to text (`chr`)  
-
-```{r usada_sanctions_pro}
-usada_sanctions_pro <- process_text(usada_sanctions_raw)
-dplyr::glimpse(usada_sanctions_pro)
-```
-
-If I compare with `waldo::compare()`, I can see the differences: 
-
-```{r waldo-compare}
-waldo::compare(usada_sanctions_lc, usada_sanctions_pro)
-```
-
-## Exporting the raw data
-
-I'll export the raw data into the `inst/extdata/raw/` folder. I've written a custom function for date-stamping the raw data before exporting: 
-
-```{r export_extdata-raw}
-export_extdata(x = usada_sanctions_raw, 
-  inst_path = "../inst/", raw = TRUE)
-```
-
-Verify: 
-
-```{r verify}
-fs::dir_tree("../inst/extdata/raw/")
-```
-
-## Export processed data 
-
-I want to export the processed data into the `inst/extdata/` folder, which I can create using `export_extdata(raw = FALSE)`
-
-```{r export_extdata-processed}
-export_extdata(x = usada_sanctions_pro, 
-  inst_path = "../inst/", raw = FALSE)
-```
-
-Verify: 
-
-```{r processed-verify}
-fs::dir_tree(path = '../inst/extdata/', regexp = "sanctions_pro")
-```
+You can also use the `scrape_sanctions()` function. 

@@ -2,7 +2,6 @@
 #'
 #' @param string character vector of items
 #'
-#' @importFrom stringr str_remove_all
 #'
 #' @return wb_regex regular expression
 #' @export create_regex_wb

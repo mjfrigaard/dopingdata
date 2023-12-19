@@ -1,5 +1,9 @@
 ---
-output: github_document
+output: 
+  rmarkdown::github_document:
+    df_print: tibble
+    toc: true
+    toc_depth: 4
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -13,8 +17,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-# dopingdata
-
 <!-- badges: start -->
 
 ![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
@@ -23,112 +25,465 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-`dopingdata` contains data from the [United States Anti-Doping Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency) for exploration, modeling, and visualizations. The datasets in this package are derived from from the [USADA website](https://www.usada.org/) and the [World Anti-Doping Agency (WADA) banned substances list](https://www.wada-ama.org/en/prohibited-list?q=).
+`dopingdata` contains data from the [United States Anti-Doping Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency) for exploration, modeling, and visualizations. The datasets in this package are derived from from the [USADA website](https://www.usada.org/) and the [World Anti-Doping Agency (WADA) banned substances list](https://www.wada-ama.org/en/prohibited-list?q=). Scraping, processing, and visualizing these data presented so many unique challenges I decided to combine the utilities into a package.
 
 ## Installation
 
 You can install the development version of `dopingdata` like so:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mjfrigaard/dopingdata")
+# install.packages("pak")
+pak::pak("mjfrigaard/dopingdata")
 ```
 
-## Raw Data
+```{r}
+library(dopingdata)
+```
+
+## Scraping Sanction Data
 
 Each dataset was ha**rvest**ed using the [`rvest`](https://rvest.tidyverse.org/) and [`xml2`](https://xml2.r-lib.org/) packages, but using manners (with the [`polite`](https://dmi3kno.github.io/polite/) package).
 
--   All raw datasets have a date (`YYYY-MM-DD`) prefix and `_raw` suffix
-    -   See the `scraping-usada-sanctions.Rmd` and `scraping-usada-proh-assoc.Rmd` vignettes for more information
-
-    -   The raw data is then saved in the `inst/extdata/raw` folder
-
-```{r raw-data, echo=FALSE}
-fs::dir_tree("inst/extdata/raw")
+```{r , eval=FALSE}
+scrape_sanctions(dest_path = "dev")
 ```
 
-## Processed Data
-
-Processed datasets have the same dimensions and structure as the `_raw` data, but they've been formatted for easier wrangling/manipulation
-
--   All processed datasets have a `_pro` suffix
-
-    -   Processed data have all had the column names formatted with `janitor::clean_names()`
-
-    -   All of the text has been converted to lowercase
-
-    -   See the `scraping-usada-sanctions.Rmd` and `scraping-usada-proh-assoc.Rmd` vignettes for more information
-
-    -   Processed datasets are in the `inst/extdata/` folder:
-
-```{r pro-data, echo=FALSE}
-fs::dir_tree("inst/extdata/", regexp = "_pro")
+```         
+Exporting raw data: dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv
+Raw data successfully exported!
 ```
 
-## Derived Data
+## Processing Data
 
-Additional datasets derived from the from the processed data and live in the `inst/extdata/` folder (and do not have a date prefix or any suffixes).
+`process_text()` performs the following:
 
-### Sanction Dates
+-   Processed data have all had the column names formatted `snake_case`
 
-The `sanction_announced` initially includes two dates (original, updated) for a selection of athletes. These observations are wrangled and formatted into dates. Derived from the `usada_sanctions_pro.csv` data.
+-   All of the text has been converted to lowercase
 
--   See the `vignettes/sanction-dates.Rmd` vignette for more information:
-
-    ```{r dates, echo = FALSE}
-    fs::dir_tree("inst/extdata/", regexp = "_dates")
-    ```
-
-### Sports
-
-The **`sport`** column has been 'tidied' and athletes/support personnel listed with more than one sport have been repeated in the data. These data are derived from the `usada_dates.csv` data.
-
--   the sports separated and 'tidied' in `vignettes/sanction-sports.Rmd`:
-
-    ```{r sports, echo = FALSE}
-    fs::dir_tree("inst/extdata/", regexp = "sports")
-    ```
-
-### Adverse Analytical Findings (AAF)
-
-The **Single Substance Violations** (i.e., Adverse Analytical Finding, AAF) are derived from `tidy_sports.csv`:
-
--   Adverse analytical finding (AAF) sanctions with a single substance are in `vignettes/single-aaf-substances.Rmd`:
-
-    ```{r single_aafs, echo = FALSE}
-    fs::dir_tree("inst/extdata/", regexp = "single_aafs")
-    ```
-
-The **Multiple Substance Violations** (i.e., Adverse Analytical Finding, AAF) are derived from
-
--   Adverse analytical finding (AAF) sanctions with multiple substance are in `vignettes/multiple-aaf-substances.Rmd`:
-
-    ```{r multiple_aaf, echo=FALSE}
-    fs::dir_tree("inst/extdata/", regexp = "tidy_mult")
-    ```
-
-### Non-Analytical Anti-doping Rule Violation (ADRV)
-
-The **Single Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the `tidy_sports.csv` data.
-
-The **Multiple Substance, Non-Analytic Violations** (i.e., Non-Analytical Anti-doping Rule Violation, ADRV) are derived from the `tidy_sports.csv` data.
-
-### Sanction terms
-
-The type and length of suspension are derived `tidy_single_aafs.csv` and `tidy_multp_aaf_subs.csv` data.
-
-### Prohibited Associations
-
-The prohibited associations are derived from the `usada_prohib_assoc_pro.csv` data.
-
-## WADA data
-
-This package also includes a list of the [World Anti-Doping Agency (WADA)](https://en.wikipedia.org/wiki/World_Anti-Doping_Agency) banned substances (published online [here](https://www.wada-ama.org/en/prohibited-list?q=)).
-
-```{r wada-data, echo=FALSE}
-fs::dir_tree("inst/extdata/wada/")
+```{r}
+usada_raw <- read.csv("dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
+str(usada_raw)
 ```
 
-### More WADA Resources on banned substances
+```{r}
+usada <- process_text(raw_data = usada_raw)
+str(usada)
+```
 
--   [USADA - UFC](https://ufc.usada.org/wp-content/uploads/UFC-Prohibited-List.pdf)
+
+
+## Sanction Dates
+
+`sanction_announced` contains the date the sanction was announced, and about 30 of these contain two values (`original` and `updated`). Wrangling these values pose some challenges because they aren't *consistently* messy. 
+
+```{r}
+subset(usada, 
+  grepl("^original", usada[['sanction_announced']]), 
+  sanction_announced)
+```
+
+I decided to split these into three `data.frame`s to wrangle the dates (`bad_dates`, `good_dates`, and `no_dates`).
+
+```{r}
+bad_dates <- subset(usada, 
+  grepl("^original", usada[['sanction_announced']]))
+good_dates <- subset(usada, 
+  !grepl("^original", usada[['sanction_announced']]) & sanction_announced != "")
+no_dates <- subset(usada,
+  athlete == "*name removed" & sanction_announced == "")
+```
+
+I've written a `clean_dates()` function that takes `date_col`, `split` and `pattern` arguments: 
+
++ `df` = processed USADA dataset with messy dates
+
++ `date_col` = sanction date column (usually `sanction_announced`)
+
++ `split` = regex to pass to split argument of `strsplit()` (defaults to `"updated"`)
+
++ `pattern` = regex for other non-date pattern (defaults to `"original"`)
+
+```{r}
+cleaned_dates <- clean_dates(
+  df = bad_dates, 
+  date_col = "sanction_announced", 
+  split = "updated", 
+  pattern = "original")
+head(
+  cleaned_dates[c('sanction_announced', 'pattern_date', 'split_date')]
+)
+```
+
+I split the bad dates on `"updated"` and provided `"original"` as the pattern (the opposite will also work). The `sanction_date` column will contain the correctly formatted updated `sanction_date`.  
+
+```{r}
+names(cleaned_dates)[names(cleaned_dates) == 'split_date'] <- 'sanction_date'
+names(cleaned_dates)[names(cleaned_dates) == 'pattern_date'] <- 'original_date'
+head(
+  cleaned_dates[c('sanction_announced', 'sanction_date', 'original_date')]
+)
+```
+
+After formatting `good_dates` and removing `original_date` column we can combine the two with `rbind()`:
+
+```{r}
+good_dates$sanction_date <- as.Date(x = good_dates[['sanction_announced']], 
+                                    format = "%m/%d/%Y")
+# get intersecting names 
+nms <- intersect(names(cleaned_dates), names(good_dates))
+# bind the two datasets 
+usada_dates <- rbind(good_dates, cleaned_dates[nms])
+str(usada_dates)
+```
+
+
+```{r}
+export_data(x = usada_dates, path = "data-raw")
+```
+
+## Sports 
+
+To wrangle the sports, I'll use packages and functions from the `tidyverse` (`dplyr`, `stringr`, `tidyr`, etc.), but I also provide the base R alternatives (wherever possible).
+
+```{r}
+library(tidyverse)
+```
+
+`tidyverse` functions will return a `tibble` (not a `data.frame`), which prints fewer rows to the console. 
+
+```{r}
+usada_sports <- tibble::as_tibble(usada_dates)
+str(usada_sports)
+```
+
+We can start by counting the `sport` column:
+
+```{r count-sports-raw}
+usada_sports |> 
+  dplyr::count(sport, sort = TRUE)
+```
+
+### Support personnel
+
+Some of the sports aren't sports--they're `athlete support personnel`. These have `support_personnel` identifier.
+
+```{r support_personnel}
+usada_sports <- dplyr::mutate(usada_dates, 
+  # support_personnel
+  support_personnel = 
+    dplyr::if_else(condition = stringr::str_detect(
+      sport, "support personnel"), 
+      true = TRUE, false = FALSE, missing = NA)) 
+
+usada_sports |> 
+  dplyr::count(sport, support_personnel) |> 
+  tidyr::pivot_wider(names_from = support_personnel, values_from = n)
+```
+
+### `track and field` or  `track & field`
+
+I'm going to convert sports like `track & field` as `track and field` (this will help me  determine which athletes/support personnel are involved in multiple sports). 
+
+```{r track-field}
+usada_sports <- dplyr::mutate(usada_sports,
+  # track & field
+  sport = stringr::str_replace_all(sport, 'track and field', 'track & field'))
+
+usada_sports |> 
+  dplyr::count(sport, support_personnel) |> 
+  tidyr::pivot_wider(names_from = support_personnel, values_from = n)
+```
+
+
+### Spelling 
+
+The incorrect spelling for `brazilian jiu-jitsu` (`brazillian jiu-jitsu`) is corrected below.
+
+```{r bjj}
+usada_sports <- dplyr::mutate(usada_sports, 
+  # brazilian jiu-jitsu
+  sport = dplyr::case_when(
+    sport == 'brazillian jiu-jitsu' ~ 'brazilian jiu-jitsu',
+    TRUE ~ sport)) 
+usada_sports |> 
+  dplyr::filter(stringr::str_detect(sport, "jitsu")) |> 
+  dplyr::count(sport, sort = TRUE)
+```
+
+
+### `paralympic`
+
+An identifier for paralympic sports: `paralympic`. 
+
+```{r paralympic}
+usada_sports <- dplyr::mutate(usada_sports, 
+  # paralympic
+  paralympic = 
+    dplyr::if_else(condition = stringr::str_detect(sport, "paralympic|para"), 
+      true = TRUE, false = FALSE, missing = NA)) 
+
+usada_sports |> 
+  dplyr::count(paralympic, sport) |> 
+  tidyr::pivot_wider(names_from = paralympic, values_from = n)
+```
+
+### `multiple_sports` 
+
+Now we can identify the multiple sports using `and` and `, ` in the regular expression. 
+
+```{r multiple_sports}
+usada_sports <- dplyr::mutate(usada_sports, 
+  # multiple_sports
+  multiple_sports = 
+    if_else(condition = stringr::str_detect(sport, "and |, "), 
+      true = TRUE, false = FALSE, missing = NA))
+
+usada_sports |> 
+  dplyr::count(multiple_sports, sport) |> 
+  tidyr::pivot_wider(names_from = multiple_sports, values_from = n)
+```
+
+### Tidy sports
+
+The athletes listed with multiple sports will occupy multiple rows in a 'tidy' version of `usada_sports`. We can check this using `count()` below to verify we have one athlete for each sport:
+
+```{r check-tidy-sports}
+usada_sports |> 
+  dplyr::filter(multiple_sports == TRUE) |> 
+  tidyr::separate_rows(sport, sep = "and|, ") |> 
+  dplyr::count(athlete, sport)
+```
+
+Remove any white-space left over from `tidyr::separate_rows()` with `stringr::str_trim()` to create a `multp_usada_sports`. 
+
+```{r multp_usada_sports}
+multp_usada_sports <- usada_sports |> 
+  dplyr::filter(multiple_sports == TRUE) |> 
+  tidyr::separate_rows(sport, sep = "and|, ") |> 
+  dplyr::mutate(sport = stringr::str_trim(sport, side = "both"))
+glimpse(multp_usada_sports)
+```
+
+To combine these with the single-sport athletes, I'll need to remove the single occurrences of the multiple-sport athletes in `usada_sports` (and replace them with the `tidy_usada_sports`)
+
+```{r single_usada_sports}
+# get athlete names
+multp_sports_athletes <- unique(multp_usada_sports['athlete'])
+# remove from 
+single_usada_sports <- dplyr::filter(usada_sports, 
+                                        athlete %nin% multp_sports_athletes)
+```
+
+Verify there aren't any duplicates in `single_usada_sports` (there should be zero rows here)
+
+```{r check-single_usada_sports}
+single_usada_sports |> 
+  dplyr::count(athlete, sanction_date, sport) |> 
+  dplyr::filter(n > 1)
+```
+
+Now we can combine the two datasets and verify there aren't any duplicates (again). 
+
+```{r tidy_sports}
+tidy_sports <- dplyr::bind_rows(single_usada_sports, multp_usada_sports)
+tidy_sports |> 
+  dplyr::count(athlete, sanction_date, sport) |> 
+  dplyr::filter(n > 1)
+```
+
+```{r check-tidy_sports}
+str(tidy_sports)
+```
+
+Export `tidy_sports` to `data-raw/`
+
+```{r export-sports, eval=TRUE}
+export_data(
+  x = tidy_sports, 
+  path = "data-raw")
+```
+
+Verify 
+
+```{r}
+fs::dir_tree("data-raw/2023-12-19")
+```
+
+## Substances 
+
+We'll start by classifying 'adverse analytic findings' for a single banned substance. I've written a `get_recent_file()` function to quickly import .csv files from a specified directory:
+
+```{r}
+get_recent_file("data-raw/2023-12-19/", regex = 'sports', ext = '.csv')
+```
+
+```{r}
+tidy_sports <- read.delim(file = 'data-raw/2023-12-19/2023-12-19-tidy_sports.csv', sep = ',')
+```
+
+#### AAFs vs ADRVs
+
+The sanctions are divided into two categories: 
+
+- `analytic`: [Adverse Analytical Finding](https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text), AAF; *An AAF is a report from a WADA-accredited laboratory that identifies the presence of a prohibited substance and/or its metabolites or markers in a sample.* 
+
+- `non-analytic`: [Non-Analytical Anti-doping Rule Violation](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/) ADRV; *a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.*. 
+
+##### `substance_reason`
+
+The `substance_reason` column contains the details of the sanction, which can include the following information: 
+
+1. The name of the banned substance  
+
+2. A description of the infraction (if non-analytic)  
+
+We will use regular expressions to identify the type of substance behind the sanction. See the examples below:
+
+```{r steroid-view}
+stringr::str_view(tidy_sports$substance_reason, 
+  "use \\(epo & hgh\\)", match = TRUE)
+```
+
+```{r non-analytic-view}
+stringr::str_view(tidy_sports$substance_reason,
+  "tampering, complicity", match = TRUE)
+```
+
+
+### Sanction type
+
+Most of the non-analytic sanctions include the terms `non-analytic`/`non-analytical`/etc., as a prefix in the `substance_reason` column.
+
+I can pass these terms as regular expressions to create the `sanction_type` variable, which will contain two values: `non-analytical` and `analytical`. I'll save this variable in a new the `usada_substances` dataset:
+
+```{r usada_sanction_types, eval=TRUE}
+usada_substances <- dplyr::mutate(.data = tidy_sports,
+    sanction_type = dplyr::case_when(
+      stringr::str_detect(string = substance_reason,
+        "non-analytical") ~ "non-analytical",
+      !stringr::str_detect(substance_reason,
+        "non-analytical") ~ "analytical",
+      TRUE ~ NA_character_
+    )
+  )
+usada_substances |>
+  dplyr::count(sanction_type, sort = TRUE)
+```
+
+
+Now I can filter `usada_substances` to the `analytical` sanctions in `sanction_type`.
+
+### Multiple vs. single substances
+
+*How can I identify the single vs. multiple substances?*
+
+Let's take a look at four different sanctions in `sanction_type_example`:
+
+```{r sanction_type_example, echo=FALSE}
+sanction_type_example <- tibble::tibble(
+             sport = c("swimming","track & field",
+                       "triathlon","track & field"),
+  substance_reason = c("non-analytical: 3 whereabouts failures","cannabinoids",
+                       "androgenic anabolic steroid; cannabinoids; anastrozole; clomiphene; gw1516",
+                       "non-analytical: tampering, administration (iv), and trafficking (testosterone)"),
+     sanction_type = c("non-analytical","analytical",
+                       "analytical","non-analytical"))
+sanction_type_example
+```
+
+We can see two analytic and two non-analytic sanctions, and each one has a single or multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), so I can use a regular expression to separate the items.
+
+```{r test-substance_cat}
+dplyr::mutate(sanction_type_example,
+  substance_cat = case_when(
+    # identify the multiple_sr substances using a regular expression
+    stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'multiple',
+    # negate the regular expression for the single substances
+    !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'single',
+    TRUE ~ NA_character_)) |>
+  dplyr::count(substance_cat, sanction_type) |> 
+  tidyr::pivot_wider(names_from = substance_cat, values_from = n)
+```
+
+The `substance_cat` identifier can be used to separate sanctions with multiple substance/reasons from sanctions with a single substance or reason.
+
+```{r}
+usada_substances <- usada_substances |>
+  dplyr::mutate(substance_cat = dplyr::case_when(
+    stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'multiple',
+    !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'single',
+    TRUE ~ NA_character_))
+usada_substances |> 
+  dplyr::count(substance_cat, sort = TRUE)
+```
+
+## Single analytic substances
+
+First we'll focus on the sanctions with a single substance listed (we will deal with multiple substances next).
+
+```{r single_analytic_substances}
+single_analytic_substances <- usada_substances |>
+  dplyr::filter(substance_cat == 'single' & sanction_type == "analytical")
+head(single_analytic_substances)
+```
+## Classifying substances with `classify_wada_substances()`
+
+To identify the [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor), I've written `classify_wada_substances()`, a function that scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). See the `classify_wada_substances()` documentation for more information.
+
+### How `classify_wada_substances()` works (S1 ANABOLIC AGENTS example)
+
+`classify_wada_substances()` creates a `substance_group` variable with each of the WADA classifications (these are stored in `dopingdata::wada_classes`)
+
+```{r show-dopingdata-wada_classes}
+dopingdata::wada_classes
+```
+
+
+`dopingdata` stores vectors with each substance group in the WADA list (S1 substances are below):
+
+```{r s1_substances}
+head(dopingdata::s1_substances, 10)
+```
+
+The substance group vectors are also stored as regular expressions (`s1_regex`), which we can use to match the `substance_reason` column on:
+
+```{r veiw-s1}
+stringr::str_view(string = single_analytic_substances$substance_reason,
+  pattern = s1_regex, match = TRUE)
+```
+
+The output from `classify_wada_substances()` can be used to answer questions like: *what `substance_group`'s appear the most?*
+
+```{r demo_classify_wada_substances}
+single_analytic_substances <- classify_wada_substances(
+  usada_data = single_analytic_substances,
+  subs_column = substance_reason) 
+single_analytic_substances |>
+  dplyr::count(substance_group, sort = TRUE)
+```
+
+## Unclassified substances
+
+The substances that were not classified using the standard WADA list can be added with `classify_substance()`
+
+```{r unclass_single_aaf_substances}
+single_analytic_substances |>
+  filter(substance_group == "UNCLASSIFIED") |>
+  count(substance_reason, sort = TRUE)
+```
+
+### Re-classify substances 
+
+`classify_substance()` takes a `df`, `substance`, and `value`:
+
+```{r}
+single_analytic_substances <- classify_substance(
+  df = single_analytic_substances,
+  substance = "elevated t/e",
+  value = "S1 ANABOLIC AGENTS")
+single_analytic_substances |>
+  dplyr::filter(substance_reason == "elevated t/e") |>
+  dplyr::select(substance_reason, substance_cat, substance_group)
+```
+

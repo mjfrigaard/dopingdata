@@ -19,25 +19,7 @@ navbar:
    articles:
     text: Articles
     menu:
-    - text: Harvesting Data
+    - text: "Harvesting Data"
     - text: USADA Sanctions
       href: articles/scraping-usada-sanctions.html
-    - text: USADA Prohibited Associations
-      href: articles/scraping-usada-proh-assoc.html
-    - text: -------
-    - text: "Dates"
-    - text: Sanction Dates
-      href: articles/sanction-dates.html
-    - text: "Sports"
-    - text: Sanction Sports
-      href: articles/sanction-sports.html
-    - text: "Adverse Analytical Findings"
-    - text: Single substance aaf sanctions
-      href: articles/single-aaf-substances.html
-    - text: Multiple substance aaf sanctions
-      href: articles/multiple-aaf-substances.html
-    - text: "Non-Analytic Rule Violations"
-    - text: Single ADRV sanctions
-      href: articles/single-adrv-sanctions.html
-    - text: Multiple ADRV sanctions
-      href:
+

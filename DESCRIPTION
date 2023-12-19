@@ -1,78 +1,51 @@
 Package: dopingdata
-Title: USADA doping data 
+Title: USADA doping data
 Version: 0.0.0.9000
-Authors@R: person('Martin', 'Frigaard', email = 'mjfrigaard@pm.me', role = c('cre', 'aut'))
-Description: R package of data and code from the United States Anti-Doping Agency website.
+Authors@R: person("Martin", "Frigaard", , "mjfrigaard@pm.me", role = c("cre",
+    "aut"))
+Description: R package of data and code from the United States Anti-Doping
+    Agency website.
 License: MIT + file LICENSE
+URL: https://mjfrigaard.github.io/dopingdata/
+Depends: 
+    R (>= 2.10)
 Imports: 
-    anytime,
-    attachment,
-    broom,
-    bs4Dash,
     cli,
-    config (>= 0.3.1),
-    data.table,
-    datapasta,
-    devtools,
+    clipr,
     dplyr,
-    extrafont,
-    feather,
-    forcats,
     fs,
     ggplot2,
-    ggthemes,
     glue,
-    golem (>= 0.3.5),
-    haven,
-    hms,
-    htmltools,
-    httpuv,
     httr,
+    lubridate,
+    memoise,
+    polite,
+    purrr,
+    robotstxt,
+    rvest,
+    stringr,
+    tibble,
+    tidyr,
+    tools,
+    utils
+Suggests: 
+    anytime,
+    forcats,
+    golem,
     janitor,
     kableExtra,
     knitr,
-    lubridate,
-    magrittr,
-    markdown,
-    methods,
-    modelr,
     palmerpenguins,
-    pkgdown,
-    pkgload,
-    polite,
-    preferably,
-    purrr,
-    reactable,
     readr,
     readxl,
-    remotes,
-    rlang,
     rmarkdown,
-    robotstxt,
-    rvest,
-    scales,
-    shiny (>= 1.7.4),
-    shinydashboard,
-    shinythemes,
-    showtext,
-    showtextdb,
-    snakecase,
+    shiny,
     spelling,
-    stringr,
-    styler,
-    testthat,
-    tibble,
-    tidyr,
-    tidytext,
-    usethis,
-    vroom,
-    xml2
+    testthat
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 RoxygenNote: 7.2.3
-Config/testthat/edition: 3
-Language: en-US
-VignetteBuilder: knitr
-Depends: 
-    R (>= 2.10)
-URL: https://mjfrigaard.github.io/dopingdata/

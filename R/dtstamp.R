@@ -7,8 +7,6 @@
 #' @return polished date (or date and time) stamp
 #' @export dtstamp
 #'
-#' @importFrom stringr str_to_lower
-#' @importFrom stringr str_split
 #'
 #' @examples
 #' dtstamp(FALSE)

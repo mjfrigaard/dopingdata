@@ -1,0 +1,43 @@
+---
+title: "utils"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{utils}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>", 
+  error = TRUE
+)
+```
+
+```{r setup}
+library(dopingdata)
+require(palmerpenguins)
+```
+
+
+```{r}
+pivot_term_long("A large size in stockings is hard to sell.")
+```
+
+
+```{r}
+process_text(palmerpenguins::penguins_raw)
+```
+
+
+```{r}
+d <- data.frame(value = c(29L, 91L, 39L, 28L, 12L),
+                name = c("John", "John, Jacob",
+                         "John, Jacob, Jingleheimer",
+                         "Jingleheimer, Schmidt",
+                         "JJJ, Schmidt"))
+sep_cols_mult(data = d, col = "name", col_prefix = "names")
+```
+
+
