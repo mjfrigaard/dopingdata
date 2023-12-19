@@ -20,7 +20,8 @@ options(
   pillar.print_max = 25, 
   dplyr.print_max = 25,
   knitr.kable.NA = '',
-  pillar.print_min = 25)
+  pillar.print_min = 25,
+  repos = "https://cloud.r-project.org")
 library(polite)
 library(dopingdata)
 library(robotstxt)
@@ -47,7 +48,7 @@ Because this package is built on top of the efforts of the fine people who colle
 To install this package, run the code below: 
 
 ```{r inst-polite, eval=FALSE}
-pak::pak("dmi3kno/polite")
+devtools::install_github("dmi3kno/polite")
 library(polite)
 ```
 
