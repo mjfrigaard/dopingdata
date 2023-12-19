@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_recent_file.R
 \name{get_recent_file}
 \alias{get_recent_file}
-\title{Return the most data file in folder}
+\title{Return the most recent data file in folder}
 \usage{
 get_recent_file(path = "default", regex = NULL, ext = ".csv")
 }
@@ -15,8 +15,8 @@ get_recent_file(path = "default", regex = NULL, ext = ".csv")
 or 'dat'}
 }
 \value{
-top_pth path the recent file
+path to the most recent file
 }
 \description{
-Return the most data file in folder
+Return the most recent data file in folder
 }

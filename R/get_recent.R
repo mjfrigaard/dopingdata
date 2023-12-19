@@ -3,9 +3,9 @@
 #' @param pth path to file or folder
 #' @param full return datetime (instead of date)
 #'
-#' @import glue
 #'
-#' @return vrsn character vector of date or datetime
+#' @return most recently modified file
+#'
 #' @export get_recent
 #'
 #' @examples

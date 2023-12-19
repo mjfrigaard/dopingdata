@@ -1,4 +1,4 @@
-#' Return the most data file in folder
+#' Return the most recent data file in folder
 #'
 #' @param path path to data folder
 #' @param regex regular expression `pattern` passed to `list.files()`
@@ -6,7 +6,7 @@
 #'     or 'dat'
 #'
 #'
-#' @return top_pth path the recent file
+#' @return path to the most recent file
 #'
 #' @export
 #'

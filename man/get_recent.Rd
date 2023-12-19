@@ -12,7 +12,7 @@ get_recent(pth = ".", full = FALSE)
 \item{full}{return datetime (instead of date)}
 }
 \value{
-vrsn character vector of date or datetime
+most recently modified file
 }
 \description{
 Return the most recent modification date

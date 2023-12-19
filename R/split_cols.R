@@ -15,8 +15,8 @@
 #'                          "John, Jacob, Jingleheimer",
 #'                          "Jingleheimer, Schmidt",
 #'                          "JJJ, Schmidt"))
-#' sep_cols_mult(data = d, col = "name", col_prefix = "names")
-sep_cols_mult <- function(data, col, pattern = "[^[:alnum:]]+", col_prefix){
+#' split_cols(data = d, col = "name", col_prefix = "names")
+split_cols <- function(data, col, pattern = "[^[:alnum:]]+", col_prefix){
   # use regex for pattern, or whatever is provided
   in_rgx <- pattern
   # ensure data is a data.frame
