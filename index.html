@@ -65,45 +65,11 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#scraping-sanction-data">Scraping Sanction Data</a></li>
-<li><a href="#processing-data">Processing Data</a></li>
-<li><a href="#sanction-dates">Sanction Dates</a></li>
-<li>
-<a href="#sports">Sports</a>
-<ul>
-<li><a href="#support-personnel">Support personnel</a></li>
-<li><a href="#track-and-field-or-track--field"><code>track and field</code> or <code>track &amp; field</code></a></li>
-<li><a href="#spelling">Spelling</a></li>
-<li><a href="#paralympic"><code>paralympic</code></a></li>
-<li><a href="#multiple_sports"><code>multiple_sports</code></a></li>
-<li><a href="#tidy-sports">Tidy sports</a></li>
-</ul>
-</li>
-<li>
-<a href="#substances">Substances</a>
-<ul>
-<li><a href="#aafs-vs-adrvs">AAFs vs ADRVs</a></li>
-<li><a href="#sanction-type">Sanction type</a></li>
-<li><a href="#multiple-vs-single-substances">Multiple vs. single substances</a></li>
-</ul>
-</li>
-<li><a href="#single-analytic-substances">Single analytic substances</a></li>
-<li>
-<a href="#classifying-substances-with-classify_wada_substances">Classifying substances with <code>classify_wada_substances()</code></a>
-<ul>
-<li><a href="#how-classify_wada_substances-works-s1-anabolic-agents-example">How <code>classify_wada_substances()</code> works (S1 ANABOLIC AGENTS example)</a></li>
-</ul>
-</li>
-<li>
-<a href="#unclassified-substances">Unclassified substances</a>
-<ul>
-<li><a href="#re-classify-substances">Re-classify substances</a></li>
-</ul>
-</li>
-</ul>
-<!-- README.md is generated from README.Rmd. Please edit that file --><!-- badges: start --><p><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></p>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="dopingdata">dopingdata<a class="anchor" aria-label="anchor" href="#dopingdata"></a>
+</h1></div>
+<!-- badges: start -->
+<p><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg"></p>
 <!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
 <!-- badges: end -->
 <p><code>dopingdata</code> contains data from the <a href="https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency" class="external-link">United States Anti-Doping Agency</a> for exploration, modeling, and visualizations. The datasets in this package are derived from from the <a href="https://www.usada.org/" class="external-link">USADA website</a> and the <a href="https://www.wada-ama.org/en/prohibited-list?q=" class="external-link">World Anti-Doping Agency (WADA) banned substances list</a>. Scraping, processing, and visualizing these data presented so many unique challenges I decided to combine the utilities into a package.</p>
@@ -112,8 +78,8 @@
 </h2>
 <p>You can install the development version of <code>dopingdata</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"mjfrigaard/dopingdata"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"mjfrigaard/dopingdata"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -303,27 +269,19 @@
 <span>      true <span class="op">=</span> <span class="cn">TRUE</span>, false <span class="op">=</span> <span class="cn">FALSE</span>, missing <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">"support personnel"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, <span class="va">support_personnel</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">support_personnel</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 66 × 3</span></span>
-<span><span class="co">#&gt;    sport                                           `FALSE` `TRUE`</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                                             &lt;int&gt;  &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 archery                                               3     NA</span></span>
-<span><span class="co">#&gt;  2 baseball                                              1     NA</span></span>
-<span><span class="co">#&gt;  3 bobsled                                               2     NA</span></span>
-<span><span class="co">#&gt;  4 bobsled and skeleton                                  4     NA</span></span>
-<span><span class="co">#&gt;  5 bobsled and skeleton, track and field                 1     NA</span></span>
-<span><span class="co">#&gt;  6 boccia                                                2     NA</span></span>
-<span><span class="co">#&gt;  7 bowling                                               1     NA</span></span>
-<span><span class="co">#&gt;  8 boxing                                                4     NA</span></span>
-<span><span class="co">#&gt;  9 brazilian jiu-jitsu                                  13     NA</span></span>
-<span><span class="co">#&gt; 10 brazilian jiu-jitsu - athlete support personnel      NA      1</span></span>
-<span><span class="co">#&gt; # ℹ 56 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span><span class="co">#&gt;   sport                                           `TRUE`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                            &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 brazilian jiu-jitsu - athlete support personnel      1</span></span>
+<span><span class="co">#&gt; 2 cycling - athlete support personnel                  6</span></span>
+<span><span class="co">#&gt; 3 track and field - athlete support personnel          6</span></span>
+<span><span class="co">#&gt; 4 weightlifting - athlete support personnel            1</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="track-and-field-or-track--field">
-<code>track and field</code> or <code>track &amp; field</code>
-<a class="anchor" aria-label="anchor" href="#track-and-field-or-track--field"></a>
+<h3 id="track-and-field-or-track--field">‘track and field’ or ‘track &amp; field’<a class="anchor" aria-label="anchor" href="#track-and-field-or-track--field"></a>
 </h3>
 <p>I’m going to convert sports like <code>track &amp; field</code> as <code>track and field</code> (this will help me determine which athletes/support personnel are involved in multiple sports).</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -332,22 +290,18 @@
 <span>  sport <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">'track and field'</span>, <span class="st">'track &amp; field'</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">"track"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, <span class="va">support_personnel</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">support_personnel</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 65 × 3</span></span>
-<span><span class="co">#&gt;    sport                                           `FALSE` `TRUE`</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                                             &lt;int&gt;  &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 archery                                               3     NA</span></span>
-<span><span class="co">#&gt;  2 baseball                                              1     NA</span></span>
-<span><span class="co">#&gt;  3 bobsled                                               2     NA</span></span>
-<span><span class="co">#&gt;  4 bobsled and skeleton                                  4     NA</span></span>
-<span><span class="co">#&gt;  5 bobsled and skeleton, track &amp; field                   1     NA</span></span>
-<span><span class="co">#&gt;  6 boccia                                                2     NA</span></span>
-<span><span class="co">#&gt;  7 bowling                                               1     NA</span></span>
-<span><span class="co">#&gt;  8 boxing                                                4     NA</span></span>
-<span><span class="co">#&gt;  9 brazilian jiu-jitsu                                  13     NA</span></span>
-<span><span class="co">#&gt; 10 brazilian jiu-jitsu - athlete support personnel      NA      1</span></span>
-<span><span class="co">#&gt; # ℹ 55 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 6 × 3</span></span>
+<span><span class="co">#&gt;   sport                                           `FALSE` `TRUE`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                             &lt;int&gt;  &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 bobsled and skeleton, track &amp; field                   1     NA</span></span>
+<span><span class="co">#&gt; 2 para track &amp; field                                    3     NA</span></span>
+<span><span class="co">#&gt; 3 paralympic track &amp; field                             11     NA</span></span>
+<span><span class="co">#&gt; 4 paralympic track &amp; field, paralympic volleyball       1     NA</span></span>
+<span><span class="co">#&gt; 5 track &amp; field                                        95     NA</span></span>
+<span><span class="co">#&gt; 6 track &amp; field - athlete support personnel            NA      6</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="spelling">Spelling<a class="anchor" aria-label="anchor" href="#spelling"></a>
@@ -369,8 +323,7 @@
 <span><span class="co">#&gt; 2 brazilian jiu-jitsu - athlete support personnel     1</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="paralympic">
-<code>paralympic</code><a class="anchor" aria-label="anchor" href="#paralympic"></a>
+<h3 id="paralympic">‘paralympic’<a class="anchor" aria-label="anchor" href="#paralympic"></a>
 </h3>
 <p>An identifier for paralympic sports: <code>paralympic</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -381,26 +334,29 @@
 <span>      true <span class="op">=</span> <span class="cn">TRUE</span>, false <span class="op">=</span> <span class="cn">FALSE</span>, missing <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">"paralympic|para"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">paralympic</span>, <span class="va">sport</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">paralympic</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 64 × 3</span></span>
-<span><span class="co">#&gt;    sport                                           `FALSE` `TRUE`</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                                             &lt;int&gt;  &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 archery                                               3     NA</span></span>
-<span><span class="co">#&gt;  2 baseball                                              1     NA</span></span>
-<span><span class="co">#&gt;  3 bobsled                                               2     NA</span></span>
-<span><span class="co">#&gt;  4 bobsled and skeleton                                  4     NA</span></span>
-<span><span class="co">#&gt;  5 bobsled and skeleton, track &amp; field                   1     NA</span></span>
-<span><span class="co">#&gt;  6 boccia                                                2     NA</span></span>
-<span><span class="co">#&gt;  7 bowling                                               1     NA</span></span>
-<span><span class="co">#&gt;  8 boxing                                                4     NA</span></span>
-<span><span class="co">#&gt;  9 brazilian jiu-jitsu                                  14     NA</span></span>
-<span><span class="co">#&gt; 10 brazilian jiu-jitsu - athlete support personnel       1     NA</span></span>
-<span><span class="co">#&gt; # ℹ 54 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 14 × 2</span></span>
+<span><span class="co">#&gt;    sport                                           `TRUE`</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                                            &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 para shooting                                        1</span></span>
+<span><span class="co">#&gt;  2 para track &amp; field                                   3</span></span>
+<span><span class="co">#&gt;  3 paralympic archery                                   1</span></span>
+<span><span class="co">#&gt;  4 paralympic basketball                                2</span></span>
+<span><span class="co">#&gt;  5 paralympic boccia                                    1</span></span>
+<span><span class="co">#&gt;  6 paralympic curling                                   1</span></span>
+<span><span class="co">#&gt;  7 paralympic cycling                                   4</span></span>
+<span><span class="co">#&gt;  8 paralympic judo                                      4</span></span>
+<span><span class="co">#&gt;  9 paralympic rugby                                     1</span></span>
+<span><span class="co">#&gt; 10 paralympic sailing                                   1</span></span>
+<span><span class="co">#&gt; 11 paralympic snowboarding                              1</span></span>
+<span><span class="co">#&gt; 12 paralympic table tennis                              1</span></span>
+<span><span class="co">#&gt; 13 paralympic track &amp; field                            11</span></span>
+<span><span class="co">#&gt; 14 paralympic track &amp; field, paralympic volleyball      1</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="multiple_sports">
-<code>multiple_sports</code><a class="anchor" aria-label="anchor" href="#multiple_sports"></a>
+<h3 id="multiple-sports">Multiple sports<a class="anchor" aria-label="anchor" href="#multiple-sports"></a>
 </h3>
 <p>Now we can identify the multiple sports using <code>and</code> and <code>,</code> in the regular expression.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -411,22 +367,18 @@
 <span>      true <span class="op">=</span> <span class="cn">TRUE</span>, false <span class="op">=</span> <span class="cn">FALSE</span>, missing <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">"and |, "</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">multiple_sports</span>, <span class="va">sport</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">multiple_sports</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 64 × 3</span></span>
-<span><span class="co">#&gt;    sport                                           `FALSE` `TRUE`</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                                             &lt;int&gt;  &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 archery                                               3     NA</span></span>
-<span><span class="co">#&gt;  2 baseball                                              1     NA</span></span>
-<span><span class="co">#&gt;  3 bobsled                                               2     NA</span></span>
-<span><span class="co">#&gt;  4 boccia                                                2     NA</span></span>
-<span><span class="co">#&gt;  5 bowling                                               1     NA</span></span>
-<span><span class="co">#&gt;  6 boxing                                                4     NA</span></span>
-<span><span class="co">#&gt;  7 brazilian jiu-jitsu                                  14     NA</span></span>
-<span><span class="co">#&gt;  8 brazilian jiu-jitsu - athlete support personnel       1     NA</span></span>
-<span><span class="co">#&gt;  9 canoe                                                 1     NA</span></span>
-<span><span class="co">#&gt; 10 cycling                                             125     NA</span></span>
-<span><span class="co">#&gt; # ℹ 54 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 6 × 2</span></span>
+<span><span class="co">#&gt;   sport                                           `TRUE`</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;                                            &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 bobsled and skeleton                                 4</span></span>
+<span><span class="co">#&gt; 2 bobsled and skeleton, track &amp; field                  1</span></span>
+<span><span class="co">#&gt; 3 cycling, triathlon                                   3</span></span>
+<span><span class="co">#&gt; 4 cycling, weightlifting                               1</span></span>
+<span><span class="co">#&gt; 5 paralympic track &amp; field, paralympic volleyball      1</span></span>
+<span><span class="co">#&gt; 6 skiing and snowboarding                              1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="tidy-sports">Tidy sports<a class="anchor" aria-label="anchor" href="#tidy-sports"></a>
@@ -457,18 +409,17 @@
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sports</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">sport</span>, sep <span class="op">=</span> <span class="st">"and|, "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sport <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">sport</span>, side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">glimpse</span><span class="op">(</span><span class="va">multp_usada_sports</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 23</span></span>
-<span><span class="co">#&gt; Columns: 9</span></span>
-<span><span class="co">#&gt; $ athlete            &lt;chr&gt; "allison, kyler", "allison, kyler", "blandford, jen…</span></span>
-<span><span class="co">#&gt; $ sport              &lt;chr&gt; "bobsled", "skeleton", "cycling", "triathlon", "bob…</span></span>
-<span><span class="co">#&gt; $ substance_reason   &lt;chr&gt; "non-analytical: refusal to submit to sample collec…</span></span>
-<span><span class="co">#&gt; $ sanction_terms     &lt;chr&gt; "4-year suspension; loss of results; sanction tolle…</span></span>
-<span><span class="co">#&gt; $ sanction_announced &lt;chr&gt; "10/09/2019", "10/09/2019", "11/28/2017", "11/28/20…</span></span>
-<span><span class="co">#&gt; $ sanction_date      &lt;date&gt; 2019-10-09, 2019-10-09, 2017-11-28, 2017-11-28, 20…</span></span>
-<span><span class="co">#&gt; $ support_personnel  &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
-<span><span class="co">#&gt; $ paralympic         &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FA…</span></span>
-<span><span class="co">#&gt; $ multiple_sports    &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">multp_usada_sports</span><span class="op">)</span></span>
+<span><span class="co">#&gt; tibble [23 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:23] "allison, kyler" "allison, kyler" "blandford, jenna" "blandford, jenna" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:23] "bobsled" "skeleton" "cycling" "triathlon" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:23] "non-analytical: refusal to submit to sample collection" "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:23] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "4-year suspension - loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:23] "10/09/2019" "10/09/2019" "11/28/2017" "11/28/2017" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:23], format: "2019-10-09" "2019-10-09" ...</span></span>
+<span><span class="co">#&gt;  $ support_personnel : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ multiple_sports   : logi [1:23] TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span></code></pre></div>
 <p>To combine these with the single-sport athletes, I’ll need to remove the single occurrences of the multiple-sport athletes in <code>usada_sports</code> (and replace them with the <code>tidy_usada_sports</code>)</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># get athlete names</span></span>
@@ -519,12 +470,12 @@
 </div>
 </div>
 <div class="section level2">
-<h2 id="substances">Substances<a class="anchor" aria-label="anchor" href="#substances"></a>
+<h2 id="adverse-analytic-findings">Adverse Analytic Findings<a class="anchor" aria-label="anchor" href="#adverse-analytic-findings"></a>
 </h2>
 <p>We’ll start by classifying ‘adverse analytic findings’ for a single banned substance. I’ve written a <code><a href="reference/get_recent_file.html">get_recent_file()</a></code> function to quickly import .csv files from a specified directory:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/get_recent_file.html">get_recent_file</a></span><span class="op">(</span><span class="st">"data-raw/2023-12-19/"</span>, regex <span class="op">=</span> <span class="st">'sports'</span>, ext <span class="op">=</span> <span class="st">'.csv'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; File last changed: 2023-12-19 13:19:11.481125</span></span>
+<span><span class="co">#&gt; File last changed: 2023-12-19 14:29:09.367087</span></span>
 <span><span class="co">#&gt; File name: 2023-12-19-tidy_sports.csv</span></span>
 <span><span class="co">#&gt; ✔ import code pasted to clipboard!</span></span></code></pre></div>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -537,10 +488,10 @@
 <li><p><code>analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text" class="external-link">Adverse Analytical Finding</a>, AAF; <em>An AAF is a report from a WADA-accredited laboratory that identifies the presence of a prohibited substance and/or its metabolites or markers in a sample.</em></p></li>
 <li><p><code>non-analytic</code>: <a href="https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/" class="external-link">Non-Analytical Anti-doping Rule Violation</a> ADRV; <em>a non-analytical anti-doping rule violation does not stem from a positive urine or blood sample, but instead originates from, and is substantiated by, other evidence of doping or violations by an athlete or athlete support personnel.</em>.</p></li>
 </ul>
-<div class="section level5">
-<h5 id="substance_reason">
-<code>substance_reason</code><a class="anchor" aria-label="anchor" href="#substance_reason"></a>
-</h5>
+</div>
+<div class="section level4">
+<h4 id="substancereason">substance/reason<a class="anchor" aria-label="anchor" href="#substancereason"></a>
+</h4>
 <p>The <code>substance_reason</code> column contains the details of the sanction, which can include the following information:</p>
 <ol style="list-style-type: decimal">
 <li><p>The name of the banned substance</p></li>
@@ -557,9 +508,9 @@
 <span><span class="co">#&gt; [85] │ non-analytical: &lt;tampering, complicity&gt;</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level3">
-<h3 id="sanction-type">Sanction type<a class="anchor" aria-label="anchor" href="#sanction-type"></a>
-</h3>
+<div class="section level2">
+<h2 id="sanction-type">Sanction Type<a class="anchor" aria-label="anchor" href="#sanction-type"></a>
+</h2>
 <p>Most of the non-analytic sanctions include the terms <code>non-analytic</code>/<code>non-analytical</code>/etc., as a prefix in the <code>substance_reason</code> column.</p>
 <p>I can pass these terms as regular expressions to create the <code>sanction_type</code> variable, which will contain two values: <code>non-analytical</code> and <code>analytical</code>. I’ll save this variable in a new the <code>usada_substances</code> dataset:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
@@ -581,9 +532,9 @@
 <span><span class="co">#&gt; 2 non-analytical   168</span></span></code></pre></div>
 <p>Now I can filter <code>usada_substances</code> to the <code>analytical</code> sanctions in <code>sanction_type</code>.</p>
 </div>
-<div class="section level3">
-<h3 id="multiple-vs-single-substances">Multiple vs. single substances<a class="anchor" aria-label="anchor" href="#multiple-vs-single-substances"></a>
-</h3>
+<div class="section level2">
+<h2 id="substances">Substances<a class="anchor" aria-label="anchor" href="#substances"></a>
+</h2>
 <p><em>How can I identify the single vs. multiple substances?</em></p>
 <p>Let’s take a look at four different sanctions in <code>sanction_type_example</code>:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 3</span></span>
@@ -623,11 +574,9 @@
 <span><span class="co">#&gt;   &lt;chr&gt;         &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1 single          488</span></span>
 <span><span class="co">#&gt; 2 multiple        184</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level2">
-<h2 id="single-analytic-substances">Single analytic substances<a class="anchor" aria-label="anchor" href="#single-analytic-substances"></a>
-</h2>
+<div class="section level3">
+<h3 id="single-analytic-substances">Single analytic substances<a class="anchor" aria-label="anchor" href="#single-analytic-substances"></a>
+</h3>
 <p>First we’ll focus on the sanctions with a single substance listed (we will deal with multiple substances next).</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_substances</span> <span class="op">&lt;-</span> <span class="va">usada_substances</span> <span class="op">|&gt;</span></span>
@@ -645,14 +594,14 @@
 <span><span class="co">#&gt; # ℹ 5 more variables: support_personnel &lt;lgl&gt;, paralympic &lt;lgl&gt;,</span></span>
 <span><span class="co">#&gt; #   multiple_sports &lt;lgl&gt;, sanction_type &lt;chr&gt;, substance_cat &lt;chr&gt;</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="classifying-substances-with-classify_wada_substances">Classifying substances with <code>classify_wada_substances()</code>
-<a class="anchor" aria-label="anchor" href="#classifying-substances-with-classify_wada_substances"></a>
-</h2>
-<p>To identify the <a href="https://www.wada-ama.org/en/prohibited-list#search-anchor" class="external-link">WADA banned substances</a>, I’ve written <code><a href="reference/classify_wada_substances.html">classify_wada_substances()</a></code>, a function that scans the <code>substance_reason</code> column and identifies any substances found on the <a href="https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf" class="external-link">WADA list</a>. See the <code><a href="reference/classify_wada_substances.html">classify_wada_substances()</a></code> documentation for more information.</p>
 <div class="section level3">
-<h3 id="how-classify_wada_substances-works-s1-anabolic-agents-example">How <code>classify_wada_substances()</code> works (S1 ANABOLIC AGENTS example)<a class="anchor" aria-label="anchor" href="#how-classify_wada_substances-works-s1-anabolic-agents-example"></a>
+<h3 id="classifying-substances-with-classify_wada_substances">Classifying substances with <code>classify_wada_substances()</code>
+<a class="anchor" aria-label="anchor" href="#classifying-substances-with-classify_wada_substances"></a>
 </h3>
+<p>To identify the <a href="https://www.wada-ama.org/en/prohibited-list#search-anchor" class="external-link">WADA banned substances</a>, I’ve written <code><a href="reference/classify_wada_substances.html">classify_wada_substances()</a></code>, a function that scans the <code>substance_reason</code> column and identifies any substances found on the <a href="https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf" class="external-link">WADA list</a>. See the <code><a href="reference/classify_wada_substances.html">classify_wada_substances()</a></code> documentation for more information.</p>
+<div class="section level4">
+<h4 id="how-classify_wada_substances-works-s1-anabolic-agents-example">How <code>classify_wada_substances()</code> works (S1 ANABOLIC AGENTS example)<a class="anchor" aria-label="anchor" href="#how-classify_wada_substances-works-s1-anabolic-agents-example"></a>
+</h4>
 <p><code><a href="reference/classify_wada_substances.html">classify_wada_substances()</a></code> creates a <code>substance_group</code> variable with each of the WADA classifications (these are stored in <code>dopingdata::wada_classes</code>)</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dopingdata</span><span class="fu">::</span><span class="va">wada_classes</span></span>
@@ -734,9 +683,9 @@
 <span><span class="co">#&gt; 12 P1 BETA-BLOCKERS                        1</span></span></code></pre></div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="unclassified-substances">Unclassified substances<a class="anchor" aria-label="anchor" href="#unclassified-substances"></a>
-</h2>
+<div class="section level3">
+<h3 id="unclassified-substances">Unclassified substances<a class="anchor" aria-label="anchor" href="#unclassified-substances"></a>
+</h3>
 <p>The substances that were not classified using the standard WADA list can be added with <code><a href="reference/classify_substance.html">classify_substance()</a></code></p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_substances</span> <span class="op">|&gt;</span></span>
@@ -751,9 +700,9 @@
 <span><span class="co">#&gt; 4 elevated t/e                          1</span></span>
 <span><span class="co">#&gt; 5 insulin                               1</span></span>
 <span><span class="co">#&gt; 6 methenolone                           1</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="re-classify-substances">Re-classify substances<a class="anchor" aria-label="anchor" href="#re-classify-substances"></a>
-</h3>
+<div class="section level4">
+<h4 id="re-classifying-substances">Re-classifying substances<a class="anchor" aria-label="anchor" href="#re-classifying-substances"></a>
+</h4>
 <p><code><a href="reference/classify_substance.html">classify_substance()</a></code> takes a <code>df</code>, <code>substance</code>, and <code>value</code>:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">single_analytic_substances</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/classify_substance.html">classify_substance</a></span><span class="op">(</span></span>
@@ -769,7 +718,8 @@
 <span><span class="co">#&gt; 1 elevated t/e     single        S1 ANABOLIC AGENTS</span></span></code></pre></div>
 </div>
 </div>
-
+</div>
+</div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">

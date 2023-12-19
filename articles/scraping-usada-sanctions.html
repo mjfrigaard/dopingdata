@@ -173,7 +173,9 @@ storing the data in a package:</p>
 <span><span class="co">#&gt; Raw data successfully exported!</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "raw/2023-12-18/usada_raw.csv"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "raw/2023-12-18/usada_raw.csv"             </span></span>
+<span><span class="co">#&gt; [2] "raw/2023-12-19/2023-12-19-tidy_sports.csv"</span></span>
+<span><span class="co">#&gt; [3] "raw/2023-12-19/2023-12-19-usada_dates.csv"</span></span></code></pre></div>
 <p>What does the raw data look like?</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv"</span><span class="op">)</span></span>
