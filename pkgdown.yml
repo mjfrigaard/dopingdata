@@ -2,14 +2,8 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  multiple-aaf-substances: multiple-aaf-substances.html
-  sanction-dates: sanction-dates.html
-  sanction-sports: sanction-sports.html
-  scraping-usada-proh-assoc: scraping-usada-proh-assoc.html
   scraping-usada-sanctions: scraping-usada-sanctions.html
-  single-aaf-substances: single-aaf-substances.html
-  single-adrv-sanctions: single-adrv-sanctions.html
-last_built: 2023-01-23T17:32Z
+last_built: 2023-12-19T21:10Z
 urls:
   reference: https://mjfrigaard.github.io/dopingdata/reference
   article: https://mjfrigaard.github.io/dopingdata/articles

@@ -8,10 +8,10 @@
 <meta name="description" content="dopingdata">
 <title>Scraping USADA sanctions • dopingdata</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Ubuntu-0.4.4/font.css" rel="stylesheet">
-<link href="../deps/Ubuntu_Mono-0.4.4/font.css" rel="stylesheet">
-<link href="../deps/Fira_Sans_Condensed-0.4.4/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Ubuntu-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Ubuntu_Mono-0.4.8/font.css" rel="stylesheet">
+<link href="../deps/Fira_Sans_Condensed-0.4.8/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Scraping USADA sanctions">
@@ -46,18 +46,6 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Harvesting Data</h6>
     <a class="dropdown-item" href="../articles/scraping-usada-sanctions.html">USADA Sanctions</a>
-    <a class="dropdown-item" href="../articles/scraping-usada-proh-assoc.html">USADA Prohibited Associations</a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Dates</h6>
-    <a class="dropdown-item" href="../articles/sanction-dates.html">Sanction Dates</a>
-    <h6 class="dropdown-header" data-toc-skip>Sports</h6>
-    <a class="dropdown-item" href="../articles/sanction-sports.html">Sanction Sports</a>
-    <h6 class="dropdown-header" data-toc-skip>Adverse Analytical Findings</h6>
-    <a class="dropdown-item" href="../articles/single-aaf-substances.html">Single substance aaf sanctions</a>
-    <a class="dropdown-item" href="../articles/multiple-aaf-substances.html">Multiple substance aaf sanctions</a>
-    <h6 class="dropdown-header" data-toc-skip>Non-Analytic Rule Violations</h6>
-    <a class="dropdown-item" href="../articles/single-adrv-sanctions.html">Single ADRV sanctions</a>
-    <h6 class="dropdown-header" data-toc-skip>Multiple ADRV sanctions</h6>
   </div>
 </li>
 <li class="nav-item">
@@ -91,16 +79,8 @@
     
 <p>Packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor" class="external-link">janitor</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://dirk.eddelbuettel.com/code/anytime.html" class="external-link">anytime</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmi3kno/polite" class="external-link">polite</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/robotstxt/" class="external-link">robotstxt</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>robotstxt_warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -118,7 +98,7 @@ use the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>
 package</a> for harvesting the HTML tables.</p>
 <p>To install this package, run the code below:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"dmi3kno/polite"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmi3kno/polite"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmi3kno/polite" class="external-link">polite</a></span><span class="op">)</span></span></code></pre></div>
 <p><code>polite</code> has many options for ethically scraping data
 (check out the <a href="https://dmi3kno.github.io/polite/reference/index.html" class="external-link">package
@@ -170,139 +150,42 @@ us access to download</a> the data.</p>
 <span>  <span class="fu">polite</span><span class="fu">::</span><span class="fu"><a href="https://dmi3kno.github.io/polite/reference/scrape.html" class="external-link">scrape</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/rename.html" class="external-link">html_nodes</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span> </span>
 <span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/html_table.html" class="external-link">html_table</a></span><span class="op">(</span><span class="va">usada_nodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p>What does the raw data look like?</p>
+</div>
+<div class="section level3">
+<h3 id="exporting-raw-data">Exporting raw data<a class="anchor" aria-label="anchor" href="#exporting-raw-data"></a>
+</h3>
+<p>Some common tasks (like exporting the raw data as a .csv file into a
+date-stamped folder and file) have been wrapped in functions:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 895</span></span>
-<span><span class="co">#&gt; Columns: 5</span></span>
-<span><span class="co">#&gt; $ Athlete              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Montañez Barroso, Elias", "Ruiz-Gutierrez, Nosle…</span></span>
-<span><span class="co">#&gt; $ Sport                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Cycling", "Cycling", "Track and Field", "Cycling…</span></span>
-<span><span class="co">#&gt; $ `Substance/Reason`   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Non-Analytical: Refusal to Submit to Sample Coll…</span></span>
-<span><span class="co">#&gt; $ `Sanction Terms`     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-Year Suspension; Loss of Results", "4-Year Sus…</span></span>
-<span><span class="co">#&gt; $ `Sanction Announced` <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "01/10/2023", "01/04/2023", "12/08/2022", "12/05/…</span></span></code></pre></div>
-<p>You can also use the <code>scrape_usada_sanctions()</code>
-function.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="process-text">Process text<a class="anchor" aria-label="anchor" href="#process-text"></a>
-</h2>
-<p>The raw HTML table needs some reformatting/restructuring before I can
-build any visualizations or models. I’ll start by standardizing the
-names and making all the text lowercase.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_data.html">export_data</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
+<span>  path <span class="op">=</span> <span class="st">"../dev"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Exporting data: ../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; Raw data successfully exported!</span></span></code></pre></div>
+<p>There’s also an <code><a href="../reference/export_extdata.html">export_extdata()</a></code> function if you’re
+storing the data in a package:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_sanctions_lc</span> <span class="op">&lt;-</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html" class="external-link">clean_names</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>                     <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_df</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="va">str_to_lower</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_sanctions_lc</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 895</span></span>
-<span><span class="co">#&gt; Columns: 5</span></span>
-<span><span class="co">#&gt; $ athlete            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "montañez barroso, elias", "ruiz-gutierrez, noslen"…</span></span>
-<span><span class="co">#&gt; $ sport              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cycling", "cycling", "track and field", "cycling",…</span></span>
-<span><span class="co">#&gt; $ substance_reason   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "non-analytical: refusal to submit to sample collec…</span></span>
-<span><span class="co">#&gt; $ sanction_terms     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-year suspension; loss of results", "4-year suspe…</span></span>
-<span><span class="co">#&gt; $ sanction_announced <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "01/10/2023", "01/04/2023", "12/08/2022", "12/05/20…</span></span></code></pre></div>
-<p>This takes care of the column names and case, but what about all the
-invisible characters? (wait, what is a <a href="https://invisible-characters.com/" class="external-link">invisible
-character???</a>).</p>
-<p>For cleaning text, we can use the <code><a href="../reference/process_text.html">process_text()</a></code>
-function, which adds a few steps:</p>
-<ol style="list-style-type: decimal">
-<li>replaces carriage returns (<code>\\r</code>) and newlines
-(<code>\\n</code>) with white space<br>
-</li>
-<li>converts <strong>all</strong> variables to text
-(<code>chr</code>)</li>
-</ol>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
+<span>  path <span class="op">=</span> <span class="st">"dev"</span>, </span>
+<span>  raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Exporting raw data: usada_sanctions_raw.csv</span></span>
+<span><span class="co">#&gt; Raw data successfully exported!</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_sanctions_pro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_text.html">process_text</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">usada_sanctions_pro</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 895</span></span>
-<span><span class="co">#&gt; Columns: 5</span></span>
-<span><span class="co">#&gt; $ athlete            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "montañez barroso, elias", "ruiz-gutierrez, noslen"…</span></span>
-<span><span class="co">#&gt; $ sport              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cycling", "cycling", "track and field", "cycling",…</span></span>
-<span><span class="co">#&gt; $ substance_reason   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "non-analytical: refusal to submit to sample collec…</span></span>
-<span><span class="co">#&gt; $ sanction_terms     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4-year suspension; loss of results", "4-year suspe…</span></span>
-<span><span class="co">#&gt; $ sanction_announced <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "01/10/2023", "01/04/2023", "12/08/2022", "12/05/20…</span></span></code></pre></div>
-<p>If I compare with <code><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">waldo::compare()</a></code>, I can see the
-differences:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "raw/2023-12-18/usada_raw.csv"</span></span></code></pre></div>
+<p>What does the raw data look like?</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">waldo</span><span class="fu">::</span><span class="fu"><a href="https://waldo.r-lib.org/reference/compare.html" class="external-link">compare</a></span><span class="op">(</span><span class="va">usada_sanctions_lc</span>, <span class="va">usada_sanctions_pro</span><span class="op">)</span></span>
-<span><span class="co">#&gt; old vs new</span></span>
-<span><span class="co">#&gt;              <span style="font-weight: bold;">                                                                                                                      sanction_terms</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[559, ] 18-month suspension - loss of results                                                                                               </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[560, ] public warning                                                                                                                      </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[561, ] 2-year suspension with 1 year reduction - loss of results                                                                           </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- old[562, ] 2-year suspension - loss of results; </span></span></span>
-<span><span class="co"><span style="color: #BBBB00;">#&gt; 2-year suspension restarted - loss of results                                                </span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">+ new[562, ] 2-year suspension - loss of results;  2-year suspension restarted - loss of results                                                 </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[563, ] 18-month suspension - loss of results                                                                                               </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[564, ] 2-year suspension - loss of results; sanction tolled                                                                                </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[565, ] 2-year suspension - loss of results                                                                                                 </span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; old vs new</span></span>
-<span><span class="co">#&gt;              <span style="font-weight: bold;">                                                                                                                      sanction_terms</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[672, ] 6-month suspension - loss of results                                                                                                </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[673, ] 3-month suspension with 3-month deferral - loss of results                                                                          </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[674, ] 2-year suspension - loss of results                                                                                                 </span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- old[675, ] 2-year suspension - loss of results </span></span></span>
-<span><span class="co"><span style="color: #BBBB00;">#&gt; suspension extended 103 days                                                                  </span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">+ new[675, ] 2-year suspension - loss of results  suspension extended 103 days                                                                   </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[676, ] 3-month suspension with 3-month deferral - loss of results                                                                          </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[677, ] 2-year suspension - loss of results                                                                                                 </span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">  old[678, ] 2-year suspension - loss of results                                                                                                 </span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; lines(old$sanction_terms[[562]]) vs lines(new$sanction_terms[[562]])</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- "2-year suspension - loss of results; "</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- "2-year suspension restarted - loss of results"</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">+ "2-year suspension - loss of results;  2-year suspension restarted - loss of results"</span></span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; lines(old$sanction_terms[[675]]) vs lines(new$sanction_terms[[675]])</span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- "2-year suspension - loss of results "</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">- "suspension extended 103 days"</span></span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">+ "2-year suspension - loss of results  suspension extended 103 days"</span></span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    937 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ Athlete           : chr  "Rodriguez, Daniel" "Park, Mariah" "Frey, John" "Jha, Kanak" ...</span></span>
+<span><span class="co">#&gt;  $ Sport             : chr  "Mixed Martial Arts" "Weightlifting" "Cycling" "Table Tennis" ...</span></span>
+<span><span class="co">#&gt;  $ Substance.Reason  : chr  "Ostarine; LGD-4033" "Chlorthalidone" "Non-Analytical: Refusal to Submit to Sample Collection" "Non-Analytical: 3 Whereabouts Failures" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction.Terms    : chr  "3-Month Suspenion" "Public Warning" "2-Year Suspension; Loss of Results" "1-Year Suspension; Loss of Results" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction.Announced: chr  "12/14/2023" "12/11/2023" "12/05/2023" "Original: 3/20/2023; Updated: 12/01/2023" ...</span></span></code></pre></div>
+<p>You can also use the <code><a href="../reference/scrape_sanctions.html">scrape_sanctions()</a></code> function.</p>
 </div>
-<div class="section level2">
-<h2 id="exporting-the-raw-data">Exporting the raw data<a class="anchor" aria-label="anchor" href="#exporting-the-raw-data"></a>
-</h2>
-<p>I’ll export the raw data into the <code>inst/extdata/raw/</code>
-folder. I’ve written a custom function for date-stamping the raw data
-before exporting:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
-<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, raw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting raw data: usada_sanctions_raw</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting raw data: usada_sanctions_raw ... done</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Raw data successfully exported!</span></span></code></pre></div>
-<p>Verify:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span><span class="st">"../inst/extdata/raw/"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/raw/</span></span></span>
-<span><span class="co">#&gt; ├── 2023-01-21_usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; ├── 2023-01-21_usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; ├── 2023-01-22_usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; ├── 2023-01-22_usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; ├── 2023-01-23_usada_prohib_assoc_raw.csv</span></span>
-<span><span class="co">#&gt; └── 2023-01-23_usada_sanctions_raw.csv</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="export-processed-data">Export processed data<a class="anchor" aria-label="anchor" href="#export-processed-data"></a>
-</h2>
-<p>I want to export the processed data into the
-<code>inst/extdata/</code> folder, which I can create using
-<code>export_extdata(raw = FALSE)</code></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">usada_sanctions_pro</span>, </span>
-<span>  inst_path <span class="op">=</span> <span class="st">"../inst/"</span>, raw <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Exporting data: usada_sanctions_pro</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Exporting data: usada_sanctions_pro ... done</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Data successfully exported!</span></span></code></pre></div>
-<p>Verify:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html" class="external-link">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">'../inst/extdata/'</span>, regexp <span class="op">=</span> <span class="st">"sanctions_pro"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB; font-weight: bold;">../inst/extdata/</span></span></span>
-<span><span class="co">#&gt; └── usada_sanctions_pro.csv</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

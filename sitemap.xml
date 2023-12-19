@@ -16,25 +16,7 @@
     <loc>https://mjfrigaard.github.io/dopingdata/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/multiple-aaf-substances.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-dates.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/sanction-sports.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-proh-assoc.html</loc>
-  </url>
-  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/single-aaf-substances.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/articles/single-adrv-sanctions.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/authors.html</loc>
@@ -46,6 +28,12 @@
     <loc>https://mjfrigaard.github.io/dopingdata/news/index.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/add_match_col.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/add_regex_col.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/check_rtxt.html</loc>
   </url>
   <url>
@@ -55,10 +43,19 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/classify_wada_substances.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/clean_dates.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/clip_top_file.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/create_regex_wb.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/dtstamp.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/export_data.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/export_extdata.html</loc>
@@ -82,6 +79,9 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/otherwise.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/pivot_term_long.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/polite_download_file.html</loc>
   </url>
   <url>
@@ -94,21 +94,15 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/process_text.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/run_app.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/scrape_sanctions.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/str_extract_matches.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/str_parse_term.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/sep_cols_mult.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/theme_ggp2g.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/setup.html</loc>
-  </url>
-  <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/to-do.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/verify_inst_path.html</loc>
   </url>
 </urlset>
