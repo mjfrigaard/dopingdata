@@ -36,8 +36,3 @@ add_match_col <- function(string, pattern) {
 
   return(match_combined)
 }
-# require(dplyr)
-# require(tidyr)
-# dplyr::mutate(dplyr::starwars,
-#       match = add_regex_col(name, "Skywalker")) |>
-#   dplyr::select(name, last_col())
