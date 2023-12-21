@@ -204,10 +204,10 @@ dplyr::filter(usada_sanction_types,
 
 How can I identify the single vs. multiple substances? 
 
-Let's take a look at four different sanctions in `sanction_type_example`:
+Let's take a look at four different sanctions in `example_sanction_type`:
 
-```{r sanction_type_example, echo=FALSE}
-sanction_type_example <- tibble::tibble(
+```{r example_sanction_type, echo=FALSE}
+example_sanction_type <- tibble::tibble(
              sport = c("swimming","track & field",
                        "triathlon","track & field"),
   substance_reason = c("non-analytical: 3 whereabouts failures","cannabinoids",
@@ -215,13 +215,13 @@ sanction_type_example <- tibble::tibble(
                        "non-analytical: tampering, administration (iv), and trafficking (testosterone)"),
      sanction_type = c("non-analytical","analytical",
                        "analytical","non-analytical"))
-sanction_type_example
+example_sanction_type
 ```
 
 We can see two analytic and two non-analytic sanctions, and each one has a single or multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), so I can use a regular expression to separate the items. 
 
 ```{r test-multiple_sr-sep}
-dplyr::mutate(sanction_type_example, 
+dplyr::mutate(example_sanction_type, 
   multiple_sr = case_when(
     # identify the multiple_sr substances using a regular expression
     stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ TRUE,

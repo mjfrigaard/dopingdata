@@ -74,6 +74,10 @@ s6_substances <- c("1,3-dimethylbutylamine",
   "non-specified stimulants",
   "norfenefrine",
   "norfenfluramine",
+  "octodrine",
+  # octodrine ----
+  # https://www.usada.org/spirit-of-sport/education/octodrine/
+  # 'Categorized as a stimulant under the World Anti-Doping Prohibited List'
   "octopamine",
   "oxilofrine",
   "oxilofrine (methylsynephrine)",

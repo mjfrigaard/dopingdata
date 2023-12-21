@@ -4,27 +4,18 @@
 \alias{export_extdata}
 \title{Export data to \verb{inst/extdata/} or \code{inst/extdata/raw}}
 \usage{
-export_extdata(x, path = "", raw = TRUE)
+export_extdata(x, path = "", type = "csv")
 }
 \arguments{
 \item{x}{data to export}
 
-\item{raw}{logical, is this a raw dataset?}
+\item{path}{path to 'inst/' folder (and only 'inst/' folder!)}
 
-\item{inst_path}{path to 'inst/' folder (and only 'inst/' folder!)}
+\item{type}{logical, is this a raw dataset?}
 }
 \value{
 exported data
 }
 \description{
 Export data to \verb{inst/extdata/} or \code{inst/extdata/raw}
-}
-\examples{
-# df <- tibble::tibble(x = 1:3,
-#                     y = c("a", "b", "c"),
-#                     z = c(TRUE, FALSE, NA))
-# export_extdata(x = df, inst_path = "inst/", raw = TRUE)
-# export_extdata(x = df, inst_path = "inst/", raw = FALSE)
-# unlink(paste0("inst/extdata/raw/", as.character(Sys.Date()), "_df.csv"))
-# unlink(paste0("inst/extdata/", "df.csv"))
 }

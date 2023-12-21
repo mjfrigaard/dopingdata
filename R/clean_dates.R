@@ -8,6 +8,16 @@
 #' @return tibble with cleaned dates
 #'
 #' @export
+#'
+#' @examples
+#' example_sanction_dates
+#'
+#' clean_dates(
+#' df = example_sanction_dates,
+#' date_col = "ugly_dates",
+#' split = "updated",
+#' pattern = "original")
+#'
 clean_dates <- function(df, date_col, split = "updated", pattern = "original") {
   # extract ugly dates
   ugly_dates <- unlist(strsplit(df[[date_col]], split = split))

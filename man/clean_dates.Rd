@@ -21,3 +21,13 @@ tibble with cleaned dates
 \description{
 Clean sanction dates
 }
+\examples{
+example_sanction_dates
+
+clean_dates(
+df = example_sanction_dates,
+date_col = "ugly_dates",
+split = "updated",
+pattern = "original")
+
+}

@@ -1,7 +1,5 @@
 ## code to prepare `wada_classes` dataset goes here
-require(tibble)
-wada_classes <- tibble::tribble(
-  ~ Classification,
+wada_classes <- data.frame(Classification = c(
   "S1 ANABOLIC AGENTS",
   "S2 PEP HORMONES/G FACTORS/MIMETICS",
   "S3 BETA-2 AGONISTS",
@@ -11,8 +9,9 @@ wada_classes <- tibble::tribble(
   "S7 NARCOTICS",
   "S8 CANNABINOIDS",
   "S9 GLUCOCORTICOIDS",
+  "S0 UNAPPROVED SUBSTANCES",
   "M1 MANIPULATION OF BLOOD",
   "M2 CHEMICAL AND PHYSICAL MANIPULATION",
   "M3 GENE AND CELL DOPING",
-  "P1 BETA-BLOCKERS")
+  "P1 BETA-BLOCKERS"))
 usethis::use_data(wada_classes, overwrite = TRUE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_match_col.R
 \name{add_match_col}
 \alias{add_match_col}
-\title{Create column with matched value}
+\title{Create column with matched value (base R)}
 \usage{
 add_match_col(string, pattern)
 }
@@ -15,12 +15,14 @@ add_match_col(string, pattern)
 matched string
 }
 \description{
-Create column with matched value
+Create column with matched value (base R)
 }
 \examples{
-require(dplyr)
-require(tidyr)
-dplyr::mutate(head(dplyr::starwars),
-      match = add_match_col(name, "Skywalker")) |>
-  dplyr::select(name, last_col())
+terms <- data.frame(term = c("A cramp is no small danger on a swim.",
+                            "The soft cushion broke the man's fall.",
+                             "There is a lag between thought and act.",
+                             "Eight miles of woodland burned to waste."))
+terms$match_upper <- add_match_col(terms$term, "[[:upper:]]")
+terms$match_vowels <- add_match_col(terms$term, "[aeiou]")
+terms
 }

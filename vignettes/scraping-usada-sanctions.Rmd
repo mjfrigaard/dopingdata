@@ -106,7 +106,6 @@ usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
 
 Some common tasks (like exporting the raw data as a .csv file into a date-stamped folder and file) have been wrapped in functions: 
 
-
 ```{r usada_sanctions_raw, echo=FALSE, message=FALSE, warning=FALSE}
 usada_sanctions_raw <- read.csv("../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
 ```
@@ -122,8 +121,7 @@ There's also an `export_extdata()` function if you're storing the data in a pack
 ```{r}
 export_extdata(
   x = usada_sanctions_raw, 
-  path = "dev", 
-  raw = TRUE)
+  path = "dev")
 ```
 
 

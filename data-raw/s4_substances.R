@@ -35,6 +35,7 @@ s4_substances <-
     "fulvestrant",
     "gw1516",
     "gw501516",
+    "insulin",
     "insulin-mimetics",
     "insulins",
     "landogrozumab",

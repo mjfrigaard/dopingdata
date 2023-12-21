@@ -1,6 +1,11 @@
 ## code to prepare `s1_substances` dataset goes here
 s1_substances <-
-  c("androgenic anabolic steroid",
+  c(
+    # 3α-hydroxy-5α-androst-1-en-17-one ----
+    # https://ufc.usada.org/ovince-saint-preux-accepts-second-doping-sanction/
+    # https://www.wada-ama.org/en/prohibited-list?page=0&q=Androstenedione&all=1#search-anchor
+    "3α-hydroxy-5α-androst-1-en-17-one",
+    "androgenic anabolic steroid",
     "androgenic anabolic steroids",
     "anabolic agent",
     "anabolic agents",
@@ -25,6 +30,11 @@ s1_substances <-
     "dhcmt",
     "di‐hydroxy‐lgd‐4033",
     "drostanolone",
+    "elevated t/e",
+    # elevated t/e ----
+    # If an athlete’s testosterone/epitestosterone (T/E) ratio is greater than the
+    # 6:1 limit, a further study be conducted to determine whether the individual
+    # has a naturally elevated T/E ratio
     "ethylestrenol (19-norpregna-4-en-17α-ol)",
     "epitrenbolone",
     "epitrenbolone",
@@ -33,14 +43,24 @@ s1_substances <-
     "furazabol (17α-methyl [1,2,5]oxadiazolo[3',4':2,3]-5αandrostan-17β-ol)",
     "gestrinone",
     "hydroxyandrostendione",
+    "lgd4033",
+    "lgd‐4033",
+    # lgd‐4033 ----
+    # https://www.usada.org/spirit-of-sport/education/5-things-to-know-about-lgd-4033/
+    # LGD-4033 is a selective androgen receptor modulator (SARM)
     "methandienone",
     "methandienone (dianabol)",
     "methandienone metabolite",
     "mestanolone",
     "mesterolone",
     "metandienone",
+    "methasterone",
+    # methasterone ----
+    # https://en.wikipedia.org/wiki/Methasterone
+    # ' orally active anabolic–androgenic steroid '
     "metandienone (17β-hydroxy-17α-methylandrosta-1,4-dien3-one)",
     "metenolone",
+    "methenolone",
     "methandriol",
     "methasterone (17β-hydroxy-2α,17α-dimethyl-5αandrostan-3-one)",
     "methyldienolone (17β-hydroxy-17α-methylestra-4,9-dien3-one)",

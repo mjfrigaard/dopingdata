@@ -135,7 +135,7 @@ dplyr::glimpse(substance_types)
 
 ### Multiple substances (`multiple_sr`)
 
-The substance_types data has the `multiple_sr` column for identifying if an sanction included more than one substance:
+The `substance_type` data has the `multiple_sr` column for identifying if an sanction included more than one substance:
 
 ```{r multiple_sr-tabyl}
 substance_types |> 

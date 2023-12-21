@@ -1,4 +1,4 @@
-#' Create column with matched value
+#' Create column with matched value (base R)
 #'
 #' @param string string to search
 #' @param pattern regex pattern to match
@@ -8,31 +8,27 @@
 #' @export
 #'
 #' @examples
-#' require(dplyr)
-#' require(tidyr)
-#' dplyr::mutate(head(dplyr::starwars),
-#'       match = add_match_col(name, "Skywalker")) |>
-#'   dplyr::select(name, last_col())
+#' terms <- data.frame(term = c("A cramp is no small danger on a swim.",
+#'                             "The soft cushion broke the man's fall.",
+#'                              "There is a lag between thought and act.",
+#'                              "Eight miles of woodland burned to waste."))
+#' terms$match_upper <- add_match_col(terms$term, "[[:upper:]]")
+#' terms$match_vowels <- add_match_col(terms$term, "[aeiou]")
+#' terms
 add_match_col <- function(string, pattern) {
 
   match_terms <- regmatches(string, gregexpr(pattern, string))
 
-  max_len <- max(sapply(match_terms, length))
-  match_matrix <- t(sapply(match_terms, function(x) {
-    c(x, rep("", max_len - length(x)))
-  }))
+  match_combined <- sapply(match_terms, function(matches) {
+    if (length(matches) > 0) {
+      trimws(gsub(" ", ", ", paste(matches, collapse = " ")), which = "right")
+    } else {
+      NA
+    }
+  })
 
-  match_df <- as.data.frame(t(match_matrix), stringsAsFactors = FALSE)
-
-  if (ncol(match_df) > 0) {
-    match_combined <- apply(X = match_df, MARGIN = 1, FUN = function(x) {
-      trimws(paste(na.omit(x), collapse = ", "), which = "right")
-    })
-  } else {
-    match_combined <- rep(NA_character_, nrow(match_df))
-  }
-
-  match_combined[match_combined == ""] <- NA
+  match_combined[match_combined == ""] <- NA_character_
 
   return(match_combined)
 }
+
