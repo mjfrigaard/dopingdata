@@ -34,19 +34,19 @@
     <loc>https://mjfrigaard.github.io/dopingdata/reference/check_rtxt.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/classify_substance.html</loc>
-  </url>
-  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/classify_wada_substances.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/clean_dates.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/clean_sports.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/clip_top_file.html</loc>
   </url>
   <url>
-    <loc>https://mjfrigaard.github.io/dopingdata/reference/create_regex_wb.html</loc>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/create_word_boundary.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/dtstamp.html</loc>
@@ -89,6 +89,9 @@
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/process_text.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/reclass_substance.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/scrape_sanctions.html</loc>
