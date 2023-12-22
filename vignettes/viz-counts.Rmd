@@ -155,10 +155,10 @@ heatmap_substances <- tidy_substances |>
 
 ``` r
 ggplot2::ggplot(data = heatmap_substances, 
-       aes(y = substance_group,
+       ggplot2::aes(y = substance_group,
            x = sport,
            fill = occurrence)) + 
-       geom_raster(hjust = 0.5, vjust = 0.5) + 
+       ggplot2::geom_raster(hjust = 0.5, vjust = 0.5) + 
   ggplot2::theme(legend.position = "left") + 
   ggplot2::labs(
     title = "Doping Data",
@@ -241,7 +241,7 @@ ggplot2::ggplot(data = waffle_weightlifting,
 knitr::include_graphics("../man/figures/waffle_weightlifting-1.png")
 ```
 
-``` r
+```{r, eval=FALSE}
 cols <- c(
   "rusty red" = "#D33F49", 
   "thistls" = "#D7C0D0", 

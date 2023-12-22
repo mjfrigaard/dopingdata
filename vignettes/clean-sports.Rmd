@@ -42,7 +42,8 @@ library(forcats)
 ```
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-usada_dates <- read.csv("../data-raw/csv/2023-12-21/2023-12-21-usada_dates.csv")
+usada_dates <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_dates.csv", 
+                       package = "dopingdata"))
 ```
 
 ## Sports 

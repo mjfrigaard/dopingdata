@@ -57,9 +57,16 @@ File name: 2023-12-21-tidy_sports.csv
 
 This makes it easy to paste the necessary import code into the console (or R markdown file):
 
-```{r}
-tidy_sports <- read.delim(file = '/Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library/dopingdata/extdata/demo/2023-12-21-tidy_sports.csv', sep = ',')
+``` r
+tidy_sports <- read.delim(file = '/Library/path/to/dopingdata/extdata/demo/2023-12-21-tidy_sports.csv', sep = ',')
 ```
+
+```{r echo=FALSE, eval=TRUE}
+tidy_sports <- read.delim(
+    file = system.file("extdata", "demo", "2023-12-21-tidy_sports.csv", 
+                       package = "dopingdata"), sep = ',')
+```
+
 
 ## AAFs vs ADRVs
 

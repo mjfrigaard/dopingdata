@@ -1,8 +1,10 @@
 ---
-title: "clean-dates"
-output: rmarkdown::html_vignette
+title: "Cleaning dates"
+output: 
+  rmarkdown::html_vignette:
+    df_print: kable
 vignette: >
-  %\VignetteIndexEntry{clean-dates}
+  %\VignetteIndexEntry{Cleaning dates}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,12 +21,12 @@ library(dopingdata)
 ```
 
 
-Below we'll import the scraped data in `data-raw/csv/` and process the text:
+Below we'll import a demo dataset and process the text:
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-usada_raw <- read.csv("../data-raw/csv/2023-12-21/2023-12-21-usada_raw.csv")
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+usada_raw <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
+                       package = "dopingdata"))
 usada <- process_text(raw_data = usada_raw)
-str(usada)
 ```
 
 ## Dates
