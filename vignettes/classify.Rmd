@@ -22,14 +22,20 @@ options(
   )
 ```
 
-```{r pkgs, eval=TRUE}
-pkgs <- c("dplyr", "stringr", "tidyr", "forcats")
-install.packages(pkgs, quiet = TRUE)
-```
-
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(dopingdata)
+```
+
+```{r pkgs, eval=TRUE}
+if ("pak" %nin% loadedNamespaces()) {
+  install.packages("pak", quiet = TRUE)
+}
+pkgs <- c("dplyr", "stringr", "tidyr", "forcats")
+pak::pak(pkgs)
+```
+
+```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(stringr)
 library(tidyr)

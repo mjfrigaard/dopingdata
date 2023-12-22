@@ -20,7 +20,13 @@ knitr::opts_chunk$set(
 options(
   max.print = 78,
   repos = "https://cloud.r-project.org"
-  )
+)
+"%nin%" <- function(x, y) {
+  return( !(x %in% y) )
+}
+if ("pak" %nin% loadedNamespaces()) {
+  install.packages("pak", quiet = TRUE)
+}
 ```
 
 # dopingdata
@@ -40,8 +46,8 @@ options(
 You can install the development version of `dopingdata` like so:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mjfrigaard/dopingdata")
+# install.packages("pak")
+pak::pak("mjfrigaard/dopingdata")
 ```
 
 ```{r}

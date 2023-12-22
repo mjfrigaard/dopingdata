@@ -25,12 +25,17 @@ challenges I decided to combine the utilities into a package.
 You can install the development version of `dopingdata` like so:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("mjfrigaard/dopingdata")
+# install.packages("pak")
+pak::pak("mjfrigaard/dopingdata")
 ```
 
 ``` r
 library(dopingdata)
+#> 
+#> Attaching package: 'dopingdata'
+#> The following object is masked _by_ '.GlobalEnv':
+#> 
+#>     %nin%
 ```
 
 ![](man/figures/top10_sports-1.png)
