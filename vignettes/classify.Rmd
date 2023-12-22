@@ -44,9 +44,15 @@ library(forcats)
 
 This vignette covers classifying 'adverse analytic findings' for a single banned substance. I've written a `get_recent_file()` function to quickly import `.csv` files from a specified directory:
 
-```{r}
+``` r
 pth <- system.file("extdata", "demo", package = "dopingdata")
 get_recent_file(pth, regex = 'sports', ext = '.csv')
+```
+
+```
+File last changed: 2023-12-21 20:33:32.064979
+File name: 2023-12-21-tidy_sports.csv
+✔ import code pasted to clipboard!
 ```
 
 This makes it easy to paste the necessary import code into the console (or R markdown file):
