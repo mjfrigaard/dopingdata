@@ -1,6 +1,10 @@
 ---
 title: "clean-sports"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+    df_print: kable
 vignette: >
   %\VignetteIndexEntry{clean-sports}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,13 +16,19 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(
+  max.print = 78,
+  repos = "https://cloud.r-project.org"
+  )
 ```
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-usada_dates <- read.csv("../data-raw/csv/2023-12-21/2023-12-21-usada_dates.csv")
+```{r pkgs, eval=TRUE}
+pkgs <- c("dplyr", "stringr", "tidyr", "forcats")
+install.packages(pkgs, quiet = TRUE)
 ```
 
-```{r setup}
+
+```{r setup, message=FALSE, warning=FALSE}
 library(dopingdata)
 library(dplyr)
 library(stringr)
@@ -26,16 +36,13 @@ library(tidyr)
 library(forcats)
 ```
 
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+usada_dates <- read.csv("../data-raw/csv/2023-12-21/2023-12-21-usada_dates.csv")
+```
 
 ## Sports 
 
-To wrangle the sports, I'll use packages and functions from the `tidyverse` (`dplyr`, `stringr`, `tidyr`, etc.), but I also provide the base R alternatives (wherever possible).
-
-```{r}
-library(tidyverse)
-```
-
-`tidyverse` functions will return a `tibble` (not a `data.frame`), which prints fewer rows to the console. 
+To wrangle the sports, I'll use packages and functions from the `tidyverse` (`dplyr`, `stringr`, `tidyr`, etc.), but I also provide the base R alternatives (wherever possible). `tidyverse` functions will return a `tibble` (not a `data.frame`), which prints fewer rows to the console. 
 
 ```{r}
 usada_sports <- tibble::as_tibble(usada_dates)

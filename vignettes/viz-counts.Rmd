@@ -1,6 +1,10 @@
 ---
 title: "Visualizing counts"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+    df_print: kable
 vignette: >
   %\VignetteIndexEntry{Visualizing counts}
   %\VignetteEngine{knitr::rmarkdown}
@@ -18,13 +22,17 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.width = 7
 )
+options(
+  max.print = 78,
+  repos = "https://cloud.r-project.org"
+  )
 ```
 
 ```{r setup}
 library(dopingdata)
 ```
 
-```{r pkgs, eval=FALSE}
+```{r pkgs, eval=TRUE, message=FALSE, warning=FALSE}
 devtools::install_github("Ryo-N7/tvthemes")
 devtools::install_github("liamgilbey/ggwaffle")
 devtools::install_github("hrbrmstr/hrbrthemes")

@@ -16,9 +16,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(
+  max.print = 78,
+  repos = "https://cloud.r-project.org"
+  )
 ```
 
-```{r pkgs, eval=FALSE}
+```{r pkgs, eval=TRUE}
 pkgs <- c("dplyr", "stringr", "tidyr", "forcats")
 install.packages(pkgs, quiet = TRUE)
 ```
