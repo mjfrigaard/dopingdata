@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
   fig.path = "../man/figures/",
   out.width = "100%",
   dpi = 320,
+  eval = FALSE,
   fig.retina = TRUE,
   fig.height = 5,
   fig.width = 7
@@ -32,7 +33,7 @@ options(
 library(dopingdata)
 ```
 
-```{r pkgs, eval=TRUE, message=FALSE, warning=FALSE}
+```{r pkgs, eval=FALSE, message=FALSE, warning=FALSE}
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
@@ -43,7 +44,7 @@ pkgs <- c("ggplot2", "extrafont", "dplyr", "stringr", "tidyr", "forcats", "ggthe
 pak::pak(pkg = pkgs)
 ```
 
-```{r, message=FALSE, warning=FALSE}
+```{r eval=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
 library(extrafont)
 loadfonts(quiet = TRUE)
@@ -62,7 +63,13 @@ pth <- system.file("extdata", "demo", package = "dopingdata")
 get_recent_file(pth, regex = 'substances', ext = '.csv')
 ```
 
-```{r}
+```
+File last changed: 2023-12-21 20:33:32.064979
+File name: 2023-12-21-tidy_substances.csv
+✔ import code pasted to clipboard!
+```
+
+```{r, eval=FALSE}
 tidy_substances <- read.delim(file = '/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv', sep = ',')
 ```
 
@@ -86,6 +93,13 @@ tidy_substances |>
   )
 ```
 
+
+
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/total_aafs-1.png")
+```
+
+
 ### Sports 
 
 ```{r top10_sports}
@@ -107,9 +121,15 @@ tidy_substances |>
 ```
 
 
+
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/top10_sports-1.png")
+```
+
+
 ### Adverse Analytical Findings & Sports 
 
-```{r , eval=TRUE, echo=TRUE}
+```{r , eval=FALSE, echo=TRUE}
 top4_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -132,7 +152,7 @@ heatmap_substances <- tidy_substances |>
   dplyr::ungroup()
 ```
 
-```{r heatmap_substances, eval=TRUE, echo=TRUE}
+```{r heatmap_substances, eval=FALSE, echo=TRUE}
 ggplot2::ggplot(data = heatmap_substances, 
        aes(y = substance_group,
            x = sport,
@@ -148,7 +168,12 @@ ggplot2::ggplot(data = heatmap_substances,
   hrbrthemes::theme_ipsum()
 ```
 
-```{r}
+
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/heatmap_substances-1.png")
+```
+
+```{r top3_sports, eval=FALSE}
 top3_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -187,6 +212,9 @@ tidy_substances |>
   ggplot2::theme(legend.position = 'none')
 ```
 
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/top3_sports-1.png")
+```
 
 ### Substances per Sport
 
@@ -206,6 +234,10 @@ ggplot2::ggplot(data = waffle_weightlifting,
   labs(title = "Weightlifting",
     subtitle = "Common WADA banned substances",
     x = "", y = "")
+```
+
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/waffle_weightlifting-1.png")
 ```
 
 ```{r , eval=FALSE, echo=FALSE}
@@ -240,6 +272,10 @@ ggplot2::ggplot(data = waffle_mma,
     x = "", y = "")
 ```
 
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/waffle_mma-1.png")
+```
+
 ```{r waffle_cycling}
 waffle_cycling <- tidy_substances |> 
   dplyr::filter(sport == "cycling") |>     
@@ -257,3 +293,8 @@ ggplot2::ggplot(data = waffle_cycling,
     x = "", y = "")
 ```
 
+
+
+```{r eval=TRUE, echo=FALSE}
+knitr::include_graphics("../man/figures/waffle_cycling-1.png")
+```
