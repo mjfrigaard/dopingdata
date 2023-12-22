@@ -30,17 +30,12 @@ Suggests:
     anytime,
     extrafont,
     forcats,
-    ggthemes,
-    ggwaffle,
-    hrbrthemes,
     knitr,
     rmarkdown,
     spelling,
     testthat,
     tibble,
-    tidyr,
-    tidyverse,
-    tvthemes
+    tidyr
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

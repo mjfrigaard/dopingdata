@@ -33,18 +33,19 @@ options(
 library(dopingdata)
 ```
 
-```{r pkgs, eval=FALSE, message=FALSE, warning=FALSE}
+``` r
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
 pak::pak("Ryo-N7/tvthemes")
 pak::pak("liamgilbey/ggwaffle")
 pak::pak("hrbrmstr/hrbrthemes")
-pkgs <- c("ggplot2", "extrafont", "dplyr", "stringr", "tidyr", "forcats", "ggthemes")
+pkgs <- c("ggplot2", "extrafont", "dplyr", "stringr", "tidyr",
+          "forcats", "ggthemes", "purrr")
 pak::pak(pkg = pkgs)
 ```
 
-```{r eval=FALSE, message=FALSE, warning=FALSE}
+``` r
 library(ggplot2)
 library(extrafont)
 loadfonts(quiet = TRUE)
@@ -58,7 +59,7 @@ library(tidyr)
 library(forcats)
 ```
 
-```{r}
+``` r
 pth <- system.file("extdata", "demo", package = "dopingdata")
 get_recent_file(pth, regex = 'substances', ext = '.csv')
 ```
@@ -69,14 +70,14 @@ File name: 2023-12-21-tidy_substances.csv
 ✔ import code pasted to clipboard!
 ```
 
-```{r, eval=FALSE}
+``` r
 tidy_substances <- read.delim(file = '/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv', sep = ',')
 ```
 
 
 ## Adverse Analytical Findings
 
-```{r total_aafs}
+``` r
 tidy_substances |>
   dplyr::filter(!is.na(substance_group)) |>
   dplyr::mutate(substance_group = factor(substance_group)) |>
@@ -102,7 +103,7 @@ knitr::include_graphics("../man/figures/total_aafs-1.png")
 
 ### Sports 
 
-```{r top10_sports}
+``` r
 tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -129,7 +130,7 @@ knitr::include_graphics("../man/figures/top10_sports-1.png")
 
 ### Adverse Analytical Findings & Sports 
 
-```{r , eval=FALSE, echo=TRUE}
+``` r
 top4_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -152,7 +153,7 @@ heatmap_substances <- tidy_substances |>
   dplyr::ungroup()
 ```
 
-```{r heatmap_substances, eval=FALSE, echo=TRUE}
+``` r
 ggplot2::ggplot(data = heatmap_substances, 
        aes(y = substance_group,
            x = sport,
@@ -173,7 +174,7 @@ ggplot2::ggplot(data = heatmap_substances,
 knitr::include_graphics("../man/figures/heatmap_substances-1.png")
 ```
 
-```{r top3_sports, eval=FALSE}
+``` r
 top3_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -218,7 +219,7 @@ knitr::include_graphics("../man/figures/top3_sports-1.png")
 
 ### Substances per Sport
 
-```{r waffle_weightlifting}
+``` r
 waffle_weightlifting <- tidy_substances |> 
   dplyr::filter(sport == "weightlifting") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))
@@ -240,7 +241,7 @@ ggplot2::ggplot(data = waffle_weightlifting,
 knitr::include_graphics("../man/figures/waffle_weightlifting-1.png")
 ```
 
-```{r , eval=FALSE, echo=FALSE}
+``` r
 cols <- c(
   "rusty red" = "#D33F49", 
   "thistls" = "#D7C0D0", 
@@ -255,7 +256,7 @@ cols <- c(
   )
 ```
 
-```{r waffle_mma}
+``` r
 waffle_mma <- tidy_substances |> 
   dplyr::filter(sport == "mixed martial arts") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))
@@ -276,7 +277,7 @@ ggplot2::ggplot(data = waffle_mma,
 knitr::include_graphics("../man/figures/waffle_mma-1.png")
 ```
 
-```{r waffle_cycling}
+``` r
 waffle_cycling <- tidy_substances |> 
   dplyr::filter(sport == "cycling") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))
