@@ -1,8 +1,8 @@
 Package: dopingdata
 Title: USADA doping data
 Version: 0.0.0.9000
-Authors@R: person("Martin", "Frigaard", , "mjfrigaard@pm.me", role = c("cre",
-    "aut"))
+Authors@R: 
+    person("Martin", "Frigaard", , "mjfrigaard@pm.me", role = c("cre", "aut"))
 Description: R package of data and code from the United States Anti-Doping
     Agency website.
 License: MIT + file LICENSE
@@ -24,29 +24,28 @@ Imports:
     robotstxt,
     rvest,
     stringr,
-    tibble,
-    tidyr,
     tools,
     utils
 Suggests: 
     anytime,
+    extrafont,
     forcats,
-    golem,
-    janitor,
-    kableExtra,
+    ggthemes,
+    ggwaffle,
+    hrbrthemes,
     knitr,
-    palmerpenguins,
-    readr,
-    readxl,
     rmarkdown,
-    shiny,
     spelling,
-    testthat
+    testthat,
+    tibble,
+    tidyr,
+    tidyverse,
+    tvthemes
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3

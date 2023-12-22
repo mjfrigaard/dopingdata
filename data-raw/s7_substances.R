@@ -9,6 +9,7 @@ s7_substances <-
     "morphine",
     "nicomorphine",
     "oxycodone",
+    "noroxycodone",
     "oxymorphone",
     "pentazocine",
     "pethidine")

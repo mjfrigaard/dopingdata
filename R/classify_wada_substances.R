@@ -19,33 +19,33 @@
 classify_wada_substances <- function(usada_data, subs_column) {
   # Function to classify substance groups based on regex patterns
   classify_group <- function(substance) {
-    if (grepl(s1_regex, substance)) {
+    if (grepl(make_regex(s1_substances), substance)) {
       return("S1 ANABOLIC AGENTS")
-    } else if (grepl(s2_regex, substance)) {
+    } else if (grepl(make_regex(s2_substances), substance)) {
       return("S2 PEP HORMONES/G FACTORS/MIMETICS")
-    } else if (grepl(s3_regex, substance)) {
+    } else if (grepl(make_regex(s3_substances), substance)) {
       return("S3 BETA-2 AGONISTS")
-    } else if (grepl(s4_regex, substance)) {
+    } else if (grepl(make_regex(s4_substances), substance)) {
       return("S4 HORMONE AND METABOLIC MODULATORS")
-    } else if (grepl(s5_regex, substance)) {
+    } else if (grepl(make_regex(s5_substances), substance)) {
       return("S5 DIURETICS/MASKING AGENTS")
-    } else if (grepl(m1_regex, substance)) {
+    } else if (grepl(make_regex(m1_method), substance)) {
       return("M1 MANIPULATION OF BLOOD")
-    } else if (grepl(m2_regex, substance)) {
+    } else if (grepl(make_regex(m2_method), substance)) {
       return("M2 CHEMICAL AND PHYSICAL MANIPULATION")
-    } else if (grepl(m3_regex, substance)) {
+    } else if (grepl(make_regex(m3_method), substance)) {
       return("M3 GENE AND CELL DOPING")
-    } else if (grepl(s6_regex, substance)) {
+    } else if (grepl(make_regex(s6_substances), substance)) {
       return("S6 STIMULANTS")
-    } else if (grepl(s7_regex, substance)) {
+    } else if (grepl(make_regex(s7_substances), substance)) {
       return("S7 NARCOTICS")
-    } else if (grepl(s8_regex, substance)) {
+    } else if (grepl(make_regex(s8_substances), substance)) {
       return("S8 CANNABINOIDS")
-    } else if (grepl(s9_regex, substance)) {
+    } else if (grepl(make_regex(s9_substances), substance)) {
       return("S9 GLUCOCORTICOIDS")
-    } else if (grepl(s0_regex, substance)) {
+    } else if (grepl(make_regex(s0_substances), substance)) {
       return("S0 UNAPPROVED SUBSTANCES")
-    } else if (grepl(p1_regex, substance)) {
+    } else if (grepl(make_regex(p1_substances), substance)) {
       return("P1 BETA-BLOCKERS")
     } else {
       return("UNCLASSIFIED")

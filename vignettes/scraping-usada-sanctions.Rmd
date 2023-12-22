@@ -13,6 +13,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
+  eval = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -104,10 +105,10 @@ usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
 
 ### Exporting raw data 
 
-Some common tasks (like exporting the raw data as a .csv file into a date-stamped folder and file) have been wrapped in functions: 
+Some common tasks (like exporting the raw data as a .csv file into a date-stamped folder and file) have been wrapped in functions:
 
-```{r usada_sanctions_raw, echo=FALSE, message=FALSE, warning=FALSE}
-usada_sanctions_raw <- read.csv("../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
+```{r usada_sanctions_raw, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+usada_sanctions_raw <- read.csv("../inst/extdata/demo/2023-12-21-usada_raw.csv")
 ```
 
 ```{r eval=TRUE}
@@ -118,21 +119,17 @@ export_data(
 
 There's also an `export_extdata()` function if you're storing the data in a package: 
 
-```{r}
+```{r eval=FALSE}
 export_extdata(
   x = usada_sanctions_raw, 
   path = "dev")
 ```
 
-
-```{r}
-dir("../inst/extdata/", recursive = TRUE)
-```
-
 What does the raw data look like? 
 
-```{r import-usada_sanctions_raw}
-usada_sanctions_raw <- read.csv("../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv")
+```{r import-usada_sanctions_raw, eval=TRUE}
+usada_sanctions_raw <- read.delim(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
+                                   package = "dopingdata"), sep = ",")
 str(usada_sanctions_raw)
 ```
 

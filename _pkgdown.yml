@@ -22,4 +22,15 @@ navbar:
     - text: "Harvesting Data"
     - text: USADA Sanctions
       href: articles/scraping-usada-sanctions.html
-
+    - text: -------
+    - text: "Wrangling Data"
+    - text: Sanction Announced (Date)
+      href: articles/clean-dates.html
+    - text: Sports
+      href: articles/clean-sports.html
+    - text: "Classifying Substances"
+    - text: Adverse Analytical Findings
+      href: articles/classify.html
+    - text: "Visualizing Substances"
+    - text: Counts
+      href: articles/viz-counts.html

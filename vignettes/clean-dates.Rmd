@@ -1,0 +1,96 @@
+---
+title: "clean-dates"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{clean-dates}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(dopingdata)
+```
+
+
+Below we'll import the scraped data in `data-raw/csv/` and process the text:
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+usada_raw <- read.csv("../data-raw/csv/2023-12-21/2023-12-21-usada_raw.csv")
+usada <- process_text(raw_data = usada_raw)
+str(usada)
+```
+
+## Dates
+
+`sanction_announced` contains the date the sanction was announced, and about 30 of these contain two values (`original` and `updated`). Wrangling these values pose some challenges because they aren't *consistently* messy:
+
+```{r}
+subset(usada, 
+  grepl("^original", usada[['sanction_announced']]), 
+  c(athlete, sanction_announced))
+```
+
+### **clean_dates()**
+
+I've written a `clean_dates()` function that takes `date_col`, `split` and `pattern` arguments: 
+
++ `df` = processed USADA dataset with messy dates
+
++ `date_col` = sanction date column (usually `sanction_announced`)
+
++ `split` = regex to pass to split argument of `strsplit()` (defaults to `"updated"`)
+
++ `pattern` = regex for other non-date pattern (defaults to `"original"`)
+
+Below is an example dataset to demonstrate how `clean_dates()` works: 
+
+```{r}
+clean_dates(
+  df = example_sanction_dates, 
+  date_col = "ugly_dates", 
+  split = "updated", 
+  pattern = "original")
+```
+
+For `usada`, split the data into three `data.frame`s (`bad_dates`, `good_dates`, and `no_dates`).
+
+```{r}
+bad_dates <- subset(usada, 
+  grepl("^original", usada[['sanction_announced']]))
+good_dates <- subset(usada, 
+  !grepl("^original", usada[['sanction_announced']]) & sanction_announced != "")
+no_dates <- subset(usada,
+  athlete == "*name removed" & sanction_announced == "")
+```
+
+Clean dates in `bad_dates` by splitting the bad dates on `"updated"` and provided `"original"` as the pattern (the opposite will also work). The `sanction_date` column will contain the correctly formatted updated `sanction_date`.
+
+After formatting `good_dates` and removing `original_date` column we can combine the two with `rbind()`.
+
+```{r}
+cleaned_dates <- clean_dates(
+  df = bad_dates, 
+  date_col = "sanction_announced", 
+  split = "updated", 
+  pattern = "original")
+# address names 
+names(cleaned_dates)[names(cleaned_dates) == 'split_date'] <- 'sanction_date'
+names(cleaned_dates)[names(cleaned_dates) == 'pattern_date'] <- 'original_date'
+# format good_dates
+good_dates$sanction_date <- as.Date(x = good_dates[['sanction_announced']], 
+                                    format = "%m/%d/%Y")
+# get intersecting names 
+nms <- intersect(names(cleaned_dates), names(good_dates))
+# bind the two datasets 
+usada_dates <- rbind(good_dates, cleaned_dates[nms])
+str(usada_dates)
+```
+
+
