@@ -241,21 +241,6 @@ ggplot2::ggplot(data = waffle_weightlifting,
 knitr::include_graphics("../man/figures/waffle_weightlifting-1.png")
 ```
 
-```{r, eval=FALSE}
-cols <- c(
-  "rusty red" = "#D33F49", 
-  "thistls" = "#D7C0D0", 
-  "sort of beige" = "#EFF0D1", 
-  "cambridge blue" = "#77BA99", 
-  "raisen black" = "#262730", 
-  "emerald" = "#06D6A0",
-  "cool gray" = "#7F7CAF",
-  "carrot" = "#F49D37",
-  "murrey" = "#950952",
-  "periwinkle" = "#E4D9FF"
-  )
-```
-
 ``` r
 waffle_mma <- tidy_substances |> 
   dplyr::filter(sport == "mixed martial arts") |>     
