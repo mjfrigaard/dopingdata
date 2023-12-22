@@ -46,6 +46,14 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <h6 class="dropdown-header" data-toc-skip>Harvesting Data</h6>
     <a class="dropdown-item" href="../articles/scraping-usada-sanctions.html">USADA Sanctions</a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Wrangling Data</h6>
+    <a class="dropdown-item" href="../articles/clean-dates.html">Sanction Announced (Date)</a>
+    <a class="dropdown-item" href="../articles/clean-sports.html">Sports</a>
+    <h6 class="dropdown-header" data-toc-skip>Classifying Substances</h6>
+    <a class="dropdown-item" href="../articles/classify.html">Adverse Analytical Findings</a>
+    <h6 class="dropdown-header" data-toc-skip>Visualizing Substances</h6>
+    <a class="dropdown-item" href="../articles/viz-counts.html">Counts</a>
   </div>
 </li>
 <li class="nav-item">
@@ -124,19 +132,14 @@ website:</p>
 <span>            <span class="st">"testing/results/sanctions/"</span><span class="op">)</span>,</span>
 <span>  <span class="co"># bots</span></span>
 <span>  bot   <span class="op">=</span> <span class="st">"*"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] TRUE TRUE TRUE</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 <p>All three paths are <code>TRUE</code>, but I will also check the
 domain with <code><a href="https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html" class="external-link">robotstxt::get_robotstxt()</a></code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rt</span> <span class="op">&lt;-</span> <span class="fu">robotstxt</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html" class="external-link">get_robotstxt</a></span><span class="op">(</span></span>
 <span>  domain <span class="op">=</span> <span class="st">"https://www.usada.org/testing/results/sanctions/"</span><span class="op">)</span></span>
 <span><span class="co"># printing</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">rt</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # robots.txt overwrite by: on_suspect_content</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; User-agent: *</span></span>
-<span><span class="co">#&gt; Allow: /</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">rt</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p>I can see the <code>Allow: /</code> configuration <a href="https://kinsta.com/blog/wordpress-robots-txt/#how-to-use-robotstxt-allow-all-to-give-robots-full-access-to-your-site" class="external-link">gives
 us access to download</a> the data.</p>
 </div>
@@ -159,23 +162,17 @@ date-stamped folder and file) have been wrapped in functions:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_data.html">export_data</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
-<span>  path <span class="op">=</span> <span class="st">"../dev"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Exporting data: ../dev/2023-12-21/2023-12-21-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; Data successfully exported!</span></span></code></pre></div>
+<span>  path <span class="op">=</span> <span class="st">"../dev"</span><span class="op">)</span></span></code></pre></div>
 <p>There’s also an <code><a href="../reference/export_extdata.html">export_extdata()</a></code> function if you’re
 storing the data in a package:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
-<span>  path <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Exporting data: inst/extdata/dev/2023-12-21/2023-12-21-usada_sanctions_raw.csv</span></span>
-<span><span class="co">#&gt; Data successfully exported!</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="st">"../inst/extdata/"</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; character(0)</span></span></code></pre></div>
+<span>  path <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span></code></pre></div>
 <p>What does the raw data look like?</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"../dev/2023-12-19/2023-12-19-usada_sanctions_raw.csv"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"demo"</span>, <span class="st">"2023-12-21-usada_raw.csv"</span>, </span>
+<span>                                   package <span class="op">=</span> <span class="st">"dopingdata"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    937 obs. of  5 variables:</span></span>
 <span><span class="co">#&gt;  $ Athlete           : chr  "Rodriguez, Daniel" "Park, Mariah" "Frey, John" "Jha, Kanak" ...</span></span>

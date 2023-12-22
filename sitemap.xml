@@ -13,10 +13,22 @@
     <loc>https://mjfrigaard.github.io/dopingdata/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/classify.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/clean-dates.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/clean-sports.html</loc>
+  </url>
+  <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/index.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/articles/scraping-usada-sanctions.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/articles/viz-counts.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/authors.html</loc>
@@ -68,6 +80,9 @@
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://mjfrigaard.github.io/dopingdata/reference/make_regex.html</loc>
   </url>
   <url>
     <loc>https://mjfrigaard.github.io/dopingdata/reference/nin.html</loc>
