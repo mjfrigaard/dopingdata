@@ -119,7 +119,7 @@
 <span><span class="co">#&gt; Reading state information...</span></span>
 <span><span class="co">#&gt; libicu-dev is already the newest version (70.1-2).</span></span>
 <span><span class="co">#&gt; 0 upgraded, 0 newly installed, 0 to remove and 26 not upgraded.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 4 pkgs + 17 deps: kept 21 <span style="color: #B2B2B2;">[11.3s]</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> 4 pkgs + 17 deps: kept 21 <span style="color: #B2B2B2;">[10.5s]</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
@@ -362,18 +362,18 @@ substances, and 3) trims the white space from the tidy
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>substance_reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">substance_reason</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 26 × 2</span></span></span>
-<span><span class="co">#&gt;    athlete           substance_reason           </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> tran, hillary     cocaine                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> tran, hillary     d-methamphetamine          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> lehr, daniel      androstenedione            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> lehr, daniel      ostarine                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> frazier, daniel   androgenic anabolic steroid</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> frazier, daniel   clomiphene                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> miller, jeffery   testosterone               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> miller, jeffery   human growth hormone (hgh) </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> miller, jeffery   oxandrolone                </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> franklin, natalie ostarine                   </span></span>
+<span><span class="co">#&gt;    athlete                substance_reason                   </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> atkinson, annie        hydrochlorothiazide                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> atkinson, annie        chlorothiazide                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> atkinson, annie        triamterene                        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> atkinson, annie        4-hydroxytriamterene               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> cardoso, josé henrique 19-norandrosterone (19-na)         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cardoso, josé henrique 2a-methyl-5a-androstan-3a-ol-17-one</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cardoso, josé henrique epitrenbolone                      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cardoso, josé henrique methasterone                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cardoso, josé henrique testosterone                       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> prince, david          ostarine                           </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 16 more rows</span></span></span></code></pre></div>
 <p>After confirming the pattern is working, the output will be stored in
 <code>tidy_multiple_substances</code>.</p>
