@@ -1,0 +1,231 @@
+# Visualizing counts
+
+``` r
+library(dopingdata)
+```
+
+``` r
+if ("pak" %nin% loadedNamespaces()) {
+  install.packages("pak", quiet = TRUE)
+}
+pak::pak("Ryo-N7/tvthemes")
+pak::pak("liamgilbey/ggwaffle")
+pak::pak("hrbrmstr/hrbrthemes")
+pkgs <- c("ggplot2", "extrafont", "dplyr", "stringr", "tidyr",
+          "forcats", "ggthemes", "purrr")
+pak::pak(pkg = pkgs)
+```
+
+``` r
+library(ggplot2)
+library(extrafont)
+loadfonts(quiet = TRUE)
+library(tvthemes)
+library(ggthemes)
+library(hrbrthemes)
+library(ggwaffle)
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(forcats)
+```
+
+``` r
+pth <- system.file("extdata", "demo", package = "dopingdata")
+get_recent_file(pth, regex = 'substances', ext = '.csv')
+```
+
+    File last changed: 2023-12-21 20:33:32.064979
+    File name: 2023-12-21-tidy_substances.csv
+    ✔ import code pasted to clipboard!
+
+``` r
+tidy_substances <- read.delim(file = '/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv', sep = ',')
+```
+
+## Adverse Analytical Findings
+
+``` r
+tidy_substances |>
+  dplyr::filter(!is.na(substance_group)) |>
+  dplyr::mutate(substance_group = factor(substance_group)) |>
+  dplyr::count(substance_group, name = "count") |>
+  ggplot2::ggplot(ggplot2::aes(
+    x = count,
+    y = forcats::fct_reorder(substance_group, count)
+  )) +
+  ggplot2::geom_col() + 
+  ggplot2::labs(
+    title = "Total Adverse Analytical Findings",
+    subtitle = "What is the most common banned substance?",
+    y = "WADA Classification", x = "Counts"
+  )
+```
+
+![](../reference/figures/total_aafs-1.png)
+
+### Sports
+
+``` r
+tidy_substances |>
+  dplyr::filter(!is.na(sport)) |>
+  dplyr::count(sport, name = "count", sort = TRUE) |>
+  head(10) |> 
+  ggplot2::ggplot(ggplot2::aes(
+    x = count,
+    y = forcats::fct_reorder(as.factor(sport), count)
+  )) +
+  ggplot2::geom_col() + 
+  ggplot2::labs(
+    title = "Top Ten Sports with Sanctions",
+    subtitle = "What sports have the most adverse analytical findings?",
+    y = "Sport", x = "Number of Sanctions"
+  ) + 
+  ggthemes::theme_fivethirtyeight()
+```
+
+![](../reference/figures/top10_sports-1.png)
+
+### Adverse Analytical Findings & Sports
+
+``` r
+top4_sports <- tidy_substances |>
+  dplyr::filter(!is.na(sport)) |>
+  dplyr::count(sport, name = "count", sort = TRUE) |>
+  head(4) |> 
+  dplyr::select(sport) |> 
+  purrr::as_vector() |> 
+  base::unname()
+heatmap_substances <- tidy_substances |> 
+  dplyr::filter(!is.na(substance_group) & sport %in% top4_sports) |> 
+  dplyr::mutate(sport = dplyr::case_when(
+    sport == "mixed martial arts" ~ "MMA",
+    sport == "track & field" ~ "Track/Field",
+    sport == "cycling" ~ "Cycling",
+    sport == "weightlifting" ~ "WL",
+    TRUE ~ sport
+  )) |> 
+  dplyr::mutate(substance_group = factor(substance_group)) |> 
+  dplyr::group_by(sport, substance_group) |>
+  dplyr::summarise(occurrence = n()) |>
+  dplyr::ungroup()
+```
+
+``` r
+ggplot2::ggplot(data = heatmap_substances, 
+       ggplot2::aes(y = substance_group,
+           x = sport,
+           fill = occurrence)) + 
+       ggplot2::geom_raster(hjust = 0.5, vjust = 0.5) + 
+  ggplot2::theme(legend.position = "left") + 
+  ggplot2::labs(
+    title = "Doping Data",
+    subtitle = "Top four sports and their most \ncommonly banned substances",
+    caption = "MMA = mixed martial arts; WL = weightlifting",
+    x = "Sport", y = "", 
+    fill = "Sanctions") + 
+  hrbrthemes::theme_ipsum()
+```
+
+![](../reference/figures/heatmap_substances-1.png)
+
+``` r
+top3_sports <- tidy_substances |>
+  dplyr::filter(!is.na(sport)) |>
+  dplyr::count(sport, name = "count", sort = TRUE) |>
+  head(3) |> 
+  dplyr::select(sport) |> 
+  purrr::as_vector() |> 
+  base::unname()
+tidy_substances |> 
+  dplyr::filter(sport %in% top3_sports & 
+      substance_group %in% 
+      c("S1 ANABOLIC AGENTS", 
+        "S6 STIMULANTS", 
+        "S4 HORMONE AND METABOLIC MODULATORS", 
+        "S5 DIURETICS/MASKING AGENTS", 
+        "S2 PEP HORMONES/G FACTORS/MIMETICS", 
+        "S8 CANNABINOIDS", 
+        "S3 BETA-2 AGONISTS"
+)) |> 
+  dplyr::mutate(substance_group = factor(substance_group)) |>
+  dplyr::count(substance_group, sport, name = "count") |>
+  ggplot2::ggplot(ggplot2::aes(
+    x = count,
+    y = forcats::fct_reorder(substance_group, count), 
+    group = sport
+  )) +
+  ggplot2::geom_col(aes(fill = substance_group), width = 0.45) + 
+  ggplot2::facet_wrap(~ sport, scales = 'free_x', nrow = 1) +
+  ggplot2::labs(
+    title = "Adverse Analytical Findings",
+    subtitle = "Most Common Substances in Top Three Sports",
+    y = "WADA Classification", 
+    x = "Total Sanctions"
+  ) + 
+  tvthemes::scale_fill_bigHero6(reverse = TRUE) +
+  ggthemes::theme_clean() +
+  ggplot2::theme(legend.position = 'none')
+```
+
+![](../reference/figures/top3_sports-1.png)
+
+### Substances per Sport
+
+``` r
+waffle_weightlifting <- tidy_substances |> 
+  dplyr::filter(sport == "weightlifting") |>     
+  ggwaffle::waffle_iron(aes_d(group = substance_group))
+
+ggplot2::ggplot(data = waffle_weightlifting, 
+       ggplot2::aes(x = x, 
+           y = y, 
+           fill = group)) + 
+  ggwaffle::geom_waffle() +
+  tvthemes::scale_fill_stevenUniverse(reverse = FALSE) +
+  ggplot2::theme(legend.position = "right") +
+  ggwaffle::theme_waffle() + 
+  labs(title = "Weightlifting",
+    subtitle = "Common WADA banned substances",
+    x = "", y = "")
+```
+
+![](../reference/figures/waffle_weightlifting-1.png)
+
+``` r
+waffle_mma <- tidy_substances |> 
+  dplyr::filter(sport == "mixed martial arts") |>     
+  ggwaffle::waffle_iron(aes_d(group = substance_group))
+ggplot2::ggplot(data = waffle_mma, 
+       ggplot2::aes(x = x, 
+           y = y, 
+           fill = group)) + 
+  ggwaffle::geom_waffle() +
+  ggplot2::theme(legend.position = "right") +
+  ggwaffle::theme_waffle() + 
+  ggplot2::scale_fill_discrete() +
+  labs(title = "Mixed martial arts",
+    subtitle = "Most common WADA banned substances",
+    x = "", y = "")
+```
+
+![](../reference/figures/waffle_mma-1.png)
+
+``` r
+waffle_cycling <- tidy_substances |> 
+  dplyr::filter(sport == "cycling") |>     
+  ggwaffle::waffle_iron(aes_d(group = substance_group))
+
+ggplot2::ggplot(data = waffle_cycling, 
+       ggplot2::aes(x = x, 
+           y = y, 
+           fill = group)) + 
+  ggwaffle::geom_waffle() +
+  ggplot2::theme(legend.position = "right") +
+  ggwaffle::theme_waffle() + 
+  labs(title = "Cycling",
+    subtitle = "Most common WADA banned substances",
+    x = "", y = "")
+```
+
+![](../reference/figures/waffle_cycling-1.png)
