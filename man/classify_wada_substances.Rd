@@ -21,7 +21,7 @@ usada_data should be the table of sanctions from the \href{https://www.usada.org
 example_sanction_type
 substances <- classify_wada_substances(
   usada_data = example_sanction_type,
-  subs_column = substance_reason
+  subs_column = "substance_reason"
 )
 head(substances[c('substance_group', 'substance_reason')])
 

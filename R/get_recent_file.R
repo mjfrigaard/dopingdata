@@ -6,7 +6,9 @@
 #'     or 'dat'
 #'
 #'
-#' @return path to the most recent file
+#' @return Called for its side effects: prints the file name and modification
+#'   time to the console, and copies a ready-to-use import statement to the
+#'   clipboard. Returns the clipboard content string invisibly.
 #'
 #' @export
 #'

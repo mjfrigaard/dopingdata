@@ -8,10 +8,9 @@
 #' @export
 #'
 #' @examples
-#' require(palmerpenguins)
-#' str(palmerpenguins::penguins_raw)
+#' str(example_usada_raw)
 #' # compare to
-#' str(process_text(palmerpenguins::penguins_raw))
+#' str(process_text(example_usada_raw))
 process_text <- function(raw_data, fct = FALSE) {
   # convert to data.frame
   raw_data <- as.data.frame(raw_data)

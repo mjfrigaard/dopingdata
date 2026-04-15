@@ -4,14 +4,19 @@
 #' @param full return datetime (instead of date)
 #'
 #'
-#' @return most recently modified file
+#' @return A named character vector: `"dstmp"` containing the most recent
+#'   modification date, or `"dtstmp"` containing the full datetime when
+#'   `full = TRUE`.
 #'
-#' @export get_recent
+#' @export
 #'
 #' @examples
+#' \dontrun{
+#' # invalid path raises an error
 #' get_recent("wrong")
-#' get_recent("inst/extdata/")
-#' get_recent("inst/extdata/raw", full = TRUE)
+#' }
+#' get_recent(tempdir())
+#' get_recent(tempdir(), full = TRUE)
 get_recent <- function(pth = ".", full = FALSE) {
   if (fs::dir_exists(pth) == FALSE) {
     cli::cli_abort("Sorry--this is not a valid file path")

@@ -11,9 +11,13 @@ clip_top_file(ext, pth, ctime)
 or \code{'dat'}}
 
 \item{pth}{path to \code{extdata} subfolder}
+
+\item{ctime}{modification time of the most recent file, as a POSIXct datetime}
 }
 \value{
-list with extension, path, and modification time for most recent file.
+Called for its side effects: prints file name and modification time to
+the console, and copies a ready-to-use import statement to the clipboard.
+Returns the clipboard content string invisibly.
 }
 \description{
 Copy the path to top data file in \verb{extdata/} folder on the clipboard

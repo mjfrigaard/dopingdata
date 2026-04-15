@@ -5,12 +5,13 @@
 #'
 #' @param x dataset to export
 #' @param path string, path to folder
-#' @param type string, type of exported file
+#' @param type string, type of exported file (`"csv"`, `"rds"`, or `"tsv"`)
 #'
 #'
 #' @return exported data message
 #'
-#' @export export_data
+#' @importFrom utils write.csv write.table
+#' @export
 #'
 export_data <- function(x, path = "", type = "csv") {
 
@@ -38,7 +39,7 @@ export_data <- function(x, path = "", type = "csv") {
   } else if (type == "rds") {
     saveRDS(object = x, file = raw_data_file_pth)
   } else if (type == "tsv") {
-    write_delim(x = x, file = raw_data_file_pth, delim = "\t")
+    write.table(x, raw_data_file_pth, sep = "\t", row.names = FALSE)
   } else {
     write.csv(x, raw_data_file_pth, row.names = FALSE)
   }

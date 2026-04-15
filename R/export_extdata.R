@@ -2,7 +2,7 @@
 #'
 #' @param x data to export
 #' @param path path to 'inst/' folder (and only 'inst/' folder!)
-#' @param type logical, is this a raw dataset?
+#' @param type string, type of exported file (`"csv"`, `"rds"`, or `"tsv"`)
 #'
 #'
 #' @return exported data
@@ -38,7 +38,7 @@ export_extdata <- function(x, path = "", type = "csv") {
   } else if (type == "rds") {
     saveRDS(object = x, file = extdata_data_file_pth)
   } else if (type == "tsv") {
-    write_delim(x = x, file = extdata_data_file_pth, delim = "\t")
+    write.table(x, extdata_data_file_pth, sep = "\t", row.names = FALSE)
   } else {
     write.csv(x, extdata_data_file_pth, row.names = FALSE)
   }

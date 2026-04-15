@@ -15,7 +15,9 @@ get_recent_file(path = "default", regex = NULL, ext = ".csv")
 or 'dat'}
 }
 \value{
-path to the most recent file
+Called for its side effects: prints the file name and modification
+time to the console, and copies a ready-to-use import statement to the
+clipboard. Returns the clipboard content string invisibly.
 }
 \description{
 Return the most recent data file in folder

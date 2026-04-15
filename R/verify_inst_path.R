@@ -1,10 +1,11 @@
 #' Verify inst/ path
 #'
-#' @param inst_path
+#' @param inst_path path string to validate as an `inst/` folder path
 #'
-#' @return invisible
+#' @return the validated path string, or an error if the path is not a valid
+#'   `inst/` folder path.
 #'
-#' @export verify_inst_path
+#' @export
 #'
 verify_inst_path <- function(inst_path = NULL) {
   # Construct regular expression pattern

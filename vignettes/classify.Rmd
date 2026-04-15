@@ -27,7 +27,7 @@ options(
 library(dopingdata)
 ```
 
-```{r pkgs, eval=TRUE}
+```{r pkgs, eval=FALSE}
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
@@ -288,7 +288,7 @@ head(dopingdata::s1_substances, 10)
 The substance group vectors are passed to make_regex() to create a regular expressions (`s1_regex`), which we can use to match the `substance_reason` column on (see the example using `dopingdata::example_tidy_substances` dataset):
 
 ```{r veiw-s1}
-s1_regex <- make_regex(x = dopingdata::s1_substances)
+s1_regex <- make_regex(x = dopingdata::s1_substances, wb = TRUE)
 stringr::str_view(string = example_tidy_substances$substance_reason,
   pattern = s1_regex, match = TRUE)
 ```

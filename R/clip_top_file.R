@@ -3,10 +3,13 @@
 #' @param ext file extension. Default is `'csv'`, accepts: `'rds'`, `'txt'`, `'tsv'`,
 #'     or `'dat'`
 #' @param pth path to `extdata` subfolder
+#' @param ctime modification time of the most recent file, as a POSIXct datetime
 #'
 #'
-#' @return list with extension, path, and modification time for most recent file.
-#' @export clip_top_file
+#' @return Called for its side effects: prints file name and modification time to
+#'   the console, and copies a ready-to-use import statement to the clipboard.
+#'   Returns the clipboard content string invisibly.
+#' @export
 #'
 clip_top_file <- function(ext, pth, ctime) {
   if (ext %in% c("rds", "txt", "tsv", "dat", "csv")) {

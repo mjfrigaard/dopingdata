@@ -11,7 +11,7 @@ export_extdata(x, path = "", type = "csv")
 
 \item{path}{path to 'inst/' folder (and only 'inst/' folder!)}
 
-\item{type}{logical, is this a raw dataset?}
+\item{type}{string, type of exported file (\code{"csv"}, \code{"rds"}, or \code{"tsv"})}
 }
 \value{
 exported data

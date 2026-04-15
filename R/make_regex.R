@@ -12,14 +12,14 @@
 #'
 #' @examples
 #' make_regex(c("apple", "banana"))
-#' make_regex(c("cat", "dog"), wb = FALSE)
+#' make_regex(c("cat", "dog"), wb = TRUE)
 make_regex <- function(x, wb = FALSE) {
   stopifnot(exprs = {
     is.character(x)
   })
   if (wb) {
-    paste0(x, collapse = "|")
-  } else {
     paste0("\\b", x, "\\b", collapse = "|")
+  } else {
+    paste0(x, collapse = "|")
   }
 }

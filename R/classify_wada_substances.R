@@ -12,40 +12,40 @@
 #' example_sanction_type
 #' substances <- classify_wada_substances(
 #'   usada_data = example_sanction_type,
-#'   subs_column = substance_reason
+#'   subs_column = "substance_reason"
 #' )
 #' head(substances[c('substance_group', 'substance_reason')])
 #'
 classify_wada_substances <- function(usada_data, subs_column) {
   # Function to classify substance groups based on regex patterns
   classify_group <- function(substance) {
-    if (grepl(make_regex(s1_substances), substance)) {
+    if (grepl(make_regex(s1_substances, wb = TRUE), substance)) {
       return("S1 ANABOLIC AGENTS")
-    } else if (grepl(make_regex(s2_substances), substance)) {
+    } else if (grepl(make_regex(s2_substances, wb = TRUE), substance)) {
       return("S2 PEP HORMONES/G FACTORS/MIMETICS")
-    } else if (grepl(make_regex(s3_substances), substance)) {
+    } else if (grepl(make_regex(s3_substances, wb = TRUE), substance)) {
       return("S3 BETA-2 AGONISTS")
-    } else if (grepl(make_regex(s4_substances), substance)) {
+    } else if (grepl(make_regex(s4_substances, wb = TRUE), substance)) {
       return("S4 HORMONE AND METABOLIC MODULATORS")
-    } else if (grepl(make_regex(s5_substances), substance)) {
+    } else if (grepl(make_regex(s5_substances, wb = TRUE), substance)) {
       return("S5 DIURETICS/MASKING AGENTS")
-    } else if (grepl(make_regex(m1_method), substance)) {
+    } else if (grepl(make_regex(m1_method, wb = TRUE), substance)) {
       return("M1 MANIPULATION OF BLOOD")
-    } else if (grepl(make_regex(m2_method), substance)) {
+    } else if (grepl(make_regex(m2_method, wb = TRUE), substance)) {
       return("M2 CHEMICAL AND PHYSICAL MANIPULATION")
-    } else if (grepl(make_regex(m3_method), substance)) {
+    } else if (grepl(make_regex(m3_method, wb = TRUE), substance)) {
       return("M3 GENE AND CELL DOPING")
-    } else if (grepl(make_regex(s6_substances), substance)) {
+    } else if (grepl(make_regex(s6_substances, wb = TRUE), substance)) {
       return("S6 STIMULANTS")
-    } else if (grepl(make_regex(s7_substances), substance)) {
+    } else if (grepl(make_regex(s7_substances, wb = TRUE), substance)) {
       return("S7 NARCOTICS")
-    } else if (grepl(make_regex(s8_substances), substance)) {
+    } else if (grepl(make_regex(s8_substances, wb = TRUE), substance)) {
       return("S8 CANNABINOIDS")
-    } else if (grepl(make_regex(s9_substances), substance)) {
+    } else if (grepl(make_regex(s9_substances, wb = TRUE), substance)) {
       return("S9 GLUCOCORTICOIDS")
-    } else if (grepl(make_regex(s0_substances), substance)) {
+    } else if (grepl(make_regex(s0_substances, wb = TRUE), substance)) {
       return("S0 UNAPPROVED SUBSTANCES")
-    } else if (grepl(make_regex(p1_substances), substance)) {
+    } else if (grepl(make_regex(p1_substances, wb = TRUE), substance)) {
       return("P1 BETA-BLOCKERS")
     } else {
       return("UNCLASSIFIED")

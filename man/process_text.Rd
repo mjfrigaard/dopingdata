@@ -18,8 +18,7 @@ data with standardized names, lowercase text, etc.
 Process raw data
 }
 \examples{
-require(palmerpenguins)
-str(palmerpenguins::penguins_raw)
+str(example_usada_raw)
 # compare to
-str(process_text(palmerpenguins::penguins_raw))
+str(process_text(example_usada_raw))
 }

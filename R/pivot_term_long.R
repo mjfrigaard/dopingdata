@@ -1,8 +1,12 @@
-#' Parse string into individual terms (as tibble)
+#' Parse string into individual terms
 #'
-#' @param term
+#' @param term A character vector of one or more strings to parse.
+#' @param sep A regular expression used to split each string into terms.
+#'   Defaults to `"[^[:alnum:]]+"` (any run of non-alphanumeric characters).
 #'
-#' @return tibble of unique terms and term
+#' @return A data.frame with two columns: `unique_items` (individual terms
+#'   split from the input) and `term` (the original input string, repeated
+#'   in the first row of each group with `NA` for subsequent rows).
 #' @export
 #'
 #' @examples

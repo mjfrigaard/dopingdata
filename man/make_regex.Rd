@@ -20,5 +20,5 @@ If \code{wb} is \code{TRUE}, word boundaries (\verb{\\\\b}) are added before and
 }
 \examples{
 make_regex(c("apple", "banana"))
-make_regex(c("cat", "dog"), wb = FALSE)
+make_regex(c("cat", "dog"), wb = TRUE)
 }

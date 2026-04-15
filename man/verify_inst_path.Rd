@@ -7,10 +7,11 @@
 verify_inst_path(inst_path = NULL)
 }
 \arguments{
-\item{inst_path}{}
+\item{inst_path}{path string to validate as an \verb{inst/} folder path}
 }
 \value{
-invisible
+the validated path string, or an error if the path is not a valid
+\verb{inst/} folder path.
 }
 \description{
 Verify inst/ path

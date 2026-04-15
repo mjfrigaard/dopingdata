@@ -12,13 +12,18 @@ get_recent(pth = ".", full = FALSE)
 \item{full}{return datetime (instead of date)}
 }
 \value{
-most recently modified file
+A named character vector: \code{"dstmp"} containing the most recent
+modification date, or \code{"dtstmp"} containing the full datetime when
+\code{full = TRUE}.
 }
 \description{
 Return the most recent modification date
 }
 \examples{
+\dontrun{
+# invalid path raises an error
 get_recent("wrong")
-get_recent("inst/extdata/")
-get_recent("inst/extdata/raw", full = TRUE)
+}
+get_recent(tempdir())
+get_recent(tempdir(), full = TRUE)
 }

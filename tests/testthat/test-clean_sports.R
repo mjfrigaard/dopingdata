@@ -12,6 +12,7 @@ test_that("clean_sports() works", {
 
   expect_equal(object = dim(tv_sports), expected = dim(base_sports))
   expect_equal(object = names(tv_sports), expected = names(base_sports))
+  expect_equal(object = rownames(base_sports), expected = as.character(seq_len(nrow(base_sports))))
 
   expect_equal(class(base_sports), "data.frame")
 

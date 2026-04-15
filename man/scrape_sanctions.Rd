@@ -2,15 +2,19 @@
 % Please edit documentation in R/scrape_sanctions.R
 \name{scrape_sanctions}
 \alias{scrape_sanctions}
-\title{Scrape the UASA website sanctions data}
+\title{Scrape the USADA website sanctions data}
 \usage{
 scrape_sanctions(dest_path)
 }
+\arguments{
+\item{dest_path}{path to directory where the scraped data will be saved}
+}
 \value{
-tibble of raw sanctions data
+called for its side effect of exporting the scraped sanctions table
+to \code{dest_path} via \code{export_data()}.
 }
 \description{
-Scrape the UASA website sanctions data
+Scrape the USADA website sanctions data
 }
 \examples{
 # scrape_sanctions()

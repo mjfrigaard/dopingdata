@@ -2,18 +2,23 @@
 % Please edit documentation in R/pivot_term_long.R
 \name{pivot_term_long}
 \alias{pivot_term_long}
-\title{Parse string into individual terms (as tibble)}
+\title{Parse string into individual terms}
 \usage{
 pivot_term_long(term, sep = "[^[:alnum:]]+")
 }
 \arguments{
-\item{term}{}
+\item{term}{A character vector of one or more strings to parse.}
+
+\item{sep}{A regular expression used to split each string into terms.
+Defaults to \code{"[^[:alnum:]]+"} (any run of non-alphanumeric characters).}
 }
 \value{
-tibble of unique terms and term
+A data.frame with two columns: \code{unique_items} (individual terms
+split from the input) and \code{term} (the original input string, repeated
+in the first row of each group with \code{NA} for subsequent rows).
 }
 \description{
-Parse string into individual terms (as tibble)
+Parse string into individual terms
 }
 \examples{
 pivot_term_long(term = "A large size in stockings is hard to sell.")

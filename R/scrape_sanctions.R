@@ -1,6 +1,9 @@
-#' Scrape the UASA website sanctions data
+#' Scrape the USADA website sanctions data
 #'
-#' @return tibble of raw sanctions data
+#' @param dest_path path to directory where the scraped data will be saved
+#'
+#' @return called for its side effect of exporting the scraped sanctions table
+#'   to `dest_path` via `export_data()`.
 #'
 #' @export
 #'

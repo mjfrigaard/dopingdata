@@ -11,7 +11,7 @@ export_data(x, path = "", type = "csv")
 
 \item{path}{string, path to folder}
 
-\item{type}{string, type of exported file}
+\item{type}{string, type of exported file (\code{"csv"}, \code{"rds"}, or \code{"tsv"})}
 }
 \value{
 exported data message

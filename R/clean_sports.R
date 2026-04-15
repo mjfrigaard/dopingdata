@@ -29,10 +29,11 @@ clean_sports <- function(df, sport_col, tidy = TRUE) {
     separated_sports <- strsplit(multp_sport_athletes[[sport_col]], "and|, ")
     tidy_multp_sport_athletes <- multp_sport_athletes[rep(seq_len(nrow(multp_sport_athletes)), sapply(separated_sports, length)), ]
     tidy_multp_sport_athletes$sport <- unlist(separated_sports)
-    tidy_multp_sport_athletes$sport <- trimws(tidy_multp_sport_athletes[[sport_col]])
+    tidy_multp_sport_athletes$sport <- trimws(tidy_multp_sport_athletes$sport)
 
     # Combine single and multiple sports data
     tidy_sports <- rbind(single_sport_athletes, tidy_multp_sport_athletes)
+    rownames(tidy_sports) <- NULL
 
     return(tidy_sports)
   } else {
