@@ -1,10 +1,12 @@
 # clean-sports
 
 ``` r
+
 library(dopingdata)
 ```
 
 ``` r
+
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
@@ -13,6 +15,7 @@ install.packages(pkgs, quiet = TRUE)
 ```
 
 ``` r
+
 library(dplyr)
 library(stringr)
 library(tidyr)
@@ -20,6 +23,7 @@ library(forcats)
 ```
 
 ``` r
+
 usada_dates <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_dates.csv", 
                        package = "dopingdata"))
 ```
@@ -33,6 +37,7 @@ return a `tibble` (not a `data.frame`), which prints fewer rows to the
 console.
 
 ``` r
+
 usada_sports <- tibble::as_tibble(usada_dates)
 str(usada_sports)
 #> tibble [649 × 6] (S3: tbl_df/tbl/data.frame)
@@ -47,6 +52,7 @@ str(usada_sports)
 We can start by counting the `sport` column:
 
 ``` r
+
 usada_sports |> 
   dplyr::count(sport, sort = TRUE)
 #> # A tibble: 66 × 2
@@ -71,6 +77,7 @@ Some of the sports aren’t sports–they’re `athlete support personnel`.
 These need a `support_personnel` identifier.
 
 ``` r
+
 usada_sports <- dplyr::mutate(usada_sports, 
   # support_personnel
   support_personnel = 
@@ -98,6 +105,7 @@ determine which athletes/support personnel are involved in multiple
 sports.
 
 ``` r
+
 usada_sports <- dplyr::mutate(usada_sports,
   # track & field
   sport = stringr::str_replace_all(sport, 'track and field', 'track & field'))
@@ -123,6 +131,7 @@ The incorrect spelling for `brazilian jiu-jitsu`
 (`brazillian jiu-jitsu`) is corrected below.
 
 ``` r
+
 usada_sports <- dplyr::mutate(usada_sports, 
   # brazilian jiu-jitsu
   sport = dplyr::case_when(
@@ -143,6 +152,7 @@ usada_sports |>
 An identifier for paralympic sports: `paralympic`.
 
 ``` r
+
 usada_sports <- dplyr::mutate(usada_sports, 
   # paralympic
   paralympic = 
@@ -178,6 +188,7 @@ Identify the multiple sports using `and` and `,` in a regular
 expression.
 
 ``` r
+
 usada_sports <- dplyr::mutate(usada_sports, 
   # multiple_sports
   multiple_sports = 
@@ -206,6 +217,7 @@ Separate the multi-sport athletes in `usada_sports` as
 `single_sport_athletes`.
 
 ``` r
+
 multp_sport_athletes <- usada_sports |> 
   dplyr::filter(multiple_sports == TRUE)
 str(multp_sport_athletes)
@@ -245,6 +257,7 @@ The athletes listed with multiple sports will occupy multiple rows in a
   dataset:
 
 ``` r
+
 tidy_multp_sport_athletes <- multp_sport_athletes |> 
   tidyr::separate_rows(sport, sep = "and|, ") |> 
   dplyr::mutate(sport = stringr::str_trim(sport, side = "both"))
@@ -264,6 +277,7 @@ str(tidy_multp_sport_athletes)
 Finally, combine the two datasets.
 
 ``` r
+
 tidy_sports <- dplyr::bind_rows(single_sport_athletes, tidy_multp_sport_athletes)
 str(tidy_sports)
 #> tibble [661 × 9] (S3: tbl_df/tbl/data.frame)
@@ -285,6 +299,7 @@ These steps are combined in the
 function:
 
 ``` r
+
 str(
   clean_sports(
     df = usada_dates, 
@@ -306,6 +321,7 @@ str(
 Verify there aren’t any duplicates (again).
 
 ``` r
+
 tidy_sports |> 
   dplyr::count(athlete, sanction_date, sport) |> 
   dplyr::filter(n > 1)
@@ -317,6 +333,7 @@ We can see the multi-sport athletes are listed in `tidy_sports` (but
 with one sport per row):
 
 ``` r
+
 tidy_sports |> 
     dplyr::filter(multiple_sports == TRUE) |> 
     dplyr::select(athlete, sport)

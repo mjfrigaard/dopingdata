@@ -1,10 +1,12 @@
 # Classifying substances
 
 ``` r
+
 library(dopingdata)
 ```
 
 ``` r
+
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
@@ -13,6 +15,7 @@ pak::pak(pkgs)
 ```
 
 ``` r
+
 library(dplyr)
 library(stringr)
 library(tidyr)
@@ -25,6 +28,7 @@ single banned substance. I’ve written a
 function to quickly import `.csv` files from a specified directory:
 
 ``` r
+
 pth <- system.file("extdata", "demo", package = "dopingdata")
 get_recent_file(pth, regex = 'sports', ext = '.csv')
 ```
@@ -37,6 +41,7 @@ This makes it easy to paste the necessary import code into the console
 (or R markdown file):
 
 ``` r
+
 tidy_sports <- read.delim(file = '/Library/path/to/dopingdata/extdata/demo/2023-12-21-tidy_sports.csv', sep = ',')
 ```
 
@@ -70,12 +75,14 @@ We will use regular expressions to identify the type of substance behind
 the sanction. See the examples below:
 
 ``` r
+
 stringr::str_view(tidy_sports[['substance_reason']], 
   "use \\(epo & hgh\\)", match = TRUE)
 #> [638] │ erythropoietin (epo) and non-analytical: <use (epo & hgh)>
 ```
 
 ``` r
+
 stringr::str_view(tidy_sports[['substance_reason']],
   "tampering, complicity", match = TRUE)
 #> [85] │ non-analytical: <tampering, complicity>
@@ -93,6 +100,7 @@ and `analytic`. I’ll save this variable in a new intermediate
 `substances` dataset:
 
 ``` r
+
 substances <- dplyr::mutate(.data = tidy_sports,
     sanction_type = dplyr::case_when(
       stringr::str_detect(string = substance_reason,
@@ -131,6 +139,7 @@ multiple items are separated by either semicolons (`;`), commas (`,`),
 or a conjunction (`and`), and can be separated by a regular expression:
 
 ``` r
+
 dplyr::mutate(example_sanction_type,
   substance_cat = dplyr::case_when(
     # identify the multiple_sr substances using a regular expression
@@ -154,6 +163,7 @@ multiple substance/reasons from sanctions with a single substance or
 reason.
 
 ``` r
+
 substances <- substances |>
   dplyr::mutate(substance_cat = dplyr::case_when(
     stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'multiple',
@@ -172,6 +182,7 @@ First create a dataset that contains the sanctions with a *single*
 substance listed. Store these in `single_analytic_substances`.
 
 ``` r
+
 single_analytic_substances <- substances |>
   dplyr::filter(substance_cat == 'single' & sanction_type == "analytic")
 ```
@@ -179,6 +190,7 @@ single_analytic_substances <- substances |>
 View the top ten single analytic substances:
 
 ``` r
+
 single_analytic_substances |> 
   dplyr::count(substance_reason, sort = TRUE) |> 
   head(10)
@@ -201,6 +213,7 @@ Next create a dataset with the sanctions listing *multiple* substances
 in `substance_reason`. Store these in `multiple_analytic_substances`.
 
 ``` r
+
 multiple_analytic_substances <- substances |>
   dplyr::filter(substance_cat == 'multiple' & sanction_type == "analytic")
 ```
@@ -208,6 +221,7 @@ multiple_analytic_substances <- substances |>
 View the top ten multiple analytic substances:
 
 ``` r
+
 multiple_analytic_substances |> 
   dplyr::count(substance_reason, sort = TRUE) |> 
   head(10)
@@ -246,6 +260,7 @@ substance.
 > substances listing `metabolites`):*
 
 ``` r
+
 dplyr::mutate(example_sanction_type,
   # add matched column
   punct_match = add_match_col(
@@ -271,6 +286,7 @@ The code below tests this pattern on a sample from
 [`tidyr::separate_rows()`](https://tidyr.tidyverse.org/reference/separate_rows.html):
 
 ``` r
+
 dplyr::sample_n(multiple_analytic_substances, size = 10, replace = FALSE) |> 
   dplyr::mutate(
     # replace plurals
@@ -301,6 +317,7 @@ After confirming the pattern is working, the output will be stored in
 `tidy_multiple_substances`.
 
 ``` r
+
 tidy_multiple_substances <- dplyr::mutate(multiple_analytic_substances,
   # replace plurals
     substance_reason = stringr::str_replace_all(substance_reason,
@@ -315,12 +332,14 @@ With both single and multiple substances in tidy format, they can be
 combined together into a single `tidy_substances` dataset.
 
 ``` r
+
 tidy_substances <- rbind(single_analytic_substances, tidy_multiple_substances) 
 ```
 
 The top 10 tidy substances are below:
 
 ``` r
+
 tidy_substances |> 
   dplyr::count(substance_reason, sort = TRUE) |> 
   head(10)
@@ -357,6 +376,7 @@ creates a `substance_group` variable with each of the WADA
 classifications (stored in `dopingdata::wada_classes`):
 
 ``` r
+
 dopingdata::wada_classes
 #>                           Classification
 #> 1                     S1 ANABOLIC AGENTS
@@ -379,6 +399,7 @@ dopingdata::wada_classes
 (the `S1 ANABOLIC AGENTS` substances are below):
 
 ``` r
+
 head(dopingdata::s1_substances, 10)
 #>  [1] "3α-hydroxy-5α-androst-1-en-17-one"              
 #>  [2] "androgenic anabolic steroid"                    
@@ -398,6 +419,7 @@ regular expressions (`s1_regex`), which we can use to match the
 `dopingdata::example_tidy_substances` dataset):
 
 ``` r
+
 s1_regex <- make_regex(x = dopingdata::s1_substances, wb = TRUE)
 stringr::str_view(string = example_tidy_substances$substance_reason,
   pattern = s1_regex, match = TRUE)
@@ -410,6 +432,7 @@ can be used to answer questions like: *what `substance_group`’s appear
 the most?*
 
 ``` r
+
 tidy_substances <- classify_wada_substances(
   usada_data = tidy_substances,
   subs_column = "substance_reason") 
@@ -420,6 +443,7 @@ tidy_substances <- classify_wada_substances(
 The following `single` substances are marked as `UNCLASSIFIED`:
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(
       substance_cat == "single" & 
@@ -434,6 +458,7 @@ The final unclassified substance is actually a result from a
 miss-classified sanction type (for `rodriguez, yair`).
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(athlete == "rodriguez, yair") |>
   dplyr::select(athlete, substance_reason, substance_group, sanction_type)
@@ -446,6 +471,7 @@ For this particular athlete, 1) the `sanction_type` should be
 (`NA_character_`)
 
 ``` r
+
 tidy_substances <- tidy_substances |>
   dplyr::mutate(sanction_type = dplyr::case_when(
     athlete == "rodriguez, yair" ~ "non-analytic",
@@ -465,6 +491,7 @@ tidy_substances |>
 ### **UNCLASSIFIED** multiple substances
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(
       substance_cat == "multiple" & 
@@ -511,6 +538,7 @@ expression in `data-raw/`)
 takes a `df`, `substance`, and `value`:
 
 ``` r
+
 # 2a-methyl-5a-androstan-3a-ol-17-one ----
 # https://www.wada-ama.org/en/prohibited-list?page=0&q=arimistane&all=1#search-anchor
 tidy_substances <- reclass_substance(
@@ -633,6 +661,7 @@ After reclassifying the substances above, remaining
 `UNCLASSIFIED`/`multiple` sanctions are all non-analytic:
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(
       substance_cat == "multiple" & 
@@ -651,6 +680,7 @@ Changing the `sanction_type` classification to non-analytic requires
 missing (`NA_character_`) values for `substance_group`:
 
 ``` r
+
 # Change sanction_type to non-analytic
 tidy_substances <- tidy_substances |> 
   dplyr::mutate(
@@ -675,6 +705,7 @@ tidy_substances <- tidy_substances |>
 Remove the empty `substance_reason` values:
 
 ``` r
+
 tidy_substances <- dplyr::filter(tidy_substances, substance_reason != "")
 ```
 
@@ -685,6 +716,7 @@ Analytical
 Findings](https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-management/#:~:text).
 
 ``` r
+
 tidy_substances |> 
   dplyr::count(sanction_type, substance_group) |> 
   tidyr::pivot_wider(names_from = sanction_type, values_from = n)
@@ -712,6 +744,7 @@ Rule
 Violations](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/).
 
 ``` r
+
 dplyr::filter(tidy_substances, sanction_type == "non-analytic") |> 
   dplyr::count(substance_reason, substance_cat) |> 
   tidyr::pivot_wider(names_from = substance_cat, values_from = n)

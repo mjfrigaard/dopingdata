@@ -1,10 +1,12 @@
 # Visualizing counts
 
 ``` r
+
 library(dopingdata)
 ```
 
 ``` r
+
 if ("pak" %nin% loadedNamespaces()) {
   install.packages("pak", quiet = TRUE)
 }
@@ -17,6 +19,7 @@ pak::pak(pkg = pkgs)
 ```
 
 ``` r
+
 library(ggplot2)
 library(extrafont)
 loadfonts(quiet = TRUE)
@@ -31,6 +34,7 @@ library(forcats)
 ```
 
 ``` r
+
 pth <- system.file("extdata", "demo", package = "dopingdata")
 get_recent_file(pth, regex = 'substances', ext = '.csv')
 ```
@@ -40,12 +44,14 @@ get_recent_file(pth, regex = 'substances', ext = '.csv')
     ✔ import code pasted to clipboard!
 
 ``` r
+
 tidy_substances <- read.delim(file = '/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv', sep = ',')
 ```
 
 ## Adverse Analytical Findings
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(!is.na(substance_group)) |>
   dplyr::mutate(substance_group = factor(substance_group)) |>
@@ -67,6 +73,7 @@ tidy_substances |>
 ### Sports
 
 ``` r
+
 tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -89,6 +96,7 @@ tidy_substances |>
 ### Adverse Analytical Findings & Sports
 
 ``` r
+
 top4_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -112,6 +120,7 @@ heatmap_substances <- tidy_substances |>
 ```
 
 ``` r
+
 ggplot2::ggplot(data = heatmap_substances, 
        ggplot2::aes(y = substance_group,
            x = sport,
@@ -130,6 +139,7 @@ ggplot2::ggplot(data = heatmap_substances,
 ![](../reference/figures/heatmap_substances-1.png)
 
 ``` r
+
 top3_sports <- tidy_substances |>
   dplyr::filter(!is.na(sport)) |>
   dplyr::count(sport, name = "count", sort = TRUE) |>
@@ -173,6 +183,7 @@ tidy_substances |>
 ### Substances per Sport
 
 ``` r
+
 waffle_weightlifting <- tidy_substances |> 
   dplyr::filter(sport == "weightlifting") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))
@@ -193,6 +204,7 @@ ggplot2::ggplot(data = waffle_weightlifting,
 ![](../reference/figures/waffle_weightlifting-1.png)
 
 ``` r
+
 waffle_mma <- tidy_substances |> 
   dplyr::filter(sport == "mixed martial arts") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))
@@ -212,6 +224,7 @@ ggplot2::ggplot(data = waffle_mma,
 ![](../reference/figures/waffle_mma-1.png)
 
 ``` r
+
 waffle_cycling <- tidy_substances |> 
   dplyr::filter(sport == "cycling") |>     
   ggwaffle::waffle_iron(aes_d(group = substance_group))

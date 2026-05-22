@@ -3,6 +3,7 @@
 Packages:
 
 ``` r
+
 library(polite)
 library(dopingdata)
 library(robotstxt)
@@ -24,6 +25,7 @@ HTML tables.
 To install this package, run the code below:
 
 ``` r
+
 devtools::install_github("dmi3kno/polite")
 library(polite)
 ```
@@ -34,6 +36,7 @@ for more information), but I’ve chosen to follow the handy [polite
 template](https://dmi3kno.github.io/polite/#polite-template):
 
 ``` r
+
 polite::use_manners()
 ```
 
@@ -42,6 +45,7 @@ polite::use_manners()
 I’ll check the `robots.txt` file before scraping the website:
 
 ``` r
+
 # retrieval
 rtxt <- robotstxt::robotstxt(domain = "https://www.usada.org/")
 
@@ -60,6 +64,7 @@ All three paths are `TRUE`, but I will also check the domain with
 [`robotstxt::get_robotstxt()`](https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html):
 
 ``` r
+
 rt <- robotstxt::get_robotstxt(
   domain = "https://www.usada.org/testing/results/sanctions/")
 # printing
@@ -75,6 +80,7 @@ the data.
 Below are the steps used to scrape the sanctions table:
 
 ``` r
+
 usada_url = "https://www.usada.org/testing/results/sanctions/"
 usada_nodes <- polite::bow(usada_url) |> 
   polite::scrape() |> 
@@ -88,6 +94,7 @@ Some common tasks (like exporting the raw data as a .csv file into a
 date-stamped folder and file) have been wrapped in functions:
 
 ``` r
+
 export_data(
   x = usada_sanctions_raw, 
   path = "../dev")
@@ -98,6 +105,7 @@ There’s also an
 function if you’re storing the data in a package:
 
 ``` r
+
 export_extdata(
   x = usada_sanctions_raw, 
   path = "dev")
@@ -106,6 +114,7 @@ export_extdata(
 What does the raw data look like?
 
 ``` r
+
 usada_sanctions_raw <- read.delim(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
                                    package = "dopingdata"), sep = ",")
 str(usada_sanctions_raw)

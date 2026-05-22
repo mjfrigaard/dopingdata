@@ -1,12 +1,14 @@
 # Cleaning dates
 
 ``` r
+
 library(dopingdata)
 ```
 
 Below we’ll import a demo dataset and process the text:
 
 ``` r
+
 usada_raw <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
                        package = "dopingdata"))
 usada <- process_text(raw_data = usada_raw)
@@ -20,6 +22,7 @@ Wrangling these values pose some challenges because they aren’t
 *consistently* messy:
 
 ``` r
+
 subset(usada, 
   grepl("^original", usada[['sanction_announced']]), 
   c(athlete, sanction_announced))
@@ -78,6 +81,7 @@ Below is an example dataset to demonstrate how
 works:
 
 ``` r
+
 clean_dates(
   df = example_sanction_dates, 
   date_col = "ugly_dates", 
@@ -151,6 +155,7 @@ For `usada`, split the data into three `data.frame`s (`bad_dates`,
 `good_dates`, and `no_dates`).
 
 ``` r
+
 bad_dates <- subset(usada, 
   grepl("^original", usada[['sanction_announced']]))
 good_dates <- subset(usada, 
@@ -168,6 +173,7 @@ After formatting `good_dates` and removing `original_date` column we can
 combine the two with [`rbind()`](https://rdrr.io/r/base/cbind.html).
 
 ``` r
+
 cleaned_dates <- clean_dates(
   df = bad_dates, 
   date_col = "sanction_announced", 

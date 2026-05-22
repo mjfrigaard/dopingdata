@@ -1,4 +1,4 @@
-pandoc: 3.1.11
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   clean-sports: clean-sports.html
   scraping-usada-sanctions: scraping-usada-sanctions.html
   viz-counts: viz-counts.html
-last_built: 2026-04-15T21:45Z
+last_built: 2026-05-22T17:45Z
 urls:
   reference: https://mjfrigaard.github.io/dopingdata/reference
   article: https://mjfrigaard.github.io/dopingdata/articles

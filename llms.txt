@@ -17,11 +17,13 @@ challenges I decided to combine the utilities into a package.
 You can install the development version of `dopingdata` like so:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("mjfrigaard/dopingdata")
 ```
 
 ``` r
+
 library(dopingdata)
 #> 
 #> Attaching package: 'dopingdata'
