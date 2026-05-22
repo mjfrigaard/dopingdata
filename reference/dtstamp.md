@@ -29,9 +29,9 @@ polished date (or date and time) stamp
 dtstamp()
 #> [1] "2026-05-22"
 dtstamp(TRUE)
-#> [1] "2026-05-22-17464"
+#> [1] "2026-05-22-17507"
 dtstamp(FALSE, "r")
 #> [1] "2026-05-22_"
 dtstamp(TRUE, "l")
-#> [1] "_2026-05-22-17464"
+#> [1] "_2026-05-22-17507"
 ```

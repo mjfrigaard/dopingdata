@@ -32,11 +32,11 @@ if (FALSE) { # \dontrun{
 get_recent("wrong")
 } # }
 get_recent(tempdir())
-#> ✔ The last modified date in '/tmp/Rtmpx84Pvl': 2026-05-22
+#> ✔ The last modified date in '/tmp/RtmpO906wj': 2026-05-22
 #>        dstmp 
 #> "2026-05-22" 
 get_recent(tempdir(), full = TRUE)
-#> ✔ The last modified datetime in '/tmp/Rtmpx84Pvl': 2026-05-22 17:45:58.1489453315735
-#>                              dtstmp 
-#> "2026-05-22 17:45:58.1489453315735" 
+#> ✔ The last modified datetime in '/tmp/RtmpO906wj': 2026-05-22 17:50:01.22403573989868
+#>                               dtstmp 
+#> "2026-05-22 17:50:01.22403573989868" 
 ```
