@@ -73,21 +73,28 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">example_usada_raw</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	250 obs. of  5 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Athlete           : chr  "*Name Removed" "Richardson, Sha'Carri" "*Name Removed" "*Name Removed" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sport             : chr  "Cycling" "Track and Field" "Track and Field" "Bobsled and Skeleton" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Substance.Reason  : chr  "Non-Analytical: Use and Possession (EPO)" "Cannabinoids" "Non-Analytical: Refusal to Submit to Sample Collection" "Elevated T/E" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sanction.Terms    : chr  "2-Year Suspension - Loss of Results" "1-Month Suspension; Loss of Results" "2-Year Suspension - Loss of Results" "2-Year Suspension - Loss of Results" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sanction.Announced: chr  "" "07/02/2021" "" "" ...</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  Athlete <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Doe, Jane"</span>, <span class="st">"Roe, Richard"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Sport <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cycling"</span>, <span class="st">"Weightlifting"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Substance.Reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cannabinoids"</span>, <span class="st">"Ostarine"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Sanction.Terms <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2-Year Suspension"</span>, <span class="st">"1-Year Suspension"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  Sanction.Announced <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"01/01/2024"</span>, <span class="st">"02/15/2024"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_raw</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	2 obs. of  5 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Athlete           : chr  "Doe, Jane" "Roe, Richard"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sport             : chr  "Cycling" "Weightlifting"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Substance.Reason  : chr  "Cannabinoids" "Ostarine"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sanction.Terms    : chr  "2-Year Suspension" "1-Year Suspension"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ Sanction.Announced: chr  "01/01/2024" "02/15/2024"</span>
 <span class="r-in"><span><span class="co"># compare to</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">process_text</span><span class="op">(</span><span class="va">example_usada_raw</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	250 obs. of  5 variables:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ athlete           : chr  "*name removed" "richardson, sha'carri" "*name removed" "*name removed" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sport             : chr  "cycling" "track and field" "track and field" "bobsled and skeleton" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ substance_reason  : chr  "non-analytical: use and possession (epo)" "cannabinoids" "non-analytical: refusal to submit to sample collection" "elevated t/e" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sanction_terms    : chr  "2-year suspension - loss of results" "1-month suspension; loss of results" "2-year suspension - loss of results" "2-year suspension - loss of results" ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sanction_announced: chr  "" "07/02/2021" "" "" ...</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu">process_text</span><span class="op">(</span><span class="va">usada_raw</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 'data.frame':	2 obs. of  5 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ athlete           : chr  "doe, jane" "roe, richard"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sport             : chr  "cycling" "weightlifting"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ substance_reason  : chr  "cannabinoids" "ostarine"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sanction_terms    : chr  "2-year suspension" "1-year suspension"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ sanction_announced: chr  "01/01/2024" "02/15/2024"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -99,7 +106,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

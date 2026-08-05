@@ -33,19 +33,26 @@ library(tidyr)
 library(forcats)
 ```
 
+`tidy_substances` is the live dataset built at the end of the
+[“Classifying
+substances”](https://mjfrigaard.github.io/dopingdata/articles/classify.md)
+article — fetched with
+[`get_sanctions_data()`](https://mjfrigaard.github.io/dopingdata/reference/get_sanctions_data.md),
+then run through
+[`process_text()`](https://mjfrigaard.github.io/dopingdata/reference/process_text.md),
+[`clean_dates()`](https://mjfrigaard.github.io/dopingdata/reference/clean_dates.md),
+[`clean_sports()`](https://mjfrigaard.github.io/dopingdata/reference/clean_sports.md),
+and
+[`classify_wada_substances()`](https://mjfrigaard.github.io/dopingdata/reference/classify_wada_substances.md):
+
 ``` r
 
-pth <- system.file("extdata", "demo", package = "dopingdata")
-get_recent_file(pth, regex = 'substances', ext = '.csv')
-```
-
-    File last changed: 2023-12-21 20:33:32.064979
-    File name: 2023-12-21-tidy_substances.csv
-    ✔ import code pasted to clipboard!
-
-``` r
-
-tidy_substances <- read.delim(file = '/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv', sep = ',')
+usada_raw <- get_sanctions_data()
+usada <- process_text(raw_data = usada_raw)
+# ... clean_dates(), clean_sports(), classify_wada_substances() -- see "Classifying substances"
+tidy_substances <- classify_wada_substances(
+  usada_data = tidy_sports,
+  subs_column = "substance_reason")
 ```
 
 ## Adverse Analytical Findings
@@ -186,9 +193,9 @@ tidy_substances |>
 
 waffle_weightlifting <- tidy_substances |> 
   dplyr::filter(sport == "weightlifting") |>     
-  ggwaffle::waffle_iron(aes_d(group = substance_group))
+  ggwaffle::waffle_iron(mapping = "substance_group")
 
-ggplot2::ggplot(data = waffle_weightlifting, 
+ggplot2::ggplot(data = waffle_weightlifting,
        ggplot2::aes(x = x, 
            y = y, 
            fill = group)) + 
@@ -207,8 +214,8 @@ ggplot2::ggplot(data = waffle_weightlifting,
 
 waffle_mma <- tidy_substances |> 
   dplyr::filter(sport == "mixed martial arts") |>     
-  ggwaffle::waffle_iron(aes_d(group = substance_group))
-ggplot2::ggplot(data = waffle_mma, 
+  ggwaffle::waffle_iron(mapping = "substance_group")
+ggplot2::ggplot(data = waffle_mma,
        ggplot2::aes(x = x, 
            y = y, 
            fill = group)) + 
@@ -227,9 +234,9 @@ ggplot2::ggplot(data = waffle_mma,
 
 waffle_cycling <- tidy_substances |> 
   dplyr::filter(sport == "cycling") |>     
-  ggwaffle::waffle_iron(aes_d(group = substance_group))
+  ggwaffle::waffle_iron(mapping = "substance_group")
 
-ggplot2::ggplot(data = waffle_cycling, 
+ggplot2::ggplot(data = waffle_cycling,
        ggplot2::aes(x = x, 
            y = y, 
            fill = group)) + 

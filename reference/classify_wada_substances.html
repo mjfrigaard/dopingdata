@@ -73,27 +73,25 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">example_sanction_type</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           sport                                           substance_reason</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      swimming                     non-analytical: 3 whereabouts failures</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 track &amp; field                                               cannabinoids</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     triathlon                  androgenic anabolic steroid; cannabinoids</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 track &amp; field non-analytical: tampering, administration, and trafficking</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">sanction_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  athlete <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"doe, jane"</span>, <span class="st">"roe, richard"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  substance_reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"cannabinoids"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"androgenic anabolic steroid; cannabinoids"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sanction_type</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        athlete                          substance_reason</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    doe, jane                              cannabinoids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 roe, richard androgenic anabolic steroid; cannabinoids</span>
 <span class="r-in"><span><span class="va">substances</span> <span class="op">&lt;-</span> <span class="fu">classify_wada_substances</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  usada_data <span class="op">=</span> <span class="va">example_sanction_type</span>,</span></span>
+<span class="r-in"><span>  usada_data <span class="op">=</span> <span class="va">sanction_type</span>,</span></span>
 <span class="r-in"><span>  subs_column <span class="op">=</span> <span class="st">"substance_reason"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">substances</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'substance_group'</span>, <span class="st">'substance_reason'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         substance_group</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                          UNCLASSIFIED</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                       S8 CANNABINOIDS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                    S1 ANABOLIC AGENTS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 M2 CHEMICAL AND PHYSICAL MANIPULATION</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                             substance_reason</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1                     non-analytical: 3 whereabouts failures</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2                                               cannabinoids</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3                  androgenic anabolic steroid; cannabinoids</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 non-analytical: tampering, administration, and trafficking</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      substance_group                          substance_reason</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    S8 CANNABINOIDS                              cannabinoids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 S1 ANABOLIC AGENTS androgenic anabolic steroid; cannabinoids</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -106,7 +104,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

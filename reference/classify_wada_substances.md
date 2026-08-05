@@ -29,25 +29,23 @@ substances dataset with newly classified substances
 ## Examples
 
 ``` r
-example_sanction_type
-#>           sport                                           substance_reason
-#> 1      swimming                     non-analytical: 3 whereabouts failures
-#> 2 track & field                                               cannabinoids
-#> 3     triathlon                  androgenic anabolic steroid; cannabinoids
-#> 4 track & field non-analytical: tampering, administration, and trafficking
+sanction_type <- data.frame(
+  athlete = c("doe, jane", "roe, richard"),
+  substance_reason = c(
+    "cannabinoids",
+    "androgenic anabolic steroid; cannabinoids"
+  )
+)
+sanction_type
+#>        athlete                          substance_reason
+#> 1    doe, jane                              cannabinoids
+#> 2 roe, richard androgenic anabolic steroid; cannabinoids
 substances <- classify_wada_substances(
-  usada_data = example_sanction_type,
+  usada_data = sanction_type,
   subs_column = "substance_reason"
 )
 head(substances[c('substance_group', 'substance_reason')])
-#>                         substance_group
-#> 1                          UNCLASSIFIED
-#> 2                       S8 CANNABINOIDS
-#> 3                    S1 ANABOLIC AGENTS
-#> 4 M2 CHEMICAL AND PHYSICAL MANIPULATION
-#>                                             substance_reason
-#> 1                     non-analytical: 3 whereabouts failures
-#> 2                                               cannabinoids
-#> 3                  androgenic anabolic steroid; cannabinoids
-#> 4 non-analytical: tampering, administration, and trafficking
+#>      substance_group                          substance_reason
+#> 1    S8 CANNABINOIDS                              cannabinoids
+#> 2 S1 ANABOLIC AGENTS androgenic anabolic steroid; cannabinoids
 ```

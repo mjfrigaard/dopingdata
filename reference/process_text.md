@@ -25,19 +25,26 @@ data with standardized names, lowercase text, etc.
 ## Examples
 
 ``` r
-str(example_usada_raw)
-#> 'data.frame':    250 obs. of  5 variables:
-#>  $ Athlete           : chr  "*Name Removed" "Richardson, Sha'Carri" "*Name Removed" "*Name Removed" ...
-#>  $ Sport             : chr  "Cycling" "Track and Field" "Track and Field" "Bobsled and Skeleton" ...
-#>  $ Substance.Reason  : chr  "Non-Analytical: Use and Possession (EPO)" "Cannabinoids" "Non-Analytical: Refusal to Submit to Sample Collection" "Elevated T/E" ...
-#>  $ Sanction.Terms    : chr  "2-Year Suspension - Loss of Results" "1-Month Suspension; Loss of Results" "2-Year Suspension - Loss of Results" "2-Year Suspension - Loss of Results" ...
-#>  $ Sanction.Announced: chr  "" "07/02/2021" "" "" ...
+usada_raw <- data.frame(
+  Athlete = c("Doe, Jane", "Roe, Richard"),
+  Sport = c("Cycling", "Weightlifting"),
+  Substance.Reason = c("Cannabinoids", "Ostarine"),
+  Sanction.Terms = c("2-Year Suspension", "1-Year Suspension"),
+  Sanction.Announced = c("01/01/2024", "02/15/2024")
+)
+str(usada_raw)
+#> 'data.frame':    2 obs. of  5 variables:
+#>  $ Athlete           : chr  "Doe, Jane" "Roe, Richard"
+#>  $ Sport             : chr  "Cycling" "Weightlifting"
+#>  $ Substance.Reason  : chr  "Cannabinoids" "Ostarine"
+#>  $ Sanction.Terms    : chr  "2-Year Suspension" "1-Year Suspension"
+#>  $ Sanction.Announced: chr  "01/01/2024" "02/15/2024"
 # compare to
-str(process_text(example_usada_raw))
-#> 'data.frame':    250 obs. of  5 variables:
-#>  $ athlete           : chr  "*name removed" "richardson, sha'carri" "*name removed" "*name removed" ...
-#>  $ sport             : chr  "cycling" "track and field" "track and field" "bobsled and skeleton" ...
-#>  $ substance_reason  : chr  "non-analytical: use and possession (epo)" "cannabinoids" "non-analytical: refusal to submit to sample collection" "elevated t/e" ...
-#>  $ sanction_terms    : chr  "2-year suspension - loss of results" "1-month suspension; loss of results" "2-year suspension - loss of results" "2-year suspension - loss of results" ...
-#>  $ sanction_announced: chr  "" "07/02/2021" "" "" ...
+str(process_text(usada_raw))
+#> 'data.frame':    2 obs. of  5 variables:
+#>  $ athlete           : chr  "doe, jane" "roe, richard"
+#>  $ sport             : chr  "cycling" "weightlifting"
+#>  $ substance_reason  : chr  "cannabinoids" "ostarine"
+#>  $ sanction_terms    : chr  "2-year suspension" "1-year suspension"
+#>  $ sanction_announced: chr  "01/01/2024" "02/15/2024"
 ```

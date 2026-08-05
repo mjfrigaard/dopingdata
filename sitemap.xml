@@ -22,8 +22,10 @@
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/dtstamp.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/export_data.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/export_extdata.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/get_prohibited_association.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/get_recent_file.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/get_sanctions_data.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/guess_basename.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/index.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/make_regex.html</loc></url>
@@ -32,12 +34,17 @@
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/pivot_term_long.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/polite_download_file.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/polite_fetch_rtxt.html</loc></url>
-<url><loc>https://mjfrigaard.github.io/dopingdata/reference/polite_read_html.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/process_text.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/reclass_substance.html</loc></url>
-<url><loc>https://mjfrigaard.github.io/dopingdata/reference/scrape_sanctions.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/split_cols.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/theme_ggp2g.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/update_sanctions_data.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_cache_is_stale.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_fetch_usada_sanctions_page.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_read_cache.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_sanctions_cache_dir.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_validate_cols.html</loc></url>
+<url><loc>https://mjfrigaard.github.io/dopingdata/reference/util_write_cache.html</loc></url>
 <url><loc>https://mjfrigaard.github.io/dopingdata/reference/verify_inst_path.html</loc></url>
 </urlset>
 

@@ -78,101 +78,92 @@
     
 <p>Packages:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmi3kno/polite" class="external-link">polite</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/robotstxt/" class="external-link">robotstxt</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>robotstxt_warn <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="usada-sanction-data">USADA sanction data<a class="anchor" aria-label="anchor" href="#usada-sanction-data"></a>
 </h2>
-<p>The data I’ll be downloading comes from <a href="https://www.usada.org/testing/results/sanctions/" class="external-link">USADA sanctions
-table</a>.</p>
+<p>The data comes from the <a href="https://www.usada.org/results/sanctions/" class="external-link">USADA sanctions
+page</a>, which hosts two tables:</p>
+<ul>
+<li>the <strong>sanctions table</strong> (Athlete, Sport,
+Substance/Reason, Sanction Terms, Sanction Announced)</li>
+<li>the <strong>prohibited association table</strong>, listing athlete
+support personnel (coaches, trainers, etc.) currently ineligible under
+the Prohibited Association rule (Name, Suspension Ends)</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="use-your-manners">Use your manners<a class="anchor" aria-label="anchor" href="#use-your-manners"></a>
 </h2>
 <p>Because this package is built on top of the efforts of the fine
-people who collected, organized, and shared their data, we’re going to
-use the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>polite</code>
-package</a> for harvesting the HTML tables.</p>
-<p>To install this package, run the code below:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"dmi3kno/polite"</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dmi3kno/polite" class="external-link">polite</a></span><span class="op">)</span></span></code></pre></div>
-<p><code>polite</code> has many options for ethically scraping data
-(check out the <a href="https://dmi3kno.github.io/polite/reference/index.html" class="external-link">package
-website</a> for more information), but I’ve chosen to follow the handy
-<a href="https://dmi3kno.github.io/polite/#polite-template" class="external-link">polite
-template</a>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">polite</span><span class="fu">::</span><span class="fu"><a href="https://dmi3kno.github.io/polite/reference/use_manners.html" class="external-link">use_manners</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+people who collected, organized, and shared their data,
+<code>dopingdata</code> uses the <a href="https://dmi3kno.github.io/polite/" class="external-link"><code>polite</code> package</a>
+to fetch this page, which respects <code>robots.txt</code> and its
+crawl-delay rules.</p>
 <div class="section level3">
 <h3 id="check-robots-txt">Check <code>robots.txt</code><a class="anchor" aria-label="anchor" href="#check-robots-txt"></a>
 </h3>
-<p>I’ll check the <code>robots.txt</code> file before scraping the
-website:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># retrieval</span></span>
-<span><span class="va">rtxt</span> <span class="op">&lt;-</span> <span class="fu">robotstxt</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/robotstxt/reference/robotstxt.html" class="external-link">robotstxt</a></span><span class="op">(</span>domain <span class="op">=</span> <span class="st">"https://www.usada.org/"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rtxt</span> <span class="op">&lt;-</span> <span class="fu">robotstxt</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/robotstxt/reference/robotstxt.html" class="external-link">robotstxt</a></span><span class="op">(</span>domain <span class="op">=</span> <span class="st">"https://www.usada.org/"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># printing</span></span>
 <span><span class="va">rtxt</span><span class="op">$</span><span class="fu">check</span><span class="op">(</span></span>
-<span>  <span class="co"># check permissions </span></span>
-<span>  paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"testing/"</span>, </span>
-<span>            <span class="st">"testing/results/"</span>, </span>
-<span>            <span class="st">"testing/results/sanctions/"</span><span class="op">)</span>,</span>
-<span>  <span class="co"># bots</span></span>
+<span>  paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"results/"</span>, <span class="st">"results/sanctions/"</span><span class="op">)</span>,</span>
 <span>  bot   <span class="op">=</span> <span class="st">"*"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>All three paths are <code>TRUE</code>, but I will also check the
-domain with <code><a href="https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html" class="external-link">robotstxt::get_robotstxt()</a></code>:</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="getting-the-data">Getting the data<a class="anchor" aria-label="anchor" href="#getting-the-data"></a>
+</h2>
+<p>Rather than scraping the page yourself, <code>dopingdata</code>
+provides a small cached API modeled on the <a href="https://benyamindsmith.github.io/fightr/index.html" class="external-link"><code>fightr</code></a>
+package: <code>get_*()</code> functions return data from a local cache
+and refresh it automatically once it’s more than
+<code>max_age_days</code> old (7 days by default), and
+<code>update_*()</code> functions force a refresh. Fetching only ever
+happens when you explicitly call one of these functions — never on
+package load.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sanctions</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">sanctions</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prohibited_association</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_prohibited_association.html">get_prohibited_association</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">prohibited_association</span><span class="op">)</span></span></code></pre></div>
+<p>To force a refresh regardless of cache age:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rt</span> <span class="op">&lt;-</span> <span class="fu">robotstxt</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html" class="external-link">get_robotstxt</a></span><span class="op">(</span></span>
-<span>  domain <span class="op">=</span> <span class="st">"https://www.usada.org/testing/results/sanctions/"</span><span class="op">)</span></span>
-<span><span class="co"># printing</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">rt</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p>I can see the <code>Allow: /</code> configuration <a href="https://kinsta.com/blog/wordpress-robots-txt/#how-to-use-robotstxt-allow-all-to-give-robots-full-access-to-your-site" class="external-link">gives
-us access to download</a> the data.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/update_sanctions_data.html">update_sanctions_data</a></span><span class="op">(</span>verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/update_sanctions_data.html">update_sanctions_data()</a></code> makes a single request for the
+page and refreshes both cached tables, so calling
+<code><a href="../reference/get_sanctions_data.html">get_sanctions_data()</a></code> and
+<code><a href="../reference/get_prohibited_association.html">get_prohibited_association()</a></code> back to back doesn’t trigger
+two separate scrapes.</p>
 </div>
-<div class="section level3">
-<h3 id="scraping-with-polite-and-rvest">Scraping with <code>polite</code> and <code>rvest</code><a class="anchor" aria-label="anchor" href="#scraping-with-polite-and-rvest"></a>
-</h3>
-<p>Below are the steps used to scrape the sanctions table:</p>
+<div class="section level2">
+<h2 id="exporting-the-data">Exporting the data<a class="anchor" aria-label="anchor" href="#exporting-the-data"></a>
+</h2>
+<p>Some common tasks (like exporting a data frame as a <code>.csv</code>
+file into a date-stamped folder) have been wrapped in functions:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_url</span> <span class="op">=</span> <span class="st">"https://www.usada.org/testing/results/sanctions/"</span></span>
-<span><span class="va">usada_nodes</span> <span class="op">&lt;-</span> <span class="fu">polite</span><span class="fu">::</span><span class="fu"><a href="https://dmi3kno.github.io/polite/reference/bow.html" class="external-link">bow</a></span><span class="op">(</span><span class="va">usada_url</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">polite</span><span class="fu">::</span><span class="fu"><a href="https://dmi3kno.github.io/polite/reference/scrape.html" class="external-link">scrape</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/rename.html" class="external-link">html_nodes</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span> </span>
-<span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu">rvest</span><span class="fu">::</span><span class="fu"><a href="https://rvest.tidyverse.org/reference/html_table.html" class="external-link">html_table</a></span><span class="op">(</span><span class="va">usada_nodes</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="exporting-raw-data">Exporting raw data<a class="anchor" aria-label="anchor" href="#exporting-raw-data"></a>
-</h3>
-<p>Some common tasks (like exporting the raw data as a .csv file into a
-date-stamped folder and file) have been wrapped in functions:</p>
+<code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    1047 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ Athlete           : chr  "Miller, Adam" "Zilcosky, Chase" "Trabing, Bert" "Cantwell, Steven" ...</span></span>
+<span><span class="co">#&gt;  $ Sport             : chr  "Field Hockey" "Weightlifting" "Weightlifting" "Paralympic Snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ Substance/Reason  : chr  "Non-Analytical: 3 Whereabouts Failures" "Amphetamine" "Anastrozole; Testosterone" "Dehydrochlormethyltestosterone (DHCMT)" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction Terms    : chr  "2-Year Suspension; Loss of Results" "2-Year Suspension; Loss of Results" "4-Year Suspension; Loss of Results" "6-Year Suspension; Loss of Results" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction Announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_data.html">export_data</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
+<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>,</span>
 <span>  path <span class="op">=</span> <span class="st">"../dev"</span><span class="op">)</span></span></code></pre></div>
 <p>There’s also an <code><a href="../reference/export_extdata.html">export_extdata()</a></code> function if you’re
 storing the data in a package:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_extdata.html">export_extdata</a></span><span class="op">(</span></span>
-<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>, </span>
+<span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>,</span>
 <span>  path <span class="op">=</span> <span class="st">"dev"</span><span class="op">)</span></span></code></pre></div>
-<p>What does the raw data look like?</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"demo"</span>, <span class="st">"2023-12-21-usada_raw.csv"</span>, </span>
-<span>                                   package <span class="op">=</span> <span class="st">"dopingdata"</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    937 obs. of  5 variables:</span></span>
-<span><span class="co">#&gt;  $ Athlete           : chr  "Rodriguez, Daniel" "Park, Mariah" "Frey, John" "Jha, Kanak" ...</span></span>
-<span><span class="co">#&gt;  $ Sport             : chr  "Mixed Martial Arts" "Weightlifting" "Cycling" "Table Tennis" ...</span></span>
-<span><span class="co">#&gt;  $ Substance.Reason  : chr  "Ostarine; LGD-4033" "Chlorthalidone" "Non-Analytical: Refusal to Submit to Sample Collection" "Non-Analytical: 3 Whereabouts Failures" ...</span></span>
-<span><span class="co">#&gt;  $ Sanction.Terms    : chr  "3-Month Suspenion" "Public Warning" "2-Year Suspension; Loss of Results" "1-Year Suspension; Loss of Results" ...</span></span>
-<span><span class="co">#&gt;  $ Sanction.Announced: chr  "12/14/2023" "12/11/2023" "12/05/2023" "Original: 3/20/2023; Updated: 12/01/2023" ...</span></span></code></pre></div>
-<p>You can also use the <code><a href="../reference/scrape_sanctions.html">scrape_sanctions()</a></code> function.</p>
-</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -185,7 +176,7 @@ storing the data in a package:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

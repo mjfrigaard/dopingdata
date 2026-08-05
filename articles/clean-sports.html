@@ -89,9 +89,35 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span></code></pre></div>
+<p>Reproducing the <code>usada_dates</code> dataset from the <a href="clean-dates.html">“Cleaning dates”</a> article:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"demo"</span>, <span class="st">"2023-12-21-usada_dates.csv"</span>, </span>
-<span>                       package <span class="op">=</span> <span class="st">"dopingdata"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">usada</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_text.html">process_text</a></span><span class="op">(</span>raw_data <span class="op">=</span> <span class="va">usada_raw</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bad_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">usada</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^original"</span>, <span class="va">usada</span><span class="op">[[</span><span class="st">'sanction_announced'</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">good_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">usada</span>,</span>
+<span>  <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^original"</span>, <span class="va">usada</span><span class="op">[[</span><span class="st">'sanction_announced'</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">sanction_announced</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cleaned_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_dates.html">clean_dates</a></span><span class="op">(</span></span>
+<span>  df <span class="op">=</span> <span class="va">bad_dates</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"sanction_announced"</span>,</span>
+<span>  split <span class="op">=</span> <span class="st">"updated"</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cleaned_dates</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cleaned_dates</span><span class="op">)</span> <span class="op">==</span> <span class="st">'split_date'</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">'sanction_date'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cleaned_dates</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cleaned_dates</span><span class="op">)</span> <span class="op">==</span> <span class="st">'pattern_date'</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">'original_date'</span></span>
+<span><span class="va">good_dates</span><span class="op">$</span><span class="va">sanction_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">good_dates</span><span class="op">[[</span><span class="st">'sanction_announced'</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>                                    format <span class="op">=</span> <span class="st">"%m/%d/%Y"</span><span class="op">)</span></span>
+<span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">intersect</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">cleaned_dates</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">good_dates</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">usada_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">good_dates</span>, <span class="va">cleaned_dates</span><span class="op">[</span><span class="va">nms</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_dates</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    693 obs. of  6 variables:</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr  "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr  "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr  "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr  "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2026-07-31" "2026-07-29" ...</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="sports">Sports<a class="anchor" aria-label="anchor" href="#sports"></a>
 </h2>
@@ -104,31 +130,31 @@ rows to the console.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sports</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">usada_dates</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sports</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [649 × 6] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr [1:649] "rodriguez, daniel" "park, mariah" "frey, john" "forrest, evan" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr [1:649] "mixed martial arts" "weightlifting" "cycling" "weightlifting" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr [1:649] "ostarine; lgd-4033" "chlorthalidone" "non-analytical: refusal to submit to sample collection" "boldenone; drostanolone; methandienone; nandrolone; testosterone" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr [1:649] "3-month suspenion" "public warning" "2-year suspension; loss of results" "3-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr [1:649] "12/14/2023" "12/11/2023" "12/05/2023" "11/30/2023" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr [1:649] "2023-12-14" "2023-12-11" "2023-12-05" "2023-11-30" ...</span></span></code></pre></div>
+<span><span class="co">#&gt; tibble [693 × 6] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:693] "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:693] "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:693] "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:693] "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:693] "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:693], format: "2026-07-31" "2026-07-29" ...</span></span></code></pre></div>
 <p>We can start by counting the <code>sport</code> column:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 66 × 2</span></span></span>
-<span><span class="co">#&gt;    sport                                   n</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> mixed martial arts                    135</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> cycling                               125</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> weightlifting                         122</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> track and field                        93</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> wrestling                              15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> triathlon                              14</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> brazilian jiu-jitsu                    13</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> paralympic track and field             11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> swimming                                9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cycling - athlete support personnel     6</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 56 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 72 × 2</span></span></span>
+<span><span class="co">#&gt;    sport                          n</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> mixed martial arts           153</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> weightlifting                140</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> cycling                      100</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> track and field               96</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> brazilian jiu-jitsu           21</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> triathlon                     17</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> swimming                      15</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> wrestling                     11</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> paralympic track and field    10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> powerlifting                   7</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 62 more rows</span></span></span></code></pre></div>
 <div class="section level3">
 <h3 id="support-personnel">Support personnel<a class="anchor" aria-label="anchor" href="#support-personnel"></a>
 </h3>
@@ -174,10 +200,10 @@ personnel are involved in multiple sports.</p>
 <span><span class="co">#&gt;   sport                                           `FALSE` `TRUE`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bobsled and skeleton, track &amp; field                   1     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> para track &amp; field                                    3     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> paralympic track &amp; field                             11     <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> para track &amp; field                                    5     <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> paralympic track &amp; field                             10     <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> paralympic track &amp; field, paralympic volleyball       1     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> track &amp; field                                        95     <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> track &amp; field                                        99     <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> track &amp; field - athlete support personnel            <span style="color: #BB0000;">NA</span>      6</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -197,7 +223,7 @@ personnel are involved in multiple sports.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
 <span><span class="co">#&gt;   sport                                               n</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brazilian jiu-jitsu                                14</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> brazilian jiu-jitsu                                21</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> brazilian jiu-jitsu - athlete support personnel     1</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -215,23 +241,26 @@ personnel are involved in multiple sports.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">sport</span>, <span class="st">"paralympic|para"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">paralympic</span>, <span class="va">sport</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">paralympic</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 17 × 2</span></span></span>
 <span><span class="co">#&gt;    sport                                           `TRUE`</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> para shooting                                        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> para track &amp; field                                   3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> paralympic archery                                   1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> paralympic basketball                                2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> paralympic boccia                                    1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> paralympic curling                                   1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> paralympic cycling                                   4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> paralympic judo                                      4</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> paralympic rugby                                     1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> paralympic sailing                                   1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> paralympic snowboarding                              1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> paralympic table tennis                              1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> paralympic track &amp; field                            11</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> paralympic track &amp; field, paralympic volleyball      1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> para alpine skiing                                   1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> para cycling                                         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> para fencing                                         1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> para judo                                            1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> para shooting                                        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> para swimming                                        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> para track &amp; field                                   5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> paralympic alpine skiing                             1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> paralympic archery                                   1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> paralympic basketball                                2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> paralympic curling                                   1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> paralympic cycling                                   4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> paralympic judo                                      4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> paralympic snowboarding                              2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> paralympic track &amp; field                            10</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> paralympic track &amp; field, paralympic volleyball      1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> paralympic triathlon                                 1</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="multiple-sports">Multiple sports<a class="anchor" aria-label="anchor" href="#multiple-sports"></a>
@@ -252,9 +281,9 @@ personnel are involved in multiple sports.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
 <span><span class="co">#&gt;   sport                                           `TRUE`</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bobsled and skeleton                                 4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> bobsled and skeleton                                 3</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> bobsled and skeleton, track &amp; field                  1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> cycling, triathlon                                   3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> cycling, triathlon                                   2</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> cycling, weightlifting                               1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> paralympic track &amp; field, paralympic volleyball      1</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> skiing and snowboarding                              1</span></span></code></pre></div>
@@ -269,29 +298,29 @@ personnel are involved in multiple sports.</p>
 <code class="sourceCode R"><span><span class="va">multp_sport_athletes</span> <span class="op">&lt;-</span> <span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sports</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">multp_sport_athletes</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [11 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr [1:11] "allison, kyler" "blandford, jenna" "cruse, j.c." "schrodt, patrick \"dillon\"" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr [1:11] "bobsled and skeleton" "cycling, triathlon" "bobsled and skeleton" "bobsled and skeleton" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr [1:11] "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "dimethylbutylamine (dmba)" "dimethylbutylamine (dmba)" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr [1:11] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "16-month suspension - loss of results" "16-month suspension - loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr [1:11] "10/09/2019" "11/28/2017" "07/20/2017" "04/06/2017" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr [1:11] "2019-10-09" "2017-11-28" "2017-07-20" "2017-04-06" ...</span></span>
-<span><span class="co">#&gt;  $ support_personnel : logi [1:11] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi [1:11] FALSE FALSE FALSE FALSE TRUE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ multiple_sports   : logi [1:11] TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
+<span><span class="co">#&gt; tibble [9 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:9] "allison, kyler" "blandford, jenna" "cruse, j.c." "schrodt, patrick \"dillon\"" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:9] "bobsled and skeleton" "cycling, triathlon" "bobsled and skeleton" "bobsled and skeleton" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:9] "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "dimethylbutylamine (dmba)" "dimethylbutylamine (dmba)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:9] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "16-month suspension - loss of results" "16-month suspension - loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:9] "10/09/2019" "11/28/2017" "07/20/2017" "04/06/2017" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:9], format: "2019-10-09" "2017-11-28" ...</span></span>
+<span><span class="co">#&gt;  $ support_personnel : logi [1:9] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi [1:9] FALSE FALSE FALSE FALSE TRUE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ multiple_sports   : logi [1:9] TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span>
 <span><span class="va">single_sport_athletes</span> <span class="op">&lt;-</span> <span class="va">usada_sports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sports</span> <span class="op">==</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">single_sport_athletes</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [638 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr [1:638] "rodriguez, daniel" "park, mariah" "frey, john" "forrest, evan" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr [1:638] "mixed martial arts" "weightlifting" "cycling" "weightlifting" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr [1:638] "ostarine; lgd-4033" "chlorthalidone" "non-analytical: refusal to submit to sample collection" "boldenone; drostanolone; methandienone; nandrolone; testosterone" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr [1:638] "3-month suspenion" "public warning" "2-year suspension; loss of results" "3-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr [1:638] "12/14/2023" "12/11/2023" "12/05/2023" "11/30/2023" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr [1:638] "2023-12-14" "2023-12-11" "2023-12-05" "2023-11-30" ...</span></span>
-<span><span class="co">#&gt;  $ support_personnel : logi [1:638] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi [1:638] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ multiple_sports   : logi [1:638] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
+<span><span class="co">#&gt; tibble [684 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:684] "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:684] "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:684] "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:684] "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:684] "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:684], format: "2026-07-31" "2026-07-29" ...</span></span>
+<span><span class="co">#&gt;  $ support_personnel : logi [1:684] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi [1:684] FALSE FALSE FALSE TRUE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ multiple_sports   : logi [1:684] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
 <p>The athletes listed with multiple sports will occupy multiple rows in
 a ‘tidy’ version of <code>usada_sports</code>.</p>
 <ul>
@@ -304,30 +333,30 @@ will create a <code>tidy_multp_sport_athletes</code> dataset:</li>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_rows.html" class="external-link">separate_rows</a></span><span class="op">(</span><span class="va">sport</span>, sep <span class="op">=</span> <span class="st">"and|, "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sport <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html" class="external-link">str_trim</a></span><span class="op">(</span><span class="va">sport</span>, side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tidy_multp_sport_athletes</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [23 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr [1:23] "allison, kyler" "allison, kyler" "blandford, jenna" "blandford, jenna" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr [1:23] "bobsled" "skeleton" "cycling" "triathlon" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr [1:23] "non-analytical: refusal to submit to sample collection" "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr [1:23] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "4-year suspension - loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr [1:23] "10/09/2019" "10/09/2019" "11/28/2017" "11/28/2017" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr [1:23] "2019-10-09" "2019-10-09" "2017-11-28" "2017-11-28" ...</span></span>
-<span><span class="co">#&gt;  $ support_personnel : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi [1:23] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ multiple_sports   : logi [1:23] TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span></code></pre></div>
+<span><span class="co">#&gt; tibble [19 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:19] "allison, kyler" "allison, kyler" "blandford, jenna" "blandford, jenna" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:19] "bobsled" "skeleton" "cycling" "triathlon" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:19] "non-analytical: refusal to submit to sample collection" "non-analytical: refusal to submit to sample collection" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" "non-analytical: use and possession (testosterone, hgh and oxandrolone)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:19] "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension; loss of results; sanction tolled due to retirement" "4-year suspension - loss of results" "4-year suspension - loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:19] "10/09/2019" "10/09/2019" "11/28/2017" "11/28/2017" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:19], format: "2019-10-09" "2019-10-09" ...</span></span>
+<span><span class="co">#&gt;  $ support_personnel : logi [1:19] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi [1:19] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ multiple_sports   : logi [1:19] TRUE TRUE TRUE TRUE TRUE TRUE ...</span></span></code></pre></div>
 <p>Finally, combine the two datasets.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_sports</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">single_sport_athletes</span>, <span class="va">tidy_multp_sport_athletes</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tidy_sports</span><span class="op">)</span></span>
-<span><span class="co">#&gt; tibble [661 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr [1:661] "rodriguez, daniel" "park, mariah" "frey, john" "forrest, evan" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr [1:661] "mixed martial arts" "weightlifting" "cycling" "weightlifting" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr [1:661] "ostarine; lgd-4033" "chlorthalidone" "non-analytical: refusal to submit to sample collection" "boldenone; drostanolone; methandienone; nandrolone; testosterone" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr [1:661] "3-month suspenion" "public warning" "2-year suspension; loss of results" "3-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr [1:661] "12/14/2023" "12/11/2023" "12/05/2023" "11/30/2023" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr [1:661] "2023-12-14" "2023-12-11" "2023-12-05" "2023-11-30" ...</span></span>
-<span><span class="co">#&gt;  $ support_personnel : logi [1:661] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi [1:661] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ multiple_sports   : logi [1:661] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
+<span><span class="co">#&gt; tibble [703 × 9] (S3: tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr [1:703] "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr [1:703] "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr [1:703] "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr [1:703] "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr [1:703] "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date[1:703], format: "2026-07-31" "2026-07-29" ...</span></span>
+<span><span class="co">#&gt;  $ support_personnel : logi [1:703] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi [1:703] FALSE FALSE FALSE TRUE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ multiple_sports   : logi [1:703] FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="clean_sports">
@@ -342,30 +371,37 @@ function:</p>
 <span>    sport_col <span class="op">=</span> <span class="st">"sport"</span>, </span>
 <span>    tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    661 obs. of  9 variables:</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr  "rodriguez, daniel" "park, mariah" "frey, john" "forrest, evan" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr  "mixed martial arts" "weightlifting" "cycling" "weightlifting" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr  "ostarine; lgd-4033" "chlorthalidone" "non-analytical: refusal to submit to sample collection" "boldenone; drostanolone; methandienone; nandrolone; testosterone" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr  "3-month suspenion" "public warning" "2-year suspension; loss of results" "3-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr  "12/14/2023" "12/11/2023" "12/05/2023" "11/30/2023" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : chr  "2023-12-14" "2023-12-11" "2023-12-05" "2023-11-30" ...</span></span>
+<span><span class="co">#&gt; 'data.frame':    703 obs. of  9 variables:</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr  "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr  "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr  "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr  "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2026-07-31" "2026-07-29" ...</span></span>
 <span><span class="co">#&gt;  $ support_personnel : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...</span></span>
 <span><span class="co">#&gt;  $ multiple_sports   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
 <p>Verify there aren’t any duplicates (again).</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_sports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_date</span>, <span class="va">sport</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 4</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 4 variables: athlete &lt;chr&gt;, sanction_date &lt;chr&gt;, sport &lt;chr&gt;, n &lt;int&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   athlete       sanction_date sport                        n</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> *name removed <span style="color: #BB0000;">NA</span>            mixed martial arts           6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> *name removed <span style="color: #BB0000;">NA</span>            paralympic track &amp; field     2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> *name removed <span style="color: #BB0000;">NA</span>            swimming                     4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> *name removed <span style="color: #BB0000;">NA</span>            track &amp; field                9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> *name removed <span style="color: #BB0000;">NA</span>            volleyball                   2</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> *name removed <span style="color: #BB0000;">NA</span>            weightlifting                3</span></span></code></pre></div>
 <p>We can see the multi-sport athletes are listed in
 <code>tidy_sports</code> (but with one sport per row):</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_sports</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">multiple_sports</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sport</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 23 × 2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 19 × 2</span></span></span>
 <span><span class="co">#&gt;    athlete                       sport                   </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">"</span>allison, kyler<span style="color: #949494;">"</span>              bobsled                 </span></span>
@@ -378,7 +414,15 @@ function:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">"</span>schrodt, patrick \"dillon\"<span style="color: #949494;">"</span> skeleton                </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">"</span>green, roderick<span style="color: #949494;">"</span>             paralympic track &amp; field</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>green, roderick<span style="color: #949494;">"</span>             paralympic volleyball   </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 13 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">"</span>denney phillips, jessica<span style="color: #949494;">"</span>    cycling                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">"</span>denney phillips, jessica<span style="color: #949494;">"</span>    weightlifting           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">"</span>flanagan, tyler<span style="color: #949494;">"</span>             skiing                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">"</span>flanagan, tyler<span style="color: #949494;">"</span>             snowboarding            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">"</span>hamilton, tyler<span style="color: #949494;">"</span>             cycling                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span> <span style="color: #949494;">"</span>hamilton, tyler<span style="color: #949494;">"</span>             triathlon               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span> <span style="color: #949494;">"</span>bailey, ryan<span style="color: #949494;">"</span>                bobsled                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span> <span style="color: #949494;">"</span>bailey, ryan<span style="color: #949494;">"</span>                skeleton                </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">19</span> <span style="color: #949494;">"</span>bailey, ryan<span style="color: #949494;">"</span>                track &amp; field</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -392,7 +436,7 @@ function:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -1,6 +1,9 @@
 # dopingdata
 
-![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+
+Lifecycle: experimental
 
 `dopingdata` contains data from the [United States Anti-Doping
 Agency](https://en.wikipedia.org/wiki/United_States_Anti-Doping_Agency)
@@ -32,8 +35,18 @@ library(dopingdata)
 #>     %nin%
 ```
 
-![](reference/figures/top10_sports-1.png)
+![Bar chart of the top ten sports with the most USADA
+sanctions](reference/figures/top10_sports-1.png)
 
-![](reference/figures/heatmap_substances-1.png)
+Bar chart of the top ten sports with the most USADA sanctions
 
-![](reference/figures/waffle_weightlifting-1.png)
+![Heatmap of WADA substance categories by sport, for the four
+most-sanctioned sports](reference/figures/heatmap_substances-1.png)
+
+Heatmap of WADA substance categories by sport, for the four
+most-sanctioned sports
+
+![Waffle chart of common WADA banned substances in weightlifting
+sanctions](reference/figures/waffle_weightlifting-1.png)
+
+Waffle chart of common WADA banned substances in weightlifting sanctions

@@ -4,7 +4,6 @@ Packages:
 
 ``` r
 
-library(polite)
 library(dopingdata)
 library(robotstxt)
 options(robotstxt_warn = FALSE)
@@ -12,91 +11,93 @@ options(robotstxt_warn = FALSE)
 
 ## USADA sanction data
 
-The data I’ll be downloading comes from [USADA sanctions
-table](https://www.usada.org/testing/results/sanctions/).
+The data comes from the [USADA sanctions
+page](https://www.usada.org/results/sanctions/), which hosts two tables:
+
+- the **sanctions table** (Athlete, Sport, Substance/Reason, Sanction
+  Terms, Sanction Announced)
+- the **prohibited association table**, listing athlete support
+  personnel (coaches, trainers, etc.) currently ineligible under the
+  Prohibited Association rule (Name, Suspension Ends)
 
 ## Use your manners
 
 Because this package is built on top of the efforts of the fine people
-who collected, organized, and shared their data, we’re going to use the
-[`polite` package](https://dmi3kno.github.io/polite/) for harvesting the
-HTML tables.
-
-To install this package, run the code below:
-
-``` r
-
-devtools::install_github("dmi3kno/polite")
-library(polite)
-```
-
-`polite` has many options for ethically scraping data (check out the
-[package website](https://dmi3kno.github.io/polite/reference/index.html)
-for more information), but I’ve chosen to follow the handy [polite
-template](https://dmi3kno.github.io/polite/#polite-template):
-
-``` r
-
-polite::use_manners()
-```
+who collected, organized, and shared their data, `dopingdata` uses the
+[`polite` package](https://dmi3kno.github.io/polite/) to fetch this
+page, which respects `robots.txt` and its crawl-delay rules.
 
 ### Check `robots.txt`
 
-I’ll check the `robots.txt` file before scraping the website:
-
 ``` r
 
-# retrieval
 rtxt <- robotstxt::robotstxt(domain = "https://www.usada.org/")
 
-# printing
 rtxt$check(
-  # check permissions 
-  paths = c("testing/", 
-            "testing/results/", 
-            "testing/results/sanctions/"),
-  # bots
+  paths = c("results/", "results/sanctions/"),
   bot   = "*"
 )
 ```
 
-All three paths are `TRUE`, but I will also check the domain with
-[`robotstxt::get_robotstxt()`](https://docs.ropensci.org/robotstxt/reference/get_robotstxt.html):
+## Getting the data
+
+Rather than scraping the page yourself, `dopingdata` provides a small
+cached API modeled on the
+[`fightr`](https://benyamindsmith.github.io/fightr/index.html) package:
+`get_*()` functions return data from a local cache and refresh it
+automatically once it’s more than `max_age_days` old (7 days by
+default), and `update_*()` functions force a refresh. Fetching only ever
+happens when you explicitly call one of these functions — never on
+package load.
 
 ``` r
 
-rt <- robotstxt::get_robotstxt(
-  domain = "https://www.usada.org/testing/results/sanctions/")
-# printing
-cat(rt[1])
+sanctions <- get_sanctions_data()
+str(sanctions)
 ```
-
-I can see the `Allow: /` configuration [gives us access to
-download](https://kinsta.com/blog/wordpress-robots-txt/#how-to-use-robotstxt-allow-all-to-give-robots-full-access-to-your-site)
-the data.
-
-### Scraping with `polite` and `rvest`
-
-Below are the steps used to scrape the sanctions table:
 
 ``` r
 
-usada_url = "https://www.usada.org/testing/results/sanctions/"
-usada_nodes <- polite::bow(usada_url) |> 
-  polite::scrape() |> 
-  rvest::html_nodes("table") 
-usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
+prohibited_association <- get_prohibited_association()
+str(prohibited_association)
 ```
 
-### Exporting raw data
+To force a refresh regardless of cache age:
 
-Some common tasks (like exporting the raw data as a .csv file into a
-date-stamped folder and file) have been wrapped in functions:
+``` r
+
+update_sanctions_data(verbose = TRUE)
+```
+
+[`update_sanctions_data()`](https://mjfrigaard.github.io/dopingdata/reference/update_sanctions_data.md)
+makes a single request for the page and refreshes both cached tables, so
+calling
+[`get_sanctions_data()`](https://mjfrigaard.github.io/dopingdata/reference/get_sanctions_data.md)
+and
+[`get_prohibited_association()`](https://mjfrigaard.github.io/dopingdata/reference/get_prohibited_association.md)
+back to back doesn’t trigger two separate scrapes.
+
+## Exporting the data
+
+Some common tasks (like exporting a data frame as a `.csv` file into a
+date-stamped folder) have been wrapped in functions:
+
+``` r
+
+usada_sanctions_raw <- get_sanctions_data()
+str(usada_sanctions_raw)
+#> Classes 'tbl_df', 'tbl' and 'data.frame':    1047 obs. of  5 variables:
+#>  $ Athlete           : chr  "Miller, Adam" "Zilcosky, Chase" "Trabing, Bert" "Cantwell, Steven" ...
+#>  $ Sport             : chr  "Field Hockey" "Weightlifting" "Weightlifting" "Paralympic Snowboarding" ...
+#>  $ Substance/Reason  : chr  "Non-Analytical: 3 Whereabouts Failures" "Amphetamine" "Anastrozole; Testosterone" "Dehydrochlormethyltestosterone (DHCMT)" ...
+#>  $ Sanction Terms    : chr  "2-Year Suspension; Loss of Results" "2-Year Suspension; Loss of Results" "4-Year Suspension; Loss of Results" "6-Year Suspension; Loss of Results" ...
+#>  $ Sanction Announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...
+```
 
 ``` r
 
 export_data(
-  x = usada_sanctions_raw, 
+  x = usada_sanctions_raw,
   path = "../dev")
 ```
 
@@ -107,25 +108,6 @@ function if you’re storing the data in a package:
 ``` r
 
 export_extdata(
-  x = usada_sanctions_raw, 
+  x = usada_sanctions_raw,
   path = "dev")
 ```
-
-What does the raw data look like?
-
-``` r
-
-usada_sanctions_raw <- read.delim(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
-                                   package = "dopingdata"), sep = ",")
-str(usada_sanctions_raw)
-#> 'data.frame':    937 obs. of  5 variables:
-#>  $ Athlete           : chr  "Rodriguez, Daniel" "Park, Mariah" "Frey, John" "Jha, Kanak" ...
-#>  $ Sport             : chr  "Mixed Martial Arts" "Weightlifting" "Cycling" "Table Tennis" ...
-#>  $ Substance.Reason  : chr  "Ostarine; LGD-4033" "Chlorthalidone" "Non-Analytical: Refusal to Submit to Sample Collection" "Non-Analytical: 3 Whereabouts Failures" ...
-#>  $ Sanction.Terms    : chr  "3-Month Suspenion" "Public Warning" "2-Year Suspension; Loss of Results" "1-Year Suspension; Loss of Results" ...
-#>  $ Sanction.Announced: chr  "12/14/2023" "12/11/2023" "12/05/2023" "Original: 3/20/2023; Updated: 12/01/2023" ...
-```
-
-You can also use the
-[`scrape_sanctions()`](https://mjfrigaard.github.io/dopingdata/reference/scrape_sanctions.md)
-function.

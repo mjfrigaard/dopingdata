@@ -100,18 +100,23 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span></code></pre></div>
+<p><code>tidy_substances</code> is the live dataset built at the end of
+the <a href="classify.html">“Classifying substances”</a> article —
+fetched with <code><a href="../reference/get_sanctions_data.html">get_sanctions_data()</a></code>, then run through
+<code><a href="../reference/process_text.html">process_text()</a></code>, <code><a href="../reference/clean_dates.html">clean_dates()</a></code>,
+<code><a href="../reference/clean_sports.html">clean_sports()</a></code>, and
+<code><a href="../reference/classify_wada_substances.html">classify_wada_substances()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"demo"</span>, package <span class="op">=</span> <span class="st">"dopingdata"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/get_recent_file.html">get_recent_file</a></span><span class="op">(</span><span class="va">pth</span>, regex <span class="op">=</span> <span class="st">'substances'</span>, ext <span class="op">=</span> <span class="st">'.csv'</span><span class="op">)</span></span></code></pre></div>
-<pre><code>File last changed: 2023-12-21 20:33:32.064979
-File name: 2023-12-21-tidy_substances.csv
-✔ import code pasted to clipboard!</code></pre>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tidy_substances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span>file <span class="op">=</span> <span class="st">'/Users/mjfrigaard/projects/pkgs/dopingdata/inst/extdata/demo/2023-12-21-tidy_substances.csv'</span>, sep <span class="op">=</span> <span class="st">','</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">usada</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_text.html">process_text</a></span><span class="op">(</span>raw_data <span class="op">=</span> <span class="va">usada_raw</span><span class="op">)</span></span>
+<span><span class="co"># ... clean_dates(), clean_sports(), classify_wada_substances() -- see "Classifying substances"</span></span>
+<span><span class="va">tidy_substances</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify_wada_substances.html">classify_wada_substances</a></span><span class="op">(</span></span>
+<span>  usada_data <span class="op">=</span> <span class="va">tidy_sports</span>,</span>
+<span>  subs_column <span class="op">=</span> <span class="st">"substance_reason"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="adverse-analytical-findings">Adverse Analytical Findings<a class="anchor" aria-label="anchor" href="#adverse-analytical-findings"></a>
 </h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_substances</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>substance_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">substance_group</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -130,7 +135,7 @@ File name: 2023-12-21-tidy_substances.csv
 <div class="section level3">
 <h3 id="sports">Sports<a class="anchor" aria-label="anchor" href="#sports"></a>
 </h3>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tidy_substances</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sport</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, name <span class="op">=</span> <span class="st">"count"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -151,7 +156,7 @@ File name: 2023-12-21-tidy_substances.csv
 <div class="section level3">
 <h3 id="adverse-analytical-findings-sports">Adverse Analytical Findings &amp; Sports<a class="anchor" aria-label="anchor" href="#adverse-analytical-findings-sports"></a>
 </h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top4_sports</span> <span class="op">&lt;-</span> <span class="va">tidy_substances</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sport</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, name <span class="op">=</span> <span class="st">"count"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -172,7 +177,7 @@ File name: 2023-12-21-tidy_substances.csv
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sport</span>, <span class="va">substance_group</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>occurrence <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">heatmap_substances</span>, </span>
 <span>       <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">substance_group</span>,</span>
 <span>           x <span class="op">=</span> <span class="va">sport</span>,</span>
@@ -187,7 +192,7 @@ File name: 2023-12-21-tidy_substances.csv
 <span>    fill <span class="op">=</span> <span class="st">"Sanctions"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">hrbrthemes</span><span class="fu">::</span><span class="fu">theme_ipsum</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/heatmap_substances-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top3_sports</span> <span class="op">&lt;-</span> <span class="va">tidy_substances</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sport</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sport</span>, name <span class="op">=</span> <span class="st">"count"</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -229,12 +234,12 @@ File name: 2023-12-21-tidy_substances.csv
 <div class="section level3">
 <h3 id="substances-per-sport">Substances per Sport<a class="anchor" aria-label="anchor" href="#substances-per-sport"></a>
 </h3>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">waffle_weightlifting</span> <span class="op">&lt;-</span> <span class="va">tidy_substances</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sport</span> <span class="op">==</span> <span class="st">"weightlifting"</span><span class="op">)</span> <span class="op">|&gt;</span>     </span>
-<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span><span class="fu">aes_d</span><span class="op">(</span>group <span class="op">=</span> <span class="va">substance_group</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span>mapping <span class="op">=</span> <span class="st">"substance_group"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_weightlifting</span>, </span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_weightlifting</span>,</span>
 <span>       <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>           y <span class="op">=</span> <span class="va">y</span>, </span>
 <span>           fill <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -246,11 +251,11 @@ File name: 2023-12-21-tidy_substances.csv
 <span>    subtitle <span class="op">=</span> <span class="st">"Common WADA banned substances"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/waffle_weightlifting-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">waffle_mma</span> <span class="op">&lt;-</span> <span class="va">tidy_substances</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sport</span> <span class="op">==</span> <span class="st">"mixed martial arts"</span><span class="op">)</span> <span class="op">|&gt;</span>     </span>
-<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span><span class="fu">aes_d</span><span class="op">(</span>group <span class="op">=</span> <span class="va">substance_group</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_mma</span>, </span>
+<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span>mapping <span class="op">=</span> <span class="st">"substance_group"</span><span class="op">)</span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_mma</span>,</span>
 <span>       <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>           y <span class="op">=</span> <span class="va">y</span>, </span>
 <span>           fill <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -262,12 +267,12 @@ File name: 2023-12-21-tidy_substances.csv
 <span>    subtitle <span class="op">=</span> <span class="st">"Most common WADA banned substances"</span>,</span>
 <span>    x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <p><img src="../reference/figures/waffle_mma-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">waffle_cycling</span> <span class="op">&lt;-</span> <span class="va">tidy_substances</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">sport</span> <span class="op">==</span> <span class="st">"cycling"</span><span class="op">)</span> <span class="op">|&gt;</span>     </span>
-<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span><span class="fu">aes_d</span><span class="op">(</span>group <span class="op">=</span> <span class="va">substance_group</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">ggwaffle</span><span class="fu">::</span><span class="fu">waffle_iron</span><span class="op">(</span>mapping <span class="op">=</span> <span class="st">"substance_group"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_cycling</span>, </span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">waffle_cycling</span>,</span>
 <span>       <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, </span>
 <span>           y <span class="op">=</span> <span class="va">y</span>, </span>
 <span>           fill <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -291,7 +296,7 @@ File name: 2023-12-21-tidy_substances.csv
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

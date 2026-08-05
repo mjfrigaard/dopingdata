@@ -78,54 +78,53 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mjfrigaard.github.io/dopingdata/">dopingdata</a></span><span class="op">)</span></span></code></pre></div>
-<p>Below we’ll import a demo dataset and process the text:</p>
+<p>Below we’ll fetch the live USADA sanctions data and process the
+text:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"demo"</span>, <span class="st">"2023-12-21-usada_raw.csv"</span>, </span>
-<span>                       package <span class="op">=</span> <span class="st">"dopingdata"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">usada_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">usada</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/process_text.html">process_text</a></span><span class="op">(</span>raw_data <span class="op">=</span> <span class="va">usada_raw</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="dates">Dates<a class="anchor" aria-label="anchor" href="#dates"></a>
 </h2>
 <p><code>sanction_announced</code> contains the date the sanction was
-announced, and about 30 of these contain two values
-(<code>original</code> and <code>updated</code>). Wrangling these values
-pose some challenges because they aren’t <em>consistently</em>
-messy:</p>
+announced, and some of these contain two values (<code>original</code>
+and <code>updated</code>). Wrangling these values pose some challenges
+because they aren’t <em>consistently</em> messy:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">usada</span>, </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^original"</span>, <span class="va">usada</span><span class="op">[[</span><span class="st">'sanction_announced'</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, </span>
+<code class="sourceCode R"><span><span class="va">bad_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">usada</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^original"</span>, <span class="va">usada</span><span class="op">[[</span><span class="st">'sanction_announced'</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">sanction_announced</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">bad_dates</span></span>
 <span><span class="co">#&gt;                    athlete                        sanction_announced</span></span>
-<span><span class="co">#&gt; 4               jha, kanak  original: 3/20/2023; updated: 12/01/2023</span></span>
-<span><span class="co">#&gt; 88         prempeh, ernest original: 05/07/2019; updated: 02/04/2022</span></span>
-<span><span class="co">#&gt; 91          ngetich, eliud     original: 09/03/21; updated: 01/25/22</span></span>
-<span><span class="co">#&gt; 121             gehm, zach original:  11/04/2019;updated: 05/17/2021</span></span>
-<span><span class="co">#&gt; 152           hudson, ryan   original 12/20/2018; updated 11/04/2020</span></span>
-<span><span class="co">#&gt; 156      paparella, flavia   original: 10/19/2020updated: 01/05/2021</span></span>
-<span><span class="co">#&gt; 167         murdock, vince original: 09/05/2019; updated: 08/26/2020</span></span>
-<span><span class="co">#&gt; 171        rante, danielle original: 07/22/2020, updated: 11/03/2022</span></span>
-<span><span class="co">#&gt; 200       werdum, fabricio   original 09/11/2018; updated 01/16/2020</span></span>
-<span><span class="co">#&gt; 212         jones, stirley original: 06/17/2019; updated: 12/16/2019</span></span>
-<span><span class="co">#&gt; 213               hay, amy original: 10/31/2017; updated: 12/16/2019</span></span>
-<span><span class="co">#&gt; 240           orbon, joane original: 08/12/2019; updated: 09/10/2019</span></span>
-<span><span class="co">#&gt; 255          ribas, amanda  original: 01/10/2018; updated 05/03/2019</span></span>
-<span><span class="co">#&gt; 288     saccente, nicholas original: 02/14/2017; updated: 12/11/2018</span></span>
-<span><span class="co">#&gt; 289           miyao, paulo  original: 05/10/2017;updated: 11/27/2018</span></span>
-<span><span class="co">#&gt; 293 garcia del moral, luis  original: 07/10/2012;updated: 10/26/2018</span></span>
-<span><span class="co">#&gt; 294        bruyneel, johan  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 295   celaya lazama, pedro  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 296            marti, jose  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 297         moffett, shaun   original: 04/24/2018updated: 10/19/2018</span></span>
-<span><span class="co">#&gt; 305           hunter, adam original: 10/28/2016; updated: 09/26/2018</span></span>
-<span><span class="co">#&gt; 384           bailey, ryan original: 08/03/2017; updated: 12/01/2017</span></span>
-<span><span class="co">#&gt; 450          thomas, tammy original: 08/30/2002; updated: 02/13/2017</span></span>
-<span><span class="co">#&gt; 478           tovar, oscar original: 10/28/2015; updated: 10/04/2016</span></span>
-<span><span class="co">#&gt; 518       fischbach, dylan original: 12/18/2015; updated: 04/11/2016</span></span>
-<span><span class="co">#&gt; 526            lea, robert original: 12/17/2015; updated: 02/25/2016</span></span>
-<span><span class="co">#&gt; 539        trafeh, mohamed original: 12/18/2014; updated: 08/25/2015</span></span>
-<span><span class="co">#&gt; 604      dotti, juan pablo original: 10/20/2011; updated: 06/05/2013</span></span>
-<span><span class="co">#&gt; 679       oliveira, flavia  original: 04/13/2010; updated 12/10/2010</span></span>
-<span><span class="co">#&gt; 742          young, jerome original: 11/10/2004; updated: 06/17/2008</span></span></code></pre></div>
+<span><span class="co">#&gt; 18        mitchell, manteo original: 09/26/2025; updated: 02/25/2026</span></span>
+<span><span class="co">#&gt; 42    qualls, robert jerry original: 06/26/2024; updated: 08/13/2025</span></span>
+<span><span class="co">#&gt; 114             jha, kanak  original: 3/20/2023; updated: 12/01/2023</span></span>
+<span><span class="co">#&gt; 198        prempeh, ernest original: 05/07/2019; updated: 02/04/2022</span></span>
+<span><span class="co">#&gt; 201         ngetich, eliud     original: 09/03/21; updated: 01/25/22</span></span>
+<span><span class="co">#&gt; 231             gehm, zach original:  11/04/2019;updated: 05/17/2021</span></span>
+<span><span class="co">#&gt; 262           hudson, ryan   original 12/20/2018; updated 11/04/2020</span></span>
+<span><span class="co">#&gt; 266      paparella, flavia   original: 10/19/2020updated: 01/05/2021</span></span>
+<span><span class="co">#&gt; 277         murdock, vince original: 09/05/2019; updated: 08/26/2020</span></span>
+<span><span class="co">#&gt; 281        rante, danielle original: 07/22/2020, updated: 11/03/2022</span></span>
+<span><span class="co">#&gt; 310       werdum, fabricio   original 09/11/2018; updated 01/16/2020</span></span>
+<span><span class="co">#&gt; 322         jones, stirley original: 06/17/2019; updated: 12/16/2019</span></span>
+<span><span class="co">#&gt; 323               hay, amy original: 10/31/2017; updated: 12/16/2019</span></span>
+<span><span class="co">#&gt; 350           orbon, joane original: 08/12/2019; updated: 09/10/2019</span></span>
+<span><span class="co">#&gt; 365          ribas, amanda  original: 01/10/2018; updated 05/03/2019</span></span>
+<span><span class="co">#&gt; 398     saccente, nicholas original: 02/14/2017; updated: 12/11/2018</span></span>
+<span><span class="co">#&gt; 399           miyao, paulo  original: 05/10/2017;updated: 11/27/2018</span></span>
+<span><span class="co">#&gt; 403 garcia del moral, luis  original: 07/10/2012;updated: 10/26/2018</span></span>
+<span><span class="co">#&gt; 404        bruyneel, johan  original: 04/22/2014;updated: 10/24/2018</span></span>
+<span><span class="co">#&gt; 405   celaya lazama, pedro  original: 04/22/2014;updated: 10/24/2018</span></span>
+<span><span class="co">#&gt; 406            marti, jose  original: 04/22/2014;updated: 10/24/2018</span></span>
+<span><span class="co">#&gt; 407         moffett, shaun   original: 04/24/2018updated: 10/19/2018</span></span>
+<span><span class="co">#&gt; 415           hunter, adam original: 10/28/2016; updated: 09/26/2018</span></span>
+<span><span class="co">#&gt; 494           bailey, ryan original: 08/03/2017; updated: 12/01/2017</span></span>
+<span><span class="co">#&gt; 560          thomas, tammy original: 08/30/2002; updated: 02/13/2017</span></span>
+<span><span class="co">#&gt; 588           tovar, oscar original: 10/28/2015; updated: 10/04/2016</span></span>
+<span><span class="co">#&gt; 628       fischbach, dylan original: 12/18/2015; updated: 04/11/2016</span></span>
+<span><span class="co">#&gt; 649        trafeh, mohamed original: 12/18/2014; updated: 08/25/2015</span></span>
+<span><span class="co">#&gt; 852          young, jerome original: 11/10/2004; updated: 06/17/2008</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="clean_dates">
 <strong>clean_dates()</strong><a class="anchor" aria-label="anchor" href="#clean_dates"></a>
@@ -143,76 +142,20 @@ dates</p></li>
 <li><p><code>pattern</code> = regex for other non-date pattern (defaults
 to <code>"original"</code>)</p></li>
 </ul>
-<p>Below is an example dataset to demonstrate how
-<code><a href="../reference/clean_dates.html">clean_dates()</a></code> works:</p>
+<p>Below, <code><a href="../reference/clean_dates.html">clean_dates()</a></code> is demonstrated on a couple of the
+messy rows found above:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/clean_dates.html">clean_dates</a></span><span class="op">(</span></span>
-<span>  df <span class="op">=</span> <span class="va">example_sanction_dates</span>, </span>
-<span>  date_col <span class="op">=</span> <span class="st">"ugly_dates"</span>, </span>
-<span>  split <span class="op">=</span> <span class="st">"updated"</span>, </span>
+<span>  df <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">bad_dates</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  date_col <span class="op">=</span> <span class="st">"sanction_announced"</span>,</span>
+<span>  split <span class="op">=</span> <span class="st">"updated"</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span>
-<span><span class="co">#&gt;                   athlete                                ugly_dates</span></span>
-<span><span class="co">#&gt; 1              jha, kanak  original: 3/20/2023; updated: 12/01/2023</span></span>
-<span><span class="co">#&gt; 2         prempeh, ernest original: 05/07/2019; updated: 02/04/2022</span></span>
-<span><span class="co">#&gt; 3          ngetich, eliud     original: 09/03/21; updated: 01/25/22</span></span>
-<span><span class="co">#&gt; 4              gehm, zach original:  11/04/2019;updated: 05/17/2021</span></span>
-<span><span class="co">#&gt; 5            hudson, ryan   original 12/20/2018; updated 11/04/2020</span></span>
-<span><span class="co">#&gt; 6       paparella, flavia   original: 10/19/2020updated: 01/05/2021</span></span>
-<span><span class="co">#&gt; 7          murdock, vince original: 09/05/2019; updated: 08/26/2020</span></span>
-<span><span class="co">#&gt; 8         rante, danielle original: 07/22/2020, updated: 11/03/2022</span></span>
-<span><span class="co">#&gt; 9        werdum, fabricio   original 09/11/2018; updated 01/16/2020</span></span>
-<span><span class="co">#&gt; 10         jones, stirley original: 06/17/2019; updated: 12/16/2019</span></span>
-<span><span class="co">#&gt; 11               hay, amy original: 10/31/2017; updated: 12/16/2019</span></span>
-<span><span class="co">#&gt; 12           orbon, joane original: 08/12/2019; updated: 09/10/2019</span></span>
-<span><span class="co">#&gt; 13          ribas, amanda  original: 01/10/2018; updated 05/03/2019</span></span>
-<span><span class="co">#&gt; 14     saccente, nicholas original: 02/14/2017; updated: 12/11/2018</span></span>
-<span><span class="co">#&gt; 15           miyao, paulo  original: 05/10/2017;updated: 11/27/2018</span></span>
-<span><span class="co">#&gt; 16 garcia del moral, luis  original: 07/10/2012;updated: 10/26/2018</span></span>
-<span><span class="co">#&gt; 17        bruyneel, johan  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 18   celaya lazama, pedro  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 19            marti, jose  original: 04/22/2014;updated: 10/24/2018</span></span>
-<span><span class="co">#&gt; 20         moffett, shaun   original: 04/24/2018updated: 10/19/2018</span></span>
-<span><span class="co">#&gt; 21           hunter, adam original: 10/28/2016; updated: 09/26/2018</span></span>
-<span><span class="co">#&gt; 22           bailey, ryan original: 08/03/2017; updated: 12/01/2017</span></span>
-<span><span class="co">#&gt; 23          thomas, tammy original: 08/30/2002; updated: 02/13/2017</span></span>
-<span><span class="co">#&gt; 24           tovar, oscar original: 10/28/2015; updated: 10/04/2016</span></span>
-<span><span class="co">#&gt; 25       fischbach, dylan original: 12/18/2015; updated: 04/11/2016</span></span>
-<span><span class="co">#&gt; 26            lea, robert original: 12/17/2015; updated: 02/25/2016</span></span>
-<span><span class="co">#&gt; 27        trafeh, mohamed original: 12/18/2014; updated: 08/25/2015</span></span>
-<span><span class="co">#&gt; 28      dotti, juan pablo original: 10/20/2011; updated: 06/05/2013</span></span>
-<span><span class="co">#&gt; 29       oliveira, flavia  original: 04/13/2010; updated 12/10/2010</span></span>
-<span><span class="co">#&gt; 30          young, jerome original: 11/10/2004; updated: 06/17/2008</span></span>
-<span><span class="co">#&gt;    pattern_date split_date</span></span>
-<span><span class="co">#&gt; 1    2023-03-20 2023-12-01</span></span>
-<span><span class="co">#&gt; 2    2019-05-07 2022-02-04</span></span>
-<span><span class="co">#&gt; 3      21-09-03   22-01-25</span></span>
-<span><span class="co">#&gt; 4    2019-11-04 2021-05-17</span></span>
-<span><span class="co">#&gt; 5    2018-12-20 2020-11-04</span></span>
-<span><span class="co">#&gt; 6    2020-10-19 2021-01-05</span></span>
-<span><span class="co">#&gt; 7    2019-09-05 2020-08-26</span></span>
-<span><span class="co">#&gt; 8    2020-07-22 2022-11-03</span></span>
-<span><span class="co">#&gt; 9    2018-09-11 2020-01-16</span></span>
-<span><span class="co">#&gt; 10   2019-06-17 2019-12-16</span></span>
-<span><span class="co">#&gt; 11   2017-10-31 2019-12-16</span></span>
-<span><span class="co">#&gt; 12   2019-08-12 2019-09-10</span></span>
-<span><span class="co">#&gt; 13   2018-01-10 2019-05-03</span></span>
-<span><span class="co">#&gt; 14   2017-02-14 2018-12-11</span></span>
-<span><span class="co">#&gt; 15   2017-05-10 2018-11-27</span></span>
-<span><span class="co">#&gt; 16   2012-07-10 2018-10-26</span></span>
-<span><span class="co">#&gt; 17   2014-04-22 2018-10-24</span></span>
-<span><span class="co">#&gt; 18   2014-04-22 2018-10-24</span></span>
-<span><span class="co">#&gt; 19   2014-04-22 2018-10-24</span></span>
-<span><span class="co">#&gt; 20   2018-04-24 2018-10-19</span></span>
-<span><span class="co">#&gt; 21   2016-10-28 2018-09-26</span></span>
-<span><span class="co">#&gt; 22   2017-08-03 2017-12-01</span></span>
-<span><span class="co">#&gt; 23   2002-08-30 2017-02-13</span></span>
-<span><span class="co">#&gt; 24   2015-10-28 2016-10-04</span></span>
-<span><span class="co">#&gt; 25   2015-12-18 2016-04-11</span></span>
-<span><span class="co">#&gt; 26   2015-12-17 2016-02-25</span></span>
-<span><span class="co">#&gt; 27   2014-12-18 2015-08-25</span></span>
-<span><span class="co">#&gt; 28   2011-10-20 2013-06-05</span></span>
-<span><span class="co">#&gt; 29   2010-04-13 2010-12-10</span></span>
-<span><span class="co">#&gt; 30   2004-11-10 2008-06-17</span></span></code></pre></div>
+<span><span class="co">#&gt;                 athlete                        sanction_announced pattern_date</span></span>
+<span><span class="co">#&gt; 18     mitchell, manteo original: 09/26/2025; updated: 02/25/2026   2025-09-26</span></span>
+<span><span class="co">#&gt; 42 qualls, robert jerry original: 06/26/2024; updated: 08/13/2025   2024-06-26</span></span>
+<span><span class="co">#&gt;    split_date</span></span>
+<span><span class="co">#&gt; 18 2026-02-25</span></span>
+<span><span class="co">#&gt; 42 2025-08-13</span></span></code></pre></div>
 <p>For <code>usada</code>, split the data into three
 <code>data.frame</code>s (<code>bad_dates</code>,
 <code>good_dates</code>, and <code>no_dates</code>).</p>
@@ -248,13 +191,13 @@ column will contain the correctly formatted updated
 <span><span class="co"># bind the two datasets </span></span>
 <span><span class="va">usada_dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">good_dates</span>, <span class="va">cleaned_dates</span><span class="op">[</span><span class="va">nms</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_dates</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    649 obs. of  6 variables:</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr  "rodriguez, daniel" "park, mariah" "frey, john" "forrest, evan" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr  "mixed martial arts" "weightlifting" "cycling" "weightlifting" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr  "ostarine; lgd-4033" "chlorthalidone" "non-analytical: refusal to submit to sample collection" "boldenone; drostanolone; methandienone; nandrolone; testosterone" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr  "3-month suspenion" "public warning" "2-year suspension; loss of results" "3-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr  "12/14/2023" "12/11/2023" "12/05/2023" "11/30/2023" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2023-12-14" "2023-12-11" ...</span></span></code></pre></div>
+<span><span class="co">#&gt; 'data.frame':    693 obs. of  6 variables:</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr  "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr  "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr  "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr  "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2026-07-31" "2026-07-29" ...</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -268,7 +211,7 @@ column will contain the correctly formatted updated
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
