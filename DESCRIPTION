@@ -7,8 +7,8 @@ Description: R package of data and code from the United States Anti-Doping
     Agency website.
 License: MIT + file LICENSE
 URL: https://mjfrigaard.github.io/dopingdata/
-Depends: 
-    R (>= 2.10)
+Depends:
+    R (>= 4.1)
 Imports: 
     cli,
     clipr,
@@ -35,7 +35,8 @@ Suggests:
     spelling,
     testthat,
     tibble,
-    tidyr
+    tidyr,
+    withr
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
@@ -43,4 +44,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

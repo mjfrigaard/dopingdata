@@ -18,3 +18,4 @@ polite_fetch_rtxt(..., user_agent, delay, verbose)
 \description{
 Function to get robots.txt is structured form. Memoised
 }
+\keyword{internal}

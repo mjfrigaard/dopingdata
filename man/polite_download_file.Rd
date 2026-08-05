@@ -44,3 +44,4 @@ polite_download_file(
 \description{
 Polite download
 }
+\keyword{internal}

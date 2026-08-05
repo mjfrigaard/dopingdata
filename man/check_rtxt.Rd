@@ -20,3 +20,4 @@ check_rtxt(url, delay, user_agent, force, verbose)
 \description{
 Function for checking robots.txt file
 }
+\keyword{internal}

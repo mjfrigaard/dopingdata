@@ -33,7 +33,7 @@ if ("pak" %nin% loadedNamespaces()) {
 
 <!-- badges: start -->
 
-![](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 <!-- https://img.shields.io/badge/lifecycle-stable-green.svg -->
 
@@ -54,8 +54,8 @@ pak::pak("mjfrigaard/dopingdata")
 library(dopingdata)
 ```
 
-![](man/figures/top10_sports-1.png)
+![Bar chart of the top ten sports with the most USADA sanctions](man/figures/top10_sports-1.png)
 
-![](man/figures/heatmap_substances-1.png)
+![Heatmap of WADA substance categories by sport, for the four most-sanctioned sports](man/figures/heatmap_substances-1.png)
 
-![](man/figures/waffle_weightlifting-1.png)
+![Waffle chart of common WADA banned substances in weightlifting sanctions](man/figures/waffle_weightlifting-1.png)

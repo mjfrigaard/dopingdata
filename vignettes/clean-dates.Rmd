@@ -21,27 +21,27 @@ library(dopingdata)
 ```
 
 
-Below we'll import a demo dataset and process the text:
+Below we'll fetch the live USADA sanctions data and process the text:
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-usada_raw <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
-                       package = "dopingdata"))
+usada_raw <- get_sanctions_data()
 usada <- process_text(raw_data = usada_raw)
 ```
 
 ## Dates
 
-`sanction_announced` contains the date the sanction was announced, and about 30 of these contain two values (`original` and `updated`). Wrangling these values pose some challenges because they aren't *consistently* messy:
+`sanction_announced` contains the date the sanction was announced, and some of these contain two values (`original` and `updated`). Wrangling these values pose some challenges because they aren't *consistently* messy:
 
 ```{r}
-subset(usada, 
-  grepl("^original", usada[['sanction_announced']]), 
+bad_dates <- subset(usada,
+  grepl("^original", usada[['sanction_announced']]),
   c(athlete, sanction_announced))
+bad_dates
 ```
 
 ### **clean_dates()**
 
-I've written a `clean_dates()` function that takes `date_col`, `split` and `pattern` arguments: 
+I've written a `clean_dates()` function that takes `date_col`, `split` and `pattern` arguments:
 
 + `df` = processed USADA dataset with messy dates
 
@@ -51,13 +51,13 @@ I've written a `clean_dates()` function that takes `date_col`, `split` and `patt
 
 + `pattern` = regex for other non-date pattern (defaults to `"original"`)
 
-Below is an example dataset to demonstrate how `clean_dates()` works: 
+Below, `clean_dates()` is demonstrated on a couple of the messy rows found above:
 
 ```{r}
 clean_dates(
-  df = example_sanction_dates, 
-  date_col = "ugly_dates", 
-  split = "updated", 
+  df = head(bad_dates, 2),
+  date_col = "sanction_announced",
+  split = "updated",
   pattern = "original")
 ```
 

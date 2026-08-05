@@ -14,6 +14,8 @@
 #' @param user_agent user agent string
 #' @param delay default delay
 #' @param verbose logical
+#'
+#' @keywords internal
 polite_fetch_rtxt <- memoise::memoise(function(..., user_agent, delay, verbose) {
   rt <- robotstxt::robotstxt(...)
   delay_df <- rt$crawl_delay
@@ -39,6 +41,7 @@ polite_fetch_rtxt <- memoise::memoise(function(..., user_agent, delay, verbose) 
 #' @param force force re-downloading of robots.xtx
 #' @param verbose logical
 #'
+#' @keywords internal
 check_rtxt <- function(url, delay, user_agent, force, verbose) {
   url_parsed <- httr::parse_url(url)
   host_url <- paste0(url_parsed$scheme, "://", url_parsed$hostname)
@@ -54,40 +57,11 @@ check_rtxt <- function(url, delay, user_agent, force, verbose) {
   is_scrapable
 }
 
-#' function that actually fetches response from the web
-#'
-#' @param url web address for scraping
-#' @param ... arguments passed to `httr::GET()`
-#' @param delay scraping delay. Default 5 sec
-#' @param user_agent user agent string. Default value `paste0("polite ", getOption("HTTPUserAgent"), "bot")`
-#' @param force force re-download of robots.txt
-#' @param verbose default FALSE
-#'
-#'
-polite_read_html <- memoise::memoise(
-  function(url, ...,
-           delay = 5,
-           user_agent = paste0("polite ", getOption("HTTPUserAgent"), "bot"),
-           force = FALSE,
-           verbose = FALSE) {
-    if (!check_rtxt(url, delay, user_agent, force, verbose)) {
-      return(NULL)
-    }
-    # this is not working yet.
-    #  old_ua <-  getOption("HTTPUserAgent")
-    #  options("HTTPUserAgent"= user_agent)
-    if (verbose) message("Scraping: ", url)
-    res <- httr::GET(url, user_agent(user_agent), ...)
-    #  options("HTTPUserAgent"= old_ua)
-    httr::content(res)
-  }
-)
-
-
 #' Guess filename for download from url
 #'
 #' @param x url to guess filename from
 #'
+#' @keywords internal
 guess_basename <- function(x) {
   destfile <- basename(x)
   if (tools::file_ext(destfile) == "") {
@@ -116,7 +90,7 @@ guess_basename <- function(x) {
 #' @param overwrite overwrite downloaded file. Default value FALSE
 #' @param verbose default value is FALSE
 #'
-#'
+#' @keywords internal
 polite_download_file <- memoise::memoise(
   function(url, destfile = guess_basename(url), ...,
            quiet = !verbose, mode = "wb", path = "downloads/",

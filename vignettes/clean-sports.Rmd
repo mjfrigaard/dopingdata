@@ -41,12 +41,32 @@ library(tidyr)
 library(forcats)
 ```
 
+Reproducing the `usada_dates` dataset from the ["Cleaning dates"](clean-dates.html) article:
+
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-usada_dates <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_dates.csv", 
-                       package = "dopingdata"))
+usada_raw <- get_sanctions_data()
+usada <- process_text(raw_data = usada_raw)
+
+bad_dates <- subset(usada,
+  grepl("^original", usada[['sanction_announced']]))
+good_dates <- subset(usada,
+  !grepl("^original", usada[['sanction_announced']]) & sanction_announced != "")
+
+cleaned_dates <- clean_dates(
+  df = bad_dates,
+  date_col = "sanction_announced",
+  split = "updated",
+  pattern = "original")
+names(cleaned_dates)[names(cleaned_dates) == 'split_date'] <- 'sanction_date'
+names(cleaned_dates)[names(cleaned_dates) == 'pattern_date'] <- 'original_date'
+good_dates$sanction_date <- as.Date(x = good_dates[['sanction_announced']],
+                                    format = "%m/%d/%Y")
+nms <- intersect(names(cleaned_dates), names(good_dates))
+usada_dates <- rbind(good_dates, cleaned_dates[nms])
+str(usada_dates)
 ```
 
-## Sports 
+## Sports
 
 To wrangle the sports, I'll use packages and functions from the `tidyverse` (`dplyr`, `stringr`, `tidyr`, etc.), but I also provide the base R alternatives (wherever possible). `tidyverse` functions will return a `tibble` (not a `data.frame`), which prints fewer rows to the console. 
 

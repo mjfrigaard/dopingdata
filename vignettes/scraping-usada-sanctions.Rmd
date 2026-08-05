@@ -1,6 +1,6 @@
 ---
 title: "Scraping USADA sanctions"
-output: 
+output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 4
@@ -18,12 +18,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 options(
-  pillar.print_max = 25, 
+  pillar.print_max = 25,
   dplyr.print_max = 25,
   knitr.kable.NA = '',
   pillar.print_min = 25,
   repos = "https://cloud.r-project.org")
-library(polite)
 library(dopingdata)
 library(robotstxt)
 options(robotstxt_warn = FALSE)
@@ -32,7 +31,6 @@ options(robotstxt_warn = FALSE)
 Packages:
 
 ```{r pkg, eval=TRUE, message=FALSE, warning=FALSE}
-library(polite)
 library(dopingdata)
 library(robotstxt)
 options(robotstxt_warn = FALSE)
@@ -40,98 +38,78 @@ options(robotstxt_warn = FALSE)
 
 ## USADA sanction data
 
-The data I'll be downloading comes from [USADA sanctions table](https://www.usada.org/testing/results/sanctions/).
+The data comes from the [USADA sanctions page](https://www.usada.org/results/sanctions/), which
+hosts two tables:
 
-## Use your manners 
+- the **sanctions table** (Athlete, Sport, Substance/Reason, Sanction Terms, Sanction Announced)
+- the **prohibited association table**, listing athlete support personnel (coaches, trainers,
+  etc.) currently ineligible under the Prohibited Association rule (Name, Suspension Ends)
 
-Because this package is built on top of the efforts of the fine people who collected, organized, and shared their data, we're going to use the [`polite` package](https://dmi3kno.github.io/polite/) for harvesting the HTML tables. 
+## Use your manners
 
-To install this package, run the code below: 
-
-```{r inst-polite, eval=FALSE}
-devtools::install_github("dmi3kno/polite")
-library(polite)
-```
-
-`polite` has many options for ethically scraping data (check out the [package website](https://dmi3kno.github.io/polite/reference/index.html) for more information), but I've chosen to follow the handy [polite template](https://dmi3kno.github.io/polite/#polite-template):
-
-```{r use_manners, eval=FALSE}
-polite::use_manners()
-```
-
+Because this package is built on top of the efforts of the fine people who collected, organized,
+and shared their data, `dopingdata` uses the [`polite` package](https://dmi3kno.github.io/polite/)
+to fetch this page, which respects `robots.txt` and its crawl-delay rules.
 
 ### Check `robots.txt`
 
-I'll check the `robots.txt` file before scraping the website:
-
 ```{r rt}
-# retrieval
 rtxt <- robotstxt::robotstxt(domain = "https://www.usada.org/")
 
-# printing
 rtxt$check(
-  # check permissions 
-  paths = c("testing/", 
-            "testing/results/", 
-            "testing/results/sanctions/"),
-  # bots
+  paths = c("results/", "results/sanctions/"),
   bot   = "*"
 )
 ```
 
-All three paths are `TRUE`, but I will also check the domain with `robotstxt::get_robotstxt()`:
+## Getting the data
 
-```{r get_robotstxt}
-rt <- robotstxt::get_robotstxt(
-  domain = "https://www.usada.org/testing/results/sanctions/")
-# printing
-cat(rt[1])
+Rather than scraping the page yourself, `dopingdata` provides a small cached API modeled on the
+[`fightr`](https://benyamindsmith.github.io/fightr/index.html) package: `get_*()` functions
+return data from a local cache and refresh it automatically once it's more than `max_age_days`
+old (7 days by default), and `update_*()` functions force a refresh. Fetching only ever happens
+when you explicitly call one of these functions — never on package load.
+
+```{r get_sanctions_data, eval=FALSE}
+sanctions <- get_sanctions_data()
+str(sanctions)
 ```
 
-I can see the `Allow: /` configuration [gives us access to download](https://kinsta.com/blog/wordpress-robots-txt/#how-to-use-robotstxt-allow-all-to-give-robots-full-access-to-your-site) the data. 
-
-
-### Scraping with `polite` and `rvest`
-
-Below are the steps used to scrape the sanctions table:
-
-```{r polite-scraping, eval=FALSE}
-usada_url = "https://www.usada.org/testing/results/sanctions/"
-usada_nodes <- polite::bow(usada_url) |> 
-  polite::scrape() |> 
-  rvest::html_nodes("table") 
-usada_sanctions_raw <- rvest::html_table(usada_nodes[[1]])
+```{r get_prohibited_association, eval=FALSE}
+prohibited_association <- get_prohibited_association()
+str(prohibited_association)
 ```
 
-### Exporting raw data 
+To force a refresh regardless of cache age:
 
-Some common tasks (like exporting the raw data as a .csv file into a date-stamped folder and file) have been wrapped in functions:
+```{r update_sanctions_data, eval=FALSE}
+update_sanctions_data(verbose = TRUE)
+```
 
-```{r usada_sanctions_raw, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
-usada_sanctions_raw <- read.csv(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
-                       package = "dopingdata"))
+`update_sanctions_data()` makes a single request for the page and refreshes both cached tables,
+so calling `get_sanctions_data()` and `get_prohibited_association()` back to back doesn't trigger
+two separate scrapes.
+
+## Exporting the data
+
+Some common tasks (like exporting a data frame as a `.csv` file into a date-stamped folder) have
+been wrapped in functions:
+
+```{r usada_sanctions_raw, echo=TRUE, message=FALSE, warning=FALSE, eval=TRUE}
+usada_sanctions_raw <- get_sanctions_data()
+str(usada_sanctions_raw)
 ```
 
 ```{r eval=FALSE}
 export_data(
-  x = usada_sanctions_raw, 
+  x = usada_sanctions_raw,
   path = "../dev")
 ```
 
-There's also an `export_extdata()` function if you're storing the data in a package: 
+There's also an `export_extdata()` function if you're storing the data in a package:
 
 ```{r eval=FALSE}
 export_extdata(
-  x = usada_sanctions_raw, 
+  x = usada_sanctions_raw,
   path = "dev")
 ```
-
-What does the raw data look like? 
-
-```{r import-usada_sanctions_raw, eval=TRUE}
-usada_sanctions_raw <- read.delim(system.file("extdata", "demo", "2023-12-21-usada_raw.csv", 
-                                   package = "dopingdata"), sep = ",")
-str(usada_sanctions_raw)
-```
-
-You can also use the `scrape_sanctions()` function. 

@@ -42,29 +42,32 @@ library(tidyr)
 library(forcats)
 ```
 
-This vignette covers classifying 'adverse analytic findings' for a single banned substance. I've written a `get_recent_file()` function to quickly import `.csv` files from a specified directory:
+This vignette covers classifying 'adverse analytic findings' for a single banned substance.
+Reproducing the `tidy_sports` dataset from the ["clean-sports"](clean-sports.html) article:
 
-``` r
-pth <- system.file("extdata", "demo", package = "dopingdata")
-get_recent_file(pth, regex = 'sports', ext = '.csv')
-```
+```{r echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+usada_raw <- get_sanctions_data()
+usada <- process_text(raw_data = usada_raw)
 
-```
-File last changed: 2023-12-21 20:33:32.064979
-File name: 2023-12-21-tidy_sports.csv
-✔ import code pasted to clipboard!
-```
+bad_dates <- subset(usada,
+  grepl("^original", usada[['sanction_announced']]))
+good_dates <- subset(usada,
+  !grepl("^original", usada[['sanction_announced']]) & sanction_announced != "")
 
-This makes it easy to paste the necessary import code into the console (or R markdown file):
+cleaned_dates <- clean_dates(
+  df = bad_dates,
+  date_col = "sanction_announced",
+  split = "updated",
+  pattern = "original")
+names(cleaned_dates)[names(cleaned_dates) == 'split_date'] <- 'sanction_date'
+names(cleaned_dates)[names(cleaned_dates) == 'pattern_date'] <- 'original_date'
+good_dates$sanction_date <- as.Date(x = good_dates[['sanction_announced']],
+                                    format = "%m/%d/%Y")
+nms <- intersect(names(cleaned_dates), names(good_dates))
+usada_dates <- rbind(good_dates, cleaned_dates[nms])
 
-``` r
-tidy_sports <- read.delim(file = '/Library/path/to/dopingdata/extdata/demo/2023-12-21-tidy_sports.csv', sep = ',')
-```
-
-```{r echo=FALSE, eval=TRUE}
-tidy_sports <- read.delim(
-    file = system.file("extdata", "demo", "2023-12-21-tidy_sports.csv", 
-                       package = "dopingdata"), sep = ',')
+tidy_sports <- clean_sports(df = usada_dates, sport_col = "sport", tidy = TRUE)
+str(tidy_sports)
 ```
 
 
@@ -121,25 +124,34 @@ Now I can filter `substances` to the `analytical` sanctions in `sanction_type`.
 
 #### *How can I identify the single vs. multiple substances?*
 
-Let's take a look at four different sanctions in `example_sanction_type`:
+Let's take a look at four different sanctions, pulled from the live data (one for each
+combination of `sanction_type` and single vs. multiple substance/reason):
 
-```{r example_sanction_type, echo=FALSE}
-dopingdata::example_sanction_type
+```{r substance_type_examples, echo=TRUE}
+substance_type_examples <- substances |>
+  dplyr::mutate(substance_cat = dplyr::if_else(
+    stringr::str_detect(substance_reason, "; |, | and | & | / "),
+    "multiple", "single")) |>
+  dplyr::group_by(sanction_type, substance_cat) |>
+  dplyr::slice_head(n = 1) |>
+  dplyr::ungroup() |>
+  dplyr::select(athlete, substance_reason, sanction_type, substance_cat)
+substance_type_examples
 ```
 
 ### Substance category
 
-We can see two analytic and two non-analytic sanctions, and each one has a single and multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), and can be separated by a regular expression:
+We can see analytic and non-analytic sanctions, with both single and multiple substance/reason. Fortunately, the sanctions with multiple items are separated by either semicolons (`; `), commas (`, `), or a conjunction (`and`), and can be separated by a regular expression:
 
 ```{r test-substance_cat}
-dplyr::mutate(example_sanction_type,
+dplyr::mutate(substance_type_examples,
   substance_cat = dplyr::case_when(
     # identify the multiple_sr substances using a regular expression
     stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'multiple',
     # negate the regular expression for the single substances
     !stringr::str_detect(substance_reason, "; |, | and | & | / ") ~ 'single',
     TRUE ~ NA_character_)) |>
-  dplyr::count(substance_cat, substance_reason) |> 
+  dplyr::count(substance_cat, substance_reason) |>
   tidyr::pivot_wider(names_from = substance_cat, values_from = n)
 ```
 
@@ -198,12 +210,12 @@ Tidying the sanctions with multiple [WADA banned substances](https://www.wada-am
 > *I've written the `add_match_col()` function, which creates a new `'matched'` column with the matched regular expression pattern (it's like `stringr::str_view()`, but in a `data.frame`/`tibble`). I used `add_match_col()` while determining the correct pattern to match on (i.e., any substances listing `metabolites`):*
 
 ```{r}
-dplyr::mutate(example_sanction_type,
+dplyr::mutate(substance_type_examples,
   # add matched column
   punct_match = add_match_col(
-    string = substance_reason, 
-    pattern = "[[:punct:]]")) |> 
-  dplyr::select(substance_reason, dplyr::last_col()) 
+    string = substance_reason,
+    pattern = "[[:punct:]]")) |>
+  dplyr::select(substance_reason, dplyr::last_col())
 ```
 
 > *The rows above are all matching correctly on the regular expression pattern.* 
@@ -266,7 +278,7 @@ dplyr::mutate(multiple_analytic_substances,
   writeLines()
 ```
 
-## Classifying substances 
+## classify_wada_substances()
 
 To identify the [WADA banned substances](https://www.wada-ama.org/en/prohibited-list#search-anchor), I've written `classify_wada_substances()`, a function that scans the `substance_reason` column and identifies any substances found on the [WADA list](https://www.wada-ama.org/sites/default/files/2022-09/2023list_en_final_9_september_2022.pdf). See the `classify_wada_substances()` documentation for more information.
 
@@ -285,11 +297,11 @@ dopingdata::wada_classes
 head(dopingdata::s1_substances, 10)
 ```
 
-The substance group vectors are passed to make_regex() to create a regular expressions (`s1_regex`), which we can use to match the `substance_reason` column on (see the example using `dopingdata::example_tidy_substances` dataset):
+The substance group vectors are passed to make_regex() to create a regular expressions (`s1_regex`), which we can use to match the `substance_reason` column on (see the example using the live `tidy_substances` dataset built above):
 
 ```{r veiw-s1}
 s1_regex <- make_regex(x = dopingdata::s1_substances, wb = TRUE)
-stringr::str_view(string = example_tidy_substances$substance_reason,
+stringr::str_view(string = tidy_substances$substance_reason,
   pattern = s1_regex, match = TRUE)
 ```
 

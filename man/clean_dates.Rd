@@ -22,10 +22,17 @@ tibble with cleaned dates
 Clean sanction dates
 }
 \examples{
-example_sanction_dates
+sanction_dates <- data.frame(
+  athlete = c("doe, jane", "roe, richard"),
+  ugly_dates = c(
+    "original: 01/01/2020 updated: 02/15/2021",
+    "original: 03/03/2019 updated: 04/04/2020"
+  )
+)
+sanction_dates
 
 clean_dates(
-df = example_sanction_dates,
+df = sanction_dates,
 date_col = "ugly_dates",
 split = "updated",
 pattern = "original")

@@ -18,9 +18,16 @@ substances dataset with newly classified substances
 usada_data should be the table of sanctions from the \href{https://www.usada.org/news/sanctions}{United States Anti-Doping Agency}. The \code{substance_reason} column contains the justification for each sanction. In some cases, there are multiple substances/reasons, and these should be identified first.
 }
 \examples{
-example_sanction_type
+sanction_type <- data.frame(
+  athlete = c("doe, jane", "roe, richard"),
+  substance_reason = c(
+    "cannabinoids",
+    "androgenic anabolic steroid; cannabinoids"
+  )
+)
+sanction_type
 substances <- classify_wada_substances(
-  usada_data = example_sanction_type,
+  usada_data = sanction_type,
   subs_column = "substance_reason"
 )
 head(substances[c('substance_group', 'substance_reason')])

@@ -23,6 +23,50 @@ navbar:
       - text: Counts
         href: articles/viz-counts.html
 
+reference:
+- title: Harvesting Data
+  desc: Fetch and cache the live USADA sanctions data
+  contents:
+  - get_sanctions_data
+  - get_prohibited_association
+  - update_sanctions_data
+
+- title: Wrangling Data
+  desc: Clean and tidy the raw sanctions text, dates, and sports
+  contents:
+  - process_text
+  - clean_dates
+  - clean_sports
+  - split_cols
+  - add_match_col
+  - pivot_term_long
+
+- title: Classifying Substances
+  desc: Classify sanctions against the WADA prohibited substance list
+  contents:
+  - classify_wada_substances
+  - reclass_substance
+  - make_regex
+  - create_word_boundary
+
+- title: Visualizing Substances
+  desc: ggplot2 theme for package visualizations
+  contents:
+  - theme_ggp2g
+
+- title: Utilities
+  desc: File export/import helpers and operators
+  contents:
+  - export_data
+  - export_extdata
+  - get_recent
+  - get_recent_file
+  - clip_top_file
+  - dtstamp
+  - verify_inst_path
+  - "%nin%"
+  - "%otherwise%"
+
 template:
   bootstrap: 5
   theme: arrow-light

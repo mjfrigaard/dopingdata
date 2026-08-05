@@ -8,9 +8,16 @@
 #' @export
 #'
 #' @examples
-#' str(example_usada_raw)
+#' usada_raw <- data.frame(
+#'   Athlete = c("Doe, Jane", "Roe, Richard"),
+#'   Sport = c("Cycling", "Weightlifting"),
+#'   Substance.Reason = c("Cannabinoids", "Ostarine"),
+#'   Sanction.Terms = c("2-Year Suspension", "1-Year Suspension"),
+#'   Sanction.Announced = c("01/01/2024", "02/15/2024")
+#' )
+#' str(usada_raw)
 #' # compare to
-#' str(process_text(example_usada_raw))
+#' str(process_text(usada_raw))
 process_text <- function(raw_data, fct = FALSE) {
   # convert to data.frame
   raw_data <- as.data.frame(raw_data)
