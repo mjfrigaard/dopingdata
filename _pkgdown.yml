@@ -1,8 +1,8 @@
 url: https://mjfrigaard.github.io/dopingdata/
 
 navbar:
-  bg: primary       # paint the bar with $primary (Atomic Blue)
-  type: dark        # light text for contrast on the deep blue bar
+  bg: primary       # paint the bar with $primary (rocket orange)
+  type: dark        # light text for contrast on the dark bar
   components:
     articles:
       text: Articles
@@ -69,16 +69,18 @@ reference:
 
 template:
   bootstrap: 5
-  theme: arrow-light
+  theme: arrow-dark
   bslib:
-    primary:   "#1E5F8C"   # Atomic Blue       — links, buttons, navbar
-    secondary: "#2B2B2B"   # Eames Charcoal    — neutral text emphasis
-    success:   "#7B8B47"   # Avocado / Olive   — retro success accent
-    info:      "#4FA5B5"   # Robin's-Egg Blue  — softer secondary blue
-    warning:   "#E87B2D"   # Atomic Tangerine  — primary orange accent
-    danger:    "#B0411C"   # Burnt Sienna      — deep orange danger
-    code-color: "#16486D"  # Deep Atomic Blue  — inline & block code text
-    code-bg:    "#FDEFE0"  # Pale Tangerine    — inline & block code background
+    bg: "#011627"           # Atomic Age dark navy, page background
+    fg: "#cbcbcb"           # Atomic Age brushed aluminum, page text
+    primary:   "#ff6f3c"   # Atomic Age rocket orange, links, buttons, navbar
+    secondary: "#cbcbcb"   # Atomic Age brushed aluminum, neutral text emphasis
+    success:   "#2ec4b6"   # Atomic Age teal
+    info:      "#cbcbcb"   # Atomic Age brushed aluminum
+    warning:   "#ffd23f"   # Atomic Age yellow
+    danger:    "#ff6f3c"   # Atomic Age rocket orange, palette has no dedicated red
+    code-color: "#cbcbcb"  # Atomic Age brushed aluminum, inline & block code text
+    code-bg:    "#011627"  # Atomic Age dark navy, inline & block code background
     base_font:
       google: Ubuntu
     heading_font:
