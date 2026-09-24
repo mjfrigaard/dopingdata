@@ -45,3 +45,5 @@ Language: en-US
 LazyData: true
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0
+Remotes:
+    dmi3kno/polite
