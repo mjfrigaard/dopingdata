@@ -148,12 +148,12 @@ file into a date-stamped folder) have been wrapped in functions:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">usada_sanctions_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_sanctions_data.html">get_sanctions_data</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">usada_sanctions_raw</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    1047 obs. of  5 variables:</span></span>
-<span><span class="co">#&gt;  $ Athlete           : chr  "Miller, Adam" "Zilcosky, Chase" "Trabing, Bert" "Cantwell, Steven" ...</span></span>
-<span><span class="co">#&gt;  $ Sport             : chr  "Field Hockey" "Weightlifting" "Weightlifting" "Paralympic Snowboarding" ...</span></span>
-<span><span class="co">#&gt;  $ Substance/Reason  : chr  "Non-Analytical: 3 Whereabouts Failures" "Amphetamine" "Anastrozole; Testosterone" "Dehydrochlormethyltestosterone (DHCMT)" ...</span></span>
-<span><span class="co">#&gt;  $ Sanction Terms    : chr  "2-Year Suspension; Loss of Results" "2-Year Suspension; Loss of Results" "4-Year Suspension; Loss of Results" "6-Year Suspension; Loss of Results" ...</span></span>
-<span><span class="co">#&gt;  $ Sanction Announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Classes 'tbl_df', 'tbl' and 'data.frame':    1059 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ Athlete           : chr  "Lingafeldt, Seth" "Samelo do Amaral, Rider" "Oprea, Erin" "Boyle, Evan" ...</span></span>
+<span><span class="co">#&gt;  $ Sport             : chr  "Weightlifting" "Brazilian Jiu-Jitsu" "Triathlon" "Cycling" ...</span></span>
+<span><span class="co">#&gt;  $ Substance/Reason  : chr  "Testosterone" "Drostanolone; Nandrolone; 19-norsteroids" "Ostarine; LGD-4033; Testosterone" "Non-Analytical: 3 Whereabouts Failures; Non-Analytical: Violation of Period of Ineligibility" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction Terms    : chr  "1-Year Suspension; Loss of Results" "3-Year Suspension; Loss of Results" "5-Year Suspension; Loss of Results" "16-Month Suspension; Loss of Results; Additional 2-Month Suspension" ...</span></span>
+<span><span class="co">#&gt;  $ Sanction Announced: chr  "09/24/2026" "09/21/2026" "09/11/2026" "Original: 04/24/2026; Updated: 09/09/2026" ...</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/export_data.html">export_data</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">usada_sanctions_raw</span>,</span>

@@ -116,15 +116,15 @@ article:</p>
 <span></span>
 <span><span class="va">tidy_sports</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/clean_sports.html">clean_sports</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">usada_dates</span>, sport_col <span class="op">=</span> <span class="st">"sport"</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">tidy_sports</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    703 obs. of  9 variables:</span></span>
-<span><span class="co">#&gt;  $ athlete           : chr  "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...</span></span>
-<span><span class="co">#&gt;  $ sport             : chr  "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...</span></span>
-<span><span class="co">#&gt;  $ substance_reason  : chr  "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_terms    : chr  "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...</span></span>
-<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2026-07-31" "2026-07-29" ...</span></span>
+<span><span class="co">#&gt; 'data.frame':    714 obs. of  9 variables:</span></span>
+<span><span class="co">#&gt;  $ athlete           : chr  "lingafeldt, seth" "samelo do amaral, rider" "oprea, erin" "meador, laura" ...</span></span>
+<span><span class="co">#&gt;  $ sport             : chr  "weightlifting" "brazilian jiu-jitsu" "triathlon" "weightlifting" ...</span></span>
+<span><span class="co">#&gt;  $ substance_reason  : chr  "testosterone" "drostanolone; nandrolone; 19-norsteroids" "ostarine; lgd-4033; testosterone" "testosterone" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_terms    : chr  "1-year suspension; loss of results" "3-year suspension; loss of results" "5-year suspension; loss of results" "4-year suspension; loss of results" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_announced: chr  "09/24/2026" "09/21/2026" "09/11/2026" "09/03/2026" ...</span></span>
+<span><span class="co">#&gt;  $ sanction_date     : Date, format: "2026-09-24" "2026-09-21" ...</span></span>
 <span><span class="co">#&gt;  $ support_personnel : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
-<span><span class="co">#&gt;  $ paralympic        : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...</span></span>
+<span><span class="co">#&gt;  $ paralympic        : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span>
 <span><span class="co">#&gt;  $ multiple_sports   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="aafs-vs-adrvs">AAFs vs ADRVs<a class="anchor" aria-label="anchor" href="#aafs-vs-adrvs"></a>
@@ -156,11 +156,11 @@ behind the sanction. See the examples below:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view</a></span><span class="op">(</span><span class="va">tidy_sports</span><span class="op">[[</span><span class="st">'substance_reason'</span><span class="op">]</span><span class="op">]</span>, </span>
 <span>  <span class="st">"use \\(epo &amp; hgh\\)"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[684] │</span> erythropoietin (epo) and non-analytical: <span style="color: #00BBBB;">&lt;use (epo &amp; hgh)&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[695] │</span> erythropoietin (epo) and non-analytical: <span style="color: #00BBBB;">&lt;use (epo &amp; hgh)&gt;</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view</a></span><span class="op">(</span><span class="va">tidy_sports</span><span class="op">[[</span><span class="st">'substance_reason'</span><span class="op">]</span><span class="op">]</span>,</span>
 <span>  <span class="st">"tampering, complicity"</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[195] │</span> non-analytical: <span style="color: #00BBBB;">&lt;tampering, complicity&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[206] │</span> non-analytical: <span style="color: #00BBBB;">&lt;tampering, complicity&gt;</span></span></span></code></pre></div>
 <p>Most of the non-analytic sanctions include the terms
 <code>non-analytic</code>/<code>non-analytical</code>/etc., as a prefix
 in the <code>substance_reason</code> column.</p>
@@ -185,8 +185,8 @@ variable in a new intermediate <code>substances</code> dataset:</p>
 <span><span class="va">substances</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sanction_type</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   sanction_type   n</span></span>
-<span><span class="co">#&gt; 1      analytic 548</span></span>
-<span><span class="co">#&gt; 2  non-analytic 155</span></span></code></pre></div>
+<span><span class="co">#&gt; 1      analytic 556</span></span>
+<span><span class="co">#&gt; 2  non-analytic 158</span></span></code></pre></div>
 <p>Now I can filter <code>substances</code> to the
 <code>analytical</code> sanctions in <code>sanction_type</code>.</p>
 <div class="section level4">
@@ -207,12 +207,12 @@ vs. multiple substance/reason):</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">substance_reason</span>, <span class="va">sanction_type</span>, <span class="va">substance_cat</span><span class="op">)</span></span>
 <span><span class="va">substance_type_examples</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
-<span><span class="co">#&gt;   athlete               substance_reason             sanction_type substance_cat</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> trabing, bert         anastrozole; testosterone    analytic      multiple     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> zilcosky, chase       amphetamine                  analytic      single       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> anmaw mengesha, adane non-analytical: use (intrav… non-analytic  multiple     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> miller, adam          non-analytical: 3 whereabou… non-analytic  single</span></span></code></pre></div>
+<span><span class="co">#&gt;   athlete                 substance_reason           sanction_type substance_cat</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> samelo do amaral, rider drostanolone; nandrolone;… analytic      multiple     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> lingafeldt, seth        testosterone               analytic      single       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> anmaw mengesha, adane   non-analytical: use (intr… non-analytic  multiple     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> hobbs, aleia            non-analytical: use (intr… non-analytic  single</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -236,10 +236,10 @@ separated by a regular expression:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
 <span><span class="co">#&gt;   substance_reason                                      multiple single</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> anastrozole; testosterone                                    1     <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> drostanolone; nandrolone; 19-norsteroids                     1     <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> non-analytical: use (intravenous infusion); tampering        1     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> amphetamine                                                 <span style="color: #BB0000;">NA</span>      1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> non-analytical: 3 whereabouts failures                      <span style="color: #BB0000;">NA</span>      1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> non-analytical: use (intravenous infusion)                  <span style="color: #BB0000;">NA</span>      1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> testosterone                                                <span style="color: #BB0000;">NA</span>      1</span></span></code></pre></div>
 <p>The <code>substance_cat</code> identifier can be used to separate
 sanctions with multiple substance/reasons from sanctions with a single
 substance or reason.</p>
@@ -252,8 +252,8 @@ substance or reason.</p>
 <span><span class="va">substances</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_cat</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   substance_cat   n</span></span>
-<span><span class="co">#&gt; 1        single 522</span></span>
-<span><span class="co">#&gt; 2      multiple 181</span></span></code></pre></div>
+<span><span class="co">#&gt; 1        single 529</span></span>
+<span><span class="co">#&gt; 2      multiple 185</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -272,15 +272,15 @@ substance or reason.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                 substance_reason  n</span></span>
 <span><span class="co">#&gt; 1    androgenic anabolic steroid 46</span></span>
-<span><span class="co">#&gt; 2                   cannabinoids 45</span></span>
+<span><span class="co">#&gt; 2                   cannabinoids 46</span></span>
 <span><span class="co">#&gt; 3                       ostarine 40</span></span>
 <span><span class="co">#&gt; 4                     clomiphene 22</span></span>
-<span><span class="co">#&gt; 5                      meldonium 14</span></span>
-<span><span class="co">#&gt; 6                   testosterone 14</span></span>
+<span><span class="co">#&gt; 5                   testosterone 16</span></span>
+<span><span class="co">#&gt; 6                      meldonium 14</span></span>
 <span><span class="co">#&gt; 7  dehydroepiandrosterone (dhea) 11</span></span>
-<span><span class="co">#&gt; 8                     stanozolol 11</span></span>
-<span><span class="co">#&gt; 9                    clenbuterol 10</span></span>
-<span><span class="co">#&gt; 10                    furosemide 10</span></span></code></pre></div>
+<span><span class="co">#&gt; 8                 spironolactone 11</span></span>
+<span><span class="co">#&gt; 9                     stanozolol 11</span></span>
+<span><span class="co">#&gt; 10                   clenbuterol 10</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="multiple-analytic-substances">Multiple analytic substances<a class="anchor" aria-label="anchor" href="#multiple-analytic-substances"></a>
@@ -348,10 +348,10 @@ match on (i.e., any substances listing
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
 <span><span class="co">#&gt;   substance_reason                                      punct_match  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> anastrozole; testosterone                             ;            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> amphetamine                                           <span style="color: #BB0000;">NA</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> drostanolone; nandrolone; 19-norsteroids              ;, ;, -      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> testosterone                                          <span style="color: #BB0000;">NA</span>           </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> non-analytical: use (intravenous infusion); tampering -, :, (, ), ;</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> non-analytical: 3 whereabouts failures                -, :</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> non-analytical: use (intravenous infusion)            -, :, (, )</span></span></code></pre></div>
 <blockquote>
 <p><em>The rows above are all matching correctly on the regular
 expression pattern.</em></p>
@@ -375,18 +375,18 @@ substances, and 3) trims the white space from the tidy
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>substance_reason <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="st">"both"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">substance_reason</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 30 × 2</span></span></span>
-<span><span class="co">#&gt;    athlete                substance_reason                   </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> romero noboa, isidro   androgenic anabolic steroid        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> romero noboa, isidro   cannabinoids                       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> romero noboa, isidro   anastrozole                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> romero noboa, isidro   clomiphene                         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> romero noboa, isidro   gw1516                             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> cardoso, josé henrique 19-norandrosterone (19-na)         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> cardoso, josé henrique 2a-methyl-5a-androstan-3a-ol-17-one</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> cardoso, josé henrique epitrenbolone                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> cardoso, josé henrique methasterone                       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> cardoso, josé henrique testosterone                       </span></span>
+<span><span class="co">#&gt;    athlete          substance_reason                       </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> lewis-parry, chi drostanolone                           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> lewis-parry, chi stanozolol                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> lewis-parry, chi dehydrochloromethyltestosterone (dhcmt)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> lewis-parry, chi tampering                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> whitham, roger   boldenone                              </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> whitham, roger   gw1516                                 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> whitham, roger   ibutamoren                             </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> whitham, roger   ostarine                               </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> silva, anderson  methyltestosterone                     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> silva, anderson  hydrochlorothiazide                    </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 20 more rows</span></span></span></code></pre></div>
 <p>After confirming the pattern is working, the output will be stored in
 <code>tidy_multiple_substances</code>.</p>
@@ -410,16 +410,16 @@ dataset.</p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               substance_reason  n</span></span>
-<span><span class="co">#&gt; 1                     ostarine 67</span></span>
+<span><span class="co">#&gt; 1                     ostarine 68</span></span>
 <span><span class="co">#&gt; 2  androgenic anabolic steroid 60</span></span>
-<span><span class="co">#&gt; 3                 cannabinoids 47</span></span>
+<span><span class="co">#&gt; 3                 cannabinoids 48</span></span>
 <span><span class="co">#&gt; 4                   clomiphene 36</span></span>
-<span><span class="co">#&gt; 5                 testosterone 29</span></span>
+<span><span class="co">#&gt; 5                 testosterone 34</span></span>
 <span><span class="co">#&gt; 6                       gw1516 20</span></span>
 <span><span class="co">#&gt; 7          hydrochlorothiazide 17</span></span>
-<span><span class="co">#&gt; 8                   stanozolol 16</span></span>
-<span><span class="co">#&gt; 9                     lgd-4033 15</span></span>
-<span><span class="co">#&gt; 10                 clenbuterol 14</span></span></code></pre></div>
+<span><span class="co">#&gt; 8                   stanozolol 17</span></span>
+<span><span class="co">#&gt; 9                     lgd-4033 16</span></span>
+<span><span class="co">#&gt; 10                drostanolone 15</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -479,27 +479,27 @@ live <code>tidy_substances</code> dataset built above):</p>
 <code class="sourceCode R"><span><span class="va">s1_regex</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_regex.html">make_regex</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">dopingdata</span><span class="fu">::</span><span class="va">s1_substances</span>, wb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_view.html" class="external-link">str_view</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">tidy_substances</span><span class="op">$</span><span class="va">substance_reason</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="va">s1_regex</span>, match <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [2] │</span> dehydrochlormethyltestosterone (<span style="color: #00BBBB;">&lt;dhcmt&gt;</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [6] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [7] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;"> [9] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[11] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[20] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[23] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[24] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[25] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[26] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [1] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [2] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;"> [7] │</span> dehydrochlormethyltestosterone (<span style="color: #00BBBB;">&lt;dhcmt&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[11] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[12] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[14] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[16] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[25] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">[28] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[31] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[33] │</span> <span style="color: #00BBBB;">&lt;drostanolone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[34] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[38] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[40] │</span> <span style="color: #00BBBB;">&lt;metenolone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[42] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[43] │</span> <span style="color: #00BBBB;">&lt;oxandrolone&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[46] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">[47] │</span> <span style="color: #00BBBB;">&lt;19-norandrosterone&gt;</span></span></span>
-<span><span class="co">#&gt; ... and 347 more</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #555555;">[29] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[30] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[31] │</span> <span style="color: #00BBBB;">&lt;testosterone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[33] │</span> <span style="color: #00BBBB;">&lt;dehydroepiandrosterone&gt;</span> (<span style="color: #00BBBB;">&lt;dhea&gt;</span>)</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[36] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[38] │</span> <span style="color: #00BBBB;">&lt;drostanolone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[39] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[43] │</span> <span style="color: #00BBBB;">&lt;ostarine&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[45] │</span> <span style="color: #00BBBB;">&lt;metenolone&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[47] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">[48] │</span> <span style="color: #00BBBB;">&lt;oxandrolone&gt;</span></span></span>
+<span><span class="co">#&gt; ... and 355 more</span></span></code></pre></div>
 <p>The output from <code><a href="../reference/classify_wada_substances.html">classify_wada_substances()</a></code> can be used
 to answer questions like: <em>what <code>substance_group</code>’s appear
 the most?</em></p>
@@ -521,13 +521,14 @@ the most?</em></p>
 <span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> </span>
 <span>      <span class="va">substance_reason</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">substance_reason</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             athlete                         substance_reason</span></span>
-<span><span class="co">#&gt; 1     *name removed                              dorzolamide</span></span>
-<span><span class="co">#&gt; 2 brinegar, michael erythropoietic stimulating agents (esas)</span></span>
-<span><span class="co">#&gt; 3   mcmahon, kensey                               vadadustat</span></span>
-<span><span class="co">#&gt; 4     *name removed                             capromorelin</span></span>
-<span><span class="co">#&gt; 5    sundeen, tyler                           ritalinic acid</span></span>
-<span><span class="co">#&gt; 6   rodriguez, yair                   3 whereabouts failures</span></span></code></pre></div>
+<span><span class="co">#&gt;             athlete               substance_reason</span></span>
+<span><span class="co">#&gt; 1      koech, jonah adverse passport finding (apf)</span></span>
+<span><span class="co">#&gt; 2     *name removed                    dorzolamide</span></span>
+<span><span class="co">#&gt; 3 brinegar, michael adverse passport finding (apf)</span></span>
+<span><span class="co">#&gt; 4   mcmahon, kensey                     vadadustat</span></span>
+<span><span class="co">#&gt; 5     *name removed                   capromorelin</span></span>
+<span><span class="co">#&gt; 6    sundeen, tyler                 ritalinic acid</span></span>
+<span><span class="co">#&gt; 7   rodriguez, yair         3 whereabouts failures</span></span></code></pre></div>
 <p>The final unclassified substance is actually a result from a
 miss-classified sanction type (for <code>rodriguez, yair</code>).</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -567,29 +568,30 @@ should be missing (<code>NA_character_</code>)</p>
 <span>      <span class="va">substance_reason</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">substance_reason</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                       substance_reason</span></span>
-<span><span class="co">#&gt; 1                                                                 hctz</span></span>
-<span><span class="co">#&gt; 2                                                              rad-140</span></span>
-<span><span class="co">#&gt; 3                                  2a-methyl-5a-androstan-3a-ol-17-one</span></span>
-<span><span class="co">#&gt; 4                                                    d-methamphetamine</span></span>
-<span><span class="co">#&gt; 5                                                           arimistane</span></span>
-<span><span class="co">#&gt; 6                                                           torasemide</span></span>
-<span><span class="co">#&gt; 7                                                           possession</span></span>
-<span><span class="co">#&gt; 8                                                    use/attempted use</span></span>
-<span><span class="co">#&gt; 9                                            evading sample collection</span></span>
-<span><span class="co">#&gt; 10                                                               igf-1</span></span>
-<span><span class="co">#&gt; 11                                  human chorionic gonadotropin (hcg)</span></span>
-<span><span class="co">#&gt; 12                                                            aod-9064</span></span>
-<span><span class="co">#&gt; 13                                                                s-23</span></span>
-<span><span class="co">#&gt; 14                           intact human chorionic gonadtrophin (hcg)</span></span>
-<span><span class="co">#&gt; 15 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)</span></span>
-<span><span class="co">#&gt; 16                                                      methylecgonine</span></span>
-<span><span class="co">#&gt; 17                                                     propylhexadrine</span></span>
-<span><span class="co">#&gt; 18                                                 androstatrienedione</span></span>
-<span><span class="co">#&gt; 19                                             androst-(2,3)-en-17-one</span></span>
-<span><span class="co">#&gt; 20                                      non-anatlyical: administration</span></span>
-<span><span class="co">#&gt; 21                                                         trafficking</span></span>
-<span><span class="co">#&gt; 22                                 human chorionic gonadotrophin (hcg)</span></span>
-<span><span class="co">#&gt; 23                                violation of period of ineligibility</span></span></code></pre></div>
+<span><span class="co">#&gt; 1                                                       19-norsteroids</span></span>
+<span><span class="co">#&gt; 2                                                                 hctz</span></span>
+<span><span class="co">#&gt; 3                                                              rad-140</span></span>
+<span><span class="co">#&gt; 4                                  2a-methyl-5a-androstan-3a-ol-17-one</span></span>
+<span><span class="co">#&gt; 5                                                    d-methamphetamine</span></span>
+<span><span class="co">#&gt; 6                                                           arimistane</span></span>
+<span><span class="co">#&gt; 7                                                           torasemide</span></span>
+<span><span class="co">#&gt; 8                                                           possession</span></span>
+<span><span class="co">#&gt; 9                                                    use/attempted use</span></span>
+<span><span class="co">#&gt; 10                                           evading sample collection</span></span>
+<span><span class="co">#&gt; 11                                                               igf-1</span></span>
+<span><span class="co">#&gt; 12                                  human chorionic gonadotropin (hcg)</span></span>
+<span><span class="co">#&gt; 13                                                            aod-9064</span></span>
+<span><span class="co">#&gt; 14                                                                s-23</span></span>
+<span><span class="co">#&gt; 15                           intact human chorionic gonadtrophin (hcg)</span></span>
+<span><span class="co">#&gt; 16 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)</span></span>
+<span><span class="co">#&gt; 17                                                      methylecgonine</span></span>
+<span><span class="co">#&gt; 18                                                     propylhexadrine</span></span>
+<span><span class="co">#&gt; 19                                                 androstatrienedione</span></span>
+<span><span class="co">#&gt; 20                                             androst-(2,3)-en-17-one</span></span>
+<span><span class="co">#&gt; 21                                      non-anatlyical: administration</span></span>
+<span><span class="co">#&gt; 22                                                         trafficking</span></span>
+<span><span class="co">#&gt; 23                                 human chorionic gonadotrophin (hcg)</span></span>
+<span><span class="co">#&gt; 24                                violation of period of ineligibility</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -733,14 +735,15 @@ non-analytic:</p>
 <span>      <span class="va">substance_reason</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">substance_reason</span><span class="op">)</span> </span>
 <span><span class="co">#&gt;                       substance_reason</span></span>
-<span><span class="co">#&gt; 1                                 hctz</span></span>
-<span><span class="co">#&gt; 2                              rad-140</span></span>
-<span><span class="co">#&gt; 3                           possession</span></span>
-<span><span class="co">#&gt; 4                    use/attempted use</span></span>
-<span><span class="co">#&gt; 5            evading sample collection</span></span>
-<span><span class="co">#&gt; 6       non-anatlyical: administration</span></span>
-<span><span class="co">#&gt; 7                          trafficking</span></span>
-<span><span class="co">#&gt; 8 violation of period of ineligibility</span></span></code></pre></div>
+<span><span class="co">#&gt; 1                       19-norsteroids</span></span>
+<span><span class="co">#&gt; 2                                 hctz</span></span>
+<span><span class="co">#&gt; 3                              rad-140</span></span>
+<span><span class="co">#&gt; 4                           possession</span></span>
+<span><span class="co">#&gt; 5                    use/attempted use</span></span>
+<span><span class="co">#&gt; 6            evading sample collection</span></span>
+<span><span class="co">#&gt; 7       non-anatlyical: administration</span></span>
+<span><span class="co">#&gt; 8                          trafficking</span></span>
+<span><span class="co">#&gt; 9 violation of period of ineligibility</span></span></code></pre></div>
 <p>Changing the <code>sanction_type</code> classification to
 non-analytic requires missing (<code>NA_character_</code>) values for
 <code>substance_group</code>:</p>
@@ -785,16 +788,16 @@ Analytical Findings</a>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> M2 CHEMICAL AND PHYSICAL MANIPULATION        1             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> P1 BETA-BLOCKERS                             2             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> S0 UNAPPROVED SUBSTANCES                     2             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> S1 ANABOLIC AGENTS                         370             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> S1 ANABOLIC AGENTS                         378             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> S2 PEP HORMONES/G FACTORS/MIMETICS          46             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> S3 BETA-2 AGONISTS                          12             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> S4 HORMONE AND METABOLIC MODULATORS        101             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> S5 DIURETICS/MASKING AGENTS                 70             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> S6 STIMULANTS                               77             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> S5 DIURETICS/MASKING AGENTS                 72             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> S6 STIMULANTS                               78             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> S7 NARCOTICS                                 2             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> S8 CANNABINOIDS                             47             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> S8 CANNABINOIDS                             48             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> S9 GLUCOCORTICOIDS                           6             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> UNCLASSIFIED                                10             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> UNCLASSIFIED                                12             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #BB0000;">NA</span>                                          <span style="color: #BB0000;">NA</span>              6</span></span></code></pre></div>
 <p>And the <code>non-analytic</code> sanctions are truly <a href="https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/" class="external-link">Non-Analytical
 Anti-doping Rule Violations</a>.</p>

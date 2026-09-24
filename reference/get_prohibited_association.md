@@ -35,22 +35,23 @@ a `data.frame` of currently-ineligible support personnel
 ``` r
 # \donttest{
 get_prohibited_association()
-#> # A tibble: 14 × 2
-#>    NAME                 `SUSPENSION ENDS\n(mm/dd/yyyy)`
-#>    <chr>                <chr>                          
-#>  1 Vowell, Michael      Lifetime                       
-#>  2 Lira, Eric           05/08/2029                     
-#>  3 Prempeh, Ernest      Indefinite*                    
-#>  4 Pearson, Keir        Lifetime                       
-#>  5 Bell, Kenta          Lifetime                       
-#>  6 Gingras, Michael     01/15/2029                     
-#>  7 Bruyneel, Johan      Lifetime                       
-#>  8 Marti, Jose          06/11/2027                     
-#>  9 Celaya Lazama, Pedro Lifetime                       
-#> 10 Ferrari, Dr. Michele Lifetime                       
-#> 11 Leinders, Dr. Geert  Lifetime                       
-#> 12 Korchemny, Remi      Lifetime                       
-#> 13 Stewart, Raymond     Lifetime                       
-#> 14 Graham, Trevor       Lifetime                       
+#> # A tibble: 15 × 2
+#>    NAME                         `SUSPENSION ENDS\n(mm/dd/yyyy)`
+#>    <chr>                        <chr>                          
+#>  1 "Edwards, Monzavous \"Rae\"" 11/14/2026                     
+#>  2 "Vowell, Michael"            Lifetime                       
+#>  3 "Lira, Eric"                 05/08/2029                     
+#>  4 "Prempeh, Ernest"            Indefinite*                    
+#>  5 "Pearson, Keir"              Lifetime                       
+#>  6 "Bell, Kenta"                Lifetime                       
+#>  7 "Gingras, Michael"           01/15/2029                     
+#>  8 "Bruyneel, Johan"            Lifetime                       
+#>  9 "Marti, Jose"                06/11/2027                     
+#> 10 "Celaya Lazama, Pedro"       Lifetime                       
+#> 11 "Ferrari, Dr. Michele"       Lifetime                       
+#> 12 "Leinders, Dr. Geert"        Lifetime                       
+#> 13 "Korchemny, Remi"            Lifetime                       
+#> 14 "Stewart, Raymond"           Lifetime                       
+#> 15 "Graham, Trevor"             Lifetime                       
 # }
 ```

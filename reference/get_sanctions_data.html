@@ -87,20 +87,20 @@ refresh is triggered. Default <code>7</code></p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu">get_sanctions_data</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,047 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,059 × 5</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Athlete        Sport `Substance/Reason` `Sanction Terms` `Sanction Announced`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Miller, Adam   Fiel… Non-Analytical: 3… 2-Year Suspensi… 07/31/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Zilcosky, Cha… Weig… Amphetamine        2-Year Suspensi… 07/29/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Trabing, Bert  Weig… Anastrozole; Test… 4-Year Suspensi… 07/22/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Cantwell, Ste… Para… Dehydrochlormethy… 6-Year Suspensi… 07/16/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Edwards, Monz… Trac… Non-Analytical: C… 2-Year Suspensi… 06/29/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Quintero, Ang… Weig… Furosemide         2-Year Suspensi… 06/22/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Digenis, Hanna Weig… Cannabinoids       3-Month Suspens… 06/17/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Bracy-William… Trac… Non-Analytical: 3… 12-Year Suspens… 06/05/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Boyle, Evan    Cycl… Non-Analytical: 3… 16-Month Suspen… 04/24/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> De Sousa, Roo… Braz… Meldonium          3-Year Suspensi… 04/15/2026          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,037 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Lingafeldt, S… Weig… Testosterone       1-Year Suspensi… 09/24/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Samelo do Ama… Braz… Drostanolone; Nan… 3-Year Suspensi… 09/21/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Oprea, Erin    Tria… Ostarine; LGD-403… 5-Year Suspensi… 09/11/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Boyle, Evan    Cycl… Non-Analytical: 3… 16-Month Suspen… Original: 04/24/202…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Meador, Laura  Weig… Testosterone       4-Year Suspensi… 09/03/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Porfírio de A… Braz… Cannabinoids       3-Month Suspens… 09/02/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Oberst, Emily  Whee… Spironolactone     Public Warning   09/01/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Hobbs, Aleia   Trac… Non-Analytical: U… 6-Month Suspens… 08/21/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> MacDermott, J… Weig… Spironolactone; A… 2-Year Suspensi… 08/20/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Aguila-Ramos,… Para… Non-Analytical: R… 4-Year Suspensi… 08/18/2026          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,049 more rows</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

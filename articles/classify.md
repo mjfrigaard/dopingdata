@@ -51,15 +51,15 @@ usada_dates <- rbind(good_dates, cleaned_dates[nms])
 
 tidy_sports <- clean_sports(df = usada_dates, sport_col = "sport", tidy = TRUE)
 str(tidy_sports)
-#> 'data.frame':    703 obs. of  9 variables:
-#>  $ athlete           : chr  "miller, adam" "zilcosky, chase" "trabing, bert" "cantwell, steven" ...
-#>  $ sport             : chr  "field hockey" "weightlifting" "weightlifting" "paralympic snowboarding" ...
-#>  $ substance_reason  : chr  "non-analytical: 3 whereabouts failures" "amphetamine" "anastrozole; testosterone" "dehydrochlormethyltestosterone (dhcmt)" ...
-#>  $ sanction_terms    : chr  "2-year suspension; loss of results" "2-year suspension; loss of results" "4-year suspension; loss of results" "6-year suspension; loss of results" ...
-#>  $ sanction_announced: chr  "07/31/2026" "07/29/2026" "07/22/2026" "07/16/2026" ...
-#>  $ sanction_date     : Date, format: "2026-07-31" "2026-07-29" ...
+#> 'data.frame':    714 obs. of  9 variables:
+#>  $ athlete           : chr  "lingafeldt, seth" "samelo do amaral, rider" "oprea, erin" "meador, laura" ...
+#>  $ sport             : chr  "weightlifting" "brazilian jiu-jitsu" "triathlon" "weightlifting" ...
+#>  $ substance_reason  : chr  "testosterone" "drostanolone; nandrolone; 19-norsteroids" "ostarine; lgd-4033; testosterone" "testosterone" ...
+#>  $ sanction_terms    : chr  "1-year suspension; loss of results" "3-year suspension; loss of results" "5-year suspension; loss of results" "4-year suspension; loss of results" ...
+#>  $ sanction_announced: chr  "09/24/2026" "09/21/2026" "09/11/2026" "09/03/2026" ...
+#>  $ sanction_date     : Date, format: "2026-09-24" "2026-09-21" ...
 #>  $ support_personnel : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
-#>  $ paralympic        : logi  FALSE FALSE FALSE TRUE FALSE FALSE ...
+#>  $ paralympic        : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 #>  $ multiple_sports   : logi  FALSE FALSE FALSE FALSE FALSE FALSE ...
 ```
 
@@ -96,14 +96,14 @@ the sanction. See the examples below:
 
 stringr::str_view(tidy_sports[['substance_reason']], 
   "use \\(epo & hgh\\)", match = TRUE)
-#> [684] │ erythropoietin (epo) and non-analytical: <use (epo & hgh)>
+#> [695] │ erythropoietin (epo) and non-analytical: <use (epo & hgh)>
 ```
 
 ``` r
 
 stringr::str_view(tidy_sports[['substance_reason']],
   "tampering, complicity", match = TRUE)
-#> [195] │ non-analytical: <tampering, complicity>
+#> [206] │ non-analytical: <tampering, complicity>
 ```
 
 Most of the non-analytic sanctions include the terms
@@ -131,8 +131,8 @@ substances <- dplyr::mutate(.data = tidy_sports,
 substances |>
   dplyr::count(sanction_type, sort = TRUE)
 #>   sanction_type   n
-#> 1      analytic 548
-#> 2  non-analytic 155
+#> 1      analytic 556
+#> 2  non-analytic 158
 ```
 
 Now I can filter `substances` to the `analytical` sanctions in
@@ -156,12 +156,12 @@ substance_type_examples <- substances |>
   dplyr::select(athlete, substance_reason, sanction_type, substance_cat)
 substance_type_examples
 #> # A tibble: 4 × 4
-#>   athlete               substance_reason             sanction_type substance_cat
-#>   <chr>                 <chr>                        <chr>         <chr>        
-#> 1 trabing, bert         anastrozole; testosterone    analytic      multiple     
-#> 2 zilcosky, chase       amphetamine                  analytic      single       
-#> 3 anmaw mengesha, adane non-analytical: use (intrav… non-analytic  multiple     
-#> 4 miller, adam          non-analytical: 3 whereabou… non-analytic  single
+#>   athlete                 substance_reason           sanction_type substance_cat
+#>   <chr>                   <chr>                      <chr>         <chr>        
+#> 1 samelo do amaral, rider drostanolone; nandrolone;… analytic      multiple     
+#> 2 lingafeldt, seth        testosterone               analytic      single       
+#> 3 anmaw mengesha, adane   non-analytical: use (intr… non-analytic  multiple     
+#> 4 hobbs, aleia            non-analytical: use (intr… non-analytic  single
 ```
 
 ### Substance category
@@ -185,10 +185,10 @@ dplyr::mutate(substance_type_examples,
 #> # A tibble: 4 × 3
 #>   substance_reason                                      multiple single
 #>   <chr>                                                    <int>  <int>
-#> 1 anastrozole; testosterone                                    1     NA
+#> 1 drostanolone; nandrolone; 19-norsteroids                     1     NA
 #> 2 non-analytical: use (intravenous infusion); tampering        1     NA
-#> 3 amphetamine                                                 NA      1
-#> 4 non-analytical: 3 whereabouts failures                      NA      1
+#> 3 non-analytical: use (intravenous infusion)                  NA      1
+#> 4 testosterone                                                NA      1
 ```
 
 The `substance_cat` identifier can be used to separate sanctions with
@@ -205,8 +205,8 @@ substances <- substances |>
 substances |> 
   dplyr::count(substance_cat, sort = TRUE)
 #>   substance_cat   n
-#> 1        single 522
-#> 2      multiple 181
+#> 1        single 529
+#> 2      multiple 185
 ```
 
 ## Single analytic substances
@@ -229,15 +229,15 @@ single_analytic_substances |>
   head(10)
 #>                 substance_reason  n
 #> 1    androgenic anabolic steroid 46
-#> 2                   cannabinoids 45
+#> 2                   cannabinoids 46
 #> 3                       ostarine 40
 #> 4                     clomiphene 22
-#> 5                      meldonium 14
-#> 6                   testosterone 14
+#> 5                   testosterone 16
+#> 6                      meldonium 14
 #> 7  dehydroepiandrosterone (dhea) 11
-#> 8                     stanozolol 11
-#> 9                    clenbuterol 10
-#> 10                    furosemide 10
+#> 8                 spironolactone 11
+#> 9                     stanozolol 11
+#> 10                   clenbuterol 10
 ```
 
 ## Multiple analytic substances
@@ -314,10 +314,10 @@ dplyr::mutate(substance_type_examples,
 #> # A tibble: 4 × 2
 #>   substance_reason                                      punct_match  
 #>   <chr>                                                 <chr>        
-#> 1 anastrozole; testosterone                             ;            
-#> 2 amphetamine                                           NA           
+#> 1 drostanolone; nandrolone; 19-norsteroids              ;, ;, -      
+#> 2 testosterone                                          NA           
 #> 3 non-analytical: use (intravenous infusion); tampering -, :, (, ), ;
-#> 4 non-analytical: 3 whereabouts failures                -, :
+#> 4 non-analytical: use (intravenous infusion)            -, :, (, )
 ```
 
 > *The rows above are all matching correctly on the regular expression
@@ -344,18 +344,18 @@ dplyr::sample_n(multiple_analytic_substances, size = 10, replace = FALSE) |>
     dplyr::mutate(substance_reason = trimws(substance_reason, "both")) |> 
     dplyr::select(athlete, substance_reason)
 #> # A tibble: 30 × 2
-#>    athlete                substance_reason                   
-#>    <chr>                  <chr>                              
-#>  1 romero noboa, isidro   androgenic anabolic steroid        
-#>  2 romero noboa, isidro   cannabinoids                       
-#>  3 romero noboa, isidro   anastrozole                        
-#>  4 romero noboa, isidro   clomiphene                         
-#>  5 romero noboa, isidro   gw1516                             
-#>  6 cardoso, josé henrique 19-norandrosterone (19-na)         
-#>  7 cardoso, josé henrique 2a-methyl-5a-androstan-3a-ol-17-one
-#>  8 cardoso, josé henrique epitrenbolone                      
-#>  9 cardoso, josé henrique methasterone                       
-#> 10 cardoso, josé henrique testosterone                       
+#>    athlete          substance_reason                       
+#>    <chr>            <chr>                                  
+#>  1 lewis-parry, chi drostanolone                           
+#>  2 lewis-parry, chi stanozolol                             
+#>  3 lewis-parry, chi dehydrochloromethyltestosterone (dhcmt)
+#>  4 lewis-parry, chi tampering                              
+#>  5 whitham, roger   boldenone                              
+#>  6 whitham, roger   gw1516                                 
+#>  7 whitham, roger   ibutamoren                             
+#>  8 whitham, roger   ostarine                               
+#>  9 silva, anderson  methyltestosterone                     
+#> 10 silva, anderson  hydrochlorothiazide                    
 #> # ℹ 20 more rows
 ```
 
@@ -390,16 +390,16 @@ tidy_substances |>
   dplyr::count(substance_reason, sort = TRUE) |> 
   head(10)
 #>               substance_reason  n
-#> 1                     ostarine 67
+#> 1                     ostarine 68
 #> 2  androgenic anabolic steroid 60
-#> 3                 cannabinoids 47
+#> 3                 cannabinoids 48
 #> 4                   clomiphene 36
-#> 5                 testosterone 29
+#> 5                 testosterone 34
 #> 6                       gw1516 20
 #> 7          hydrochlorothiazide 17
-#> 8                   stanozolol 16
-#> 9                     lgd-4033 15
-#> 10                 clenbuterol 14
+#> 8                   stanozolol 17
+#> 9                     lgd-4033 16
+#> 10                drostanolone 15
 ```
 
 ## classify_wada_substances()
@@ -469,27 +469,27 @@ regular expressions (`s1_regex`), which we can use to match the
 s1_regex <- make_regex(x = dopingdata::s1_substances, wb = TRUE)
 stringr::str_view(string = tidy_substances$substance_reason,
   pattern = s1_regex, match = TRUE)
-#>  [2] │ dehydrochlormethyltestosterone (<dhcmt>)
-#>  [6] │ <testosterone>
-#>  [7] │ <dehydroepiandrosterone> (<dhea>)
-#>  [9] │ <dehydroepiandrosterone> (<dhea>)
-#> [11] │ <androgenic anabolic steroid>
-#> [20] │ <androgenic anabolic steroid>
-#> [23] │ <dehydroepiandrosterone> (<dhea>)
-#> [24] │ <testosterone>
-#> [25] │ <testosterone>
-#> [26] │ <testosterone>
+#>  [1] │ <testosterone>
+#>  [2] │ <testosterone>
+#>  [7] │ dehydrochlormethyltestosterone (<dhcmt>)
+#> [11] │ <testosterone>
+#> [12] │ <dehydroepiandrosterone> (<dhea>)
+#> [14] │ <dehydroepiandrosterone> (<dhea>)
+#> [16] │ <androgenic anabolic steroid>
+#> [25] │ <androgenic anabolic steroid>
 #> [28] │ <dehydroepiandrosterone> (<dhea>)
-#> [31] │ <ostarine>
-#> [33] │ <drostanolone>
-#> [34] │ <androgenic anabolic steroid>
-#> [38] │ <ostarine>
-#> [40] │ <metenolone>
-#> [42] │ <androgenic anabolic steroid>
-#> [43] │ <oxandrolone>
-#> [46] │ <ostarine>
-#> [47] │ <19-norandrosterone>
-#> ... and 347 more
+#> [29] │ <testosterone>
+#> [30] │ <testosterone>
+#> [31] │ <testosterone>
+#> [33] │ <dehydroepiandrosterone> (<dhea>)
+#> [36] │ <ostarine>
+#> [38] │ <drostanolone>
+#> [39] │ <androgenic anabolic steroid>
+#> [43] │ <ostarine>
+#> [45] │ <metenolone>
+#> [47] │ <androgenic anabolic steroid>
+#> [48] │ <oxandrolone>
+#> ... and 355 more
 ```
 
 The output from
@@ -516,13 +516,14 @@ tidy_substances |>
       substance_group == "UNCLASSIFIED" & 
       substance_reason != "") |>
   dplyr::distinct(athlete, substance_reason)
-#>             athlete                         substance_reason
-#> 1     *name removed                              dorzolamide
-#> 2 brinegar, michael erythropoietic stimulating agents (esas)
-#> 3   mcmahon, kensey                               vadadustat
-#> 4     *name removed                             capromorelin
-#> 5    sundeen, tyler                           ritalinic acid
-#> 6   rodriguez, yair                   3 whereabouts failures
+#>             athlete               substance_reason
+#> 1      koech, jonah adverse passport finding (apf)
+#> 2     *name removed                    dorzolamide
+#> 3 brinegar, michael adverse passport finding (apf)
+#> 4   mcmahon, kensey                     vadadustat
+#> 5     *name removed                   capromorelin
+#> 6    sundeen, tyler                 ritalinic acid
+#> 7   rodriguez, yair         3 whereabouts failures
 ```
 
 The final unclassified substance is actually a result from a
@@ -570,29 +571,30 @@ tidy_substances |>
       substance_reason != "") |>
   dplyr::distinct(substance_reason)
 #>                                                       substance_reason
-#> 1                                                                 hctz
-#> 2                                                              rad-140
-#> 3                                  2a-methyl-5a-androstan-3a-ol-17-one
-#> 4                                                    d-methamphetamine
-#> 5                                                           arimistane
-#> 6                                                           torasemide
-#> 7                                                           possession
-#> 8                                                    use/attempted use
-#> 9                                            evading sample collection
-#> 10                                                               igf-1
-#> 11                                  human chorionic gonadotropin (hcg)
-#> 12                                                            aod-9064
-#> 13                                                                s-23
-#> 14                           intact human chorionic gonadtrophin (hcg)
-#> 15 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)
-#> 16                                                      methylecgonine
-#> 17                                                     propylhexadrine
-#> 18                                                 androstatrienedione
-#> 19                                             androst-(2,3)-en-17-one
-#> 20                                      non-anatlyical: administration
-#> 21                                                         trafficking
-#> 22                                 human chorionic gonadotrophin (hcg)
-#> 23                                violation of period of ineligibility
+#> 1                                                       19-norsteroids
+#> 2                                                                 hctz
+#> 3                                                              rad-140
+#> 4                                  2a-methyl-5a-androstan-3a-ol-17-one
+#> 5                                                    d-methamphetamine
+#> 6                                                           arimistane
+#> 7                                                           torasemide
+#> 8                                                           possession
+#> 9                                                    use/attempted use
+#> 10                                           evading sample collection
+#> 11                                                               igf-1
+#> 12                                  human chorionic gonadotropin (hcg)
+#> 13                                                            aod-9064
+#> 14                                                                s-23
+#> 15                           intact human chorionic gonadtrophin (hcg)
+#> 16 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)
+#> 17                                                      methylecgonine
+#> 18                                                     propylhexadrine
+#> 19                                                 androstatrienedione
+#> 20                                             androst-(2,3)-en-17-one
+#> 21                                      non-anatlyical: administration
+#> 22                                                         trafficking
+#> 23                                 human chorionic gonadotrophin (hcg)
+#> 24                                violation of period of ineligibility
 ```
 
 ## Re-classifying substances
@@ -740,14 +742,15 @@ tidy_substances |>
       substance_reason != "") |>
   dplyr::distinct(substance_reason) 
 #>                       substance_reason
-#> 1                                 hctz
-#> 2                              rad-140
-#> 3                           possession
-#> 4                    use/attempted use
-#> 5            evading sample collection
-#> 6       non-anatlyical: administration
-#> 7                          trafficking
-#> 8 violation of period of ineligibility
+#> 1                       19-norsteroids
+#> 2                                 hctz
+#> 3                              rad-140
+#> 4                           possession
+#> 5                    use/attempted use
+#> 6            evading sample collection
+#> 7       non-anatlyical: administration
+#> 8                          trafficking
+#> 9 violation of period of ineligibility
 ```
 
 Changing the `sanction_type` classification to non-analytic requires
@@ -801,16 +804,16 @@ tidy_substances |>
 #>  2 M2 CHEMICAL AND PHYSICAL MANIPULATION        1             NA
 #>  3 P1 BETA-BLOCKERS                             2             NA
 #>  4 S0 UNAPPROVED SUBSTANCES                     2             NA
-#>  5 S1 ANABOLIC AGENTS                         370             NA
+#>  5 S1 ANABOLIC AGENTS                         378             NA
 #>  6 S2 PEP HORMONES/G FACTORS/MIMETICS          46             NA
 #>  7 S3 BETA-2 AGONISTS                          12             NA
 #>  8 S4 HORMONE AND METABOLIC MODULATORS        101             NA
-#>  9 S5 DIURETICS/MASKING AGENTS                 70             NA
-#> 10 S6 STIMULANTS                               77             NA
+#>  9 S5 DIURETICS/MASKING AGENTS                 72             NA
+#> 10 S6 STIMULANTS                               78             NA
 #> 11 S7 NARCOTICS                                 2             NA
-#> 12 S8 CANNABINOIDS                             47             NA
+#> 12 S8 CANNABINOIDS                             48             NA
 #> 13 S9 GLUCOCORTICOIDS                           6             NA
-#> 14 UNCLASSIFIED                                10             NA
+#> 14 UNCLASSIFIED                                12             NA
 #> 15 NA                                          NA              6
 ```
 
