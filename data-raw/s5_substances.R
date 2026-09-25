@@ -38,5 +38,7 @@ s5_substances <-
     "tolvaptan",
     "torsemide",
     "triamterene",
-    "vaptans")
+    "vaptans",
+    "dorzolamide",
+    "hctz")
 usethis::use_data(s5_substances, overwrite = TRUE)

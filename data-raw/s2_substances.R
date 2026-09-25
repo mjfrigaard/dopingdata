@@ -84,5 +84,7 @@ s2_substances <-
     "triptorelin",
     "vadadustat (akb-6548)",
     "vascular-endothelial growth factor (vegf)",
-    "xenon")
+    "xenon",
+    "capromorelin",
+    "vadadustat")
 usethis::use_data(s2_substances, overwrite = TRUE)

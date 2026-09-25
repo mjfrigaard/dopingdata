@@ -99,5 +99,6 @@ s6_substances <- c("1,3-dimethylbutylamine",
   "pseudoephedrine",
   "α - pyrrolidinovalerophenone",
   "strychnine",
-  "tuaminoheptane")
+  "tuaminoheptane",
+  "ritalinic acid")
 usethis::use_data(s6_substances, overwrite = TRUE)

@@ -131,5 +131,7 @@ s1_substances <-
     "stanozolol",
     "boldenone",
     "lgd-4033",
-    "ostarine")
+    "ostarine",
+    "19-norsteroids",
+    "rad-140")
 usethis::use_data(s1_substances, overwrite = TRUE)

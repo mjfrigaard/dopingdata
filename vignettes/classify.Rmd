@@ -528,6 +528,8 @@ tidy_substances <- tidy_substances |>
       substance_group == "UNCLASSIFIED" & substance_reason == "evading sample collection" ~ "non-analytic",
       substance_group == "UNCLASSIFIED" & substance_reason == "non-anatlyical: administration" ~ "non-analytic",
       substance_group == "UNCLASSIFIED" & substance_reason == "trafficking" ~ "non-analytic",
+      substance_group == "UNCLASSIFIED" & substance_reason == "adverse passport finding (apf)" ~ "non-analytic",
+      substance_group == "UNCLASSIFIED" & substance_reason == "violation of period of ineligibility" ~ "non-analytic",
       TRUE ~ sanction_type
     )
   ) 
@@ -566,7 +568,7 @@ dplyr::filter(tidy_substances, sanction_type == "non-analytic") |>
 
 
 ```{r export_data, include=FALSE, echo=FALSE, eval=FALSE}
-export_data(x = tidy_substances, path = "../isnt/extdata/demo")
+export_data(x = tidy_substances, path = "../inst/extdata/demo")
 ```
 
 
