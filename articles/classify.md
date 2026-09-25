@@ -489,7 +489,7 @@ stringr::str_view(string = tidy_substances$substance_reason,
 #> [45] │ <metenolone>
 #> [47] │ <androgenic anabolic steroid>
 #> [48] │ <oxandrolone>
-#> ... and 355 more
+#> ... and 357 more
 ```
 
 The output from
@@ -518,12 +518,8 @@ tidy_substances |>
   dplyr::distinct(athlete, substance_reason)
 #>             athlete               substance_reason
 #> 1      koech, jonah adverse passport finding (apf)
-#> 2     *name removed                    dorzolamide
-#> 3 brinegar, michael adverse passport finding (apf)
-#> 4   mcmahon, kensey                     vadadustat
-#> 5     *name removed                   capromorelin
-#> 6    sundeen, tyler                 ritalinic acid
-#> 7   rodriguez, yair         3 whereabouts failures
+#> 2 brinegar, michael adverse passport finding (apf)
+#> 3   rodriguez, yair         3 whereabouts failures
 ```
 
 The final unclassified substance is actually a result from a
@@ -571,30 +567,27 @@ tidy_substances |>
       substance_reason != "") |>
   dplyr::distinct(substance_reason)
 #>                                                       substance_reason
-#> 1                                                       19-norsteroids
-#> 2                                                                 hctz
-#> 3                                                              rad-140
-#> 4                                  2a-methyl-5a-androstan-3a-ol-17-one
-#> 5                                                    d-methamphetamine
-#> 6                                                           arimistane
-#> 7                                                           torasemide
-#> 8                                                           possession
-#> 9                                                    use/attempted use
-#> 10                                           evading sample collection
-#> 11                                                               igf-1
-#> 12                                  human chorionic gonadotropin (hcg)
-#> 13                                                            aod-9064
-#> 14                                                                s-23
-#> 15                           intact human chorionic gonadtrophin (hcg)
-#> 16 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)
-#> 17                                                      methylecgonine
-#> 18                                                     propylhexadrine
-#> 19                                                 androstatrienedione
-#> 20                                             androst-(2,3)-en-17-one
-#> 21                                      non-anatlyical: administration
-#> 22                                                         trafficking
-#> 23                                 human chorionic gonadotrophin (hcg)
-#> 24                                violation of period of ineligibility
+#> 1                                  2a-methyl-5a-androstan-3a-ol-17-one
+#> 2                                                    d-methamphetamine
+#> 3                                                           arimistane
+#> 4                                                           torasemide
+#> 5                                                           possession
+#> 6                                                    use/attempted use
+#> 7                                            evading sample collection
+#> 8                                                                igf-1
+#> 9                                   human chorionic gonadotropin (hcg)
+#> 10                                                            aod-9064
+#> 11                                                                s-23
+#> 12                           intact human chorionic gonadtrophin (hcg)
+#> 13 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)
+#> 14                                                      methylecgonine
+#> 15                                                     propylhexadrine
+#> 16                                                 androstatrienedione
+#> 17                                             androst-(2,3)-en-17-one
+#> 18                                      non-anatlyical: administration
+#> 19                                                         trafficking
+#> 20                                 human chorionic gonadotrophin (hcg)
+#> 21                                violation of period of ineligibility
 ```
 
 ## Re-classifying substances
@@ -742,15 +735,12 @@ tidy_substances |>
       substance_reason != "") |>
   dplyr::distinct(substance_reason) 
 #>                       substance_reason
-#> 1                       19-norsteroids
-#> 2                                 hctz
-#> 3                              rad-140
-#> 4                           possession
-#> 5                    use/attempted use
-#> 6            evading sample collection
-#> 7       non-anatlyical: administration
-#> 8                          trafficking
-#> 9 violation of period of ineligibility
+#> 1                           possession
+#> 2                    use/attempted use
+#> 3            evading sample collection
+#> 4       non-anatlyical: administration
+#> 5                          trafficking
+#> 6 violation of period of ineligibility
 ```
 
 Changing the `sanction_type` classification to non-analytic requires
@@ -767,6 +757,8 @@ tidy_substances <- tidy_substances |>
       substance_group == "UNCLASSIFIED" & substance_reason == "evading sample collection" ~ "non-analytic",
       substance_group == "UNCLASSIFIED" & substance_reason == "non-anatlyical: administration" ~ "non-analytic",
       substance_group == "UNCLASSIFIED" & substance_reason == "trafficking" ~ "non-analytic",
+      substance_group == "UNCLASSIFIED" & substance_reason == "adverse passport finding (apf)" ~ "non-analytic",
+      substance_group == "UNCLASSIFIED" & substance_reason == "violation of period of ineligibility" ~ "non-analytic",
       TRUE ~ sanction_type
     )
   ) 
@@ -797,24 +789,23 @@ Findings](https://www.usada.org/spirit-of-sport/education/alphabet-soup-results-
 tidy_substances |> 
   dplyr::count(sanction_type, substance_group) |> 
   tidyr::pivot_wider(names_from = sanction_type, values_from = n)
-#> # A tibble: 15 × 3
+#> # A tibble: 14 × 3
 #>    substance_group                       analytic `non-analytic`
 #>    <chr>                                    <int>          <int>
 #>  1 M1 MANIPULATION OF BLOOD                     3             NA
 #>  2 M2 CHEMICAL AND PHYSICAL MANIPULATION        1             NA
 #>  3 P1 BETA-BLOCKERS                             2             NA
 #>  4 S0 UNAPPROVED SUBSTANCES                     2             NA
-#>  5 S1 ANABOLIC AGENTS                         378             NA
-#>  6 S2 PEP HORMONES/G FACTORS/MIMETICS          46             NA
+#>  5 S1 ANABOLIC AGENTS                         380             NA
+#>  6 S2 PEP HORMONES/G FACTORS/MIMETICS          49             NA
 #>  7 S3 BETA-2 AGONISTS                          12             NA
 #>  8 S4 HORMONE AND METABOLIC MODULATORS        101             NA
-#>  9 S5 DIURETICS/MASKING AGENTS                 72             NA
-#> 10 S6 STIMULANTS                               78             NA
+#>  9 S5 DIURETICS/MASKING AGENTS                 75             NA
+#> 10 S6 STIMULANTS                               79             NA
 #> 11 S7 NARCOTICS                                 2             NA
 #> 12 S8 CANNABINOIDS                             48             NA
 #> 13 S9 GLUCOCORTICOIDS                           6             NA
-#> 14 UNCLASSIFIED                                12             NA
-#> 15 NA                                          NA              6
+#> 14 NA                                          NA              9
 ```
 
 And the `non-analytic` sanctions are truly [Non-Analytical Anti-doping
@@ -826,13 +817,15 @@ Violations](https://www.usada.org/spirit-of-sport/education/non-analytical-anti-
 dplyr::filter(tidy_substances, sanction_type == "non-analytic") |> 
   dplyr::count(substance_reason, substance_cat) |> 
   tidyr::pivot_wider(names_from = substance_cat, values_from = n)
-#> # A tibble: 6 × 3
-#>   substance_reason               single multiple
-#>   <chr>                           <int>    <int>
-#> 1 3 whereabouts failures              1       NA
-#> 2 evading sample collection          NA        1
-#> 3 non-anatlyical: administration     NA        1
-#> 4 possession                         NA        1
-#> 5 trafficking                        NA        1
-#> 6 use/attempted use                  NA        1
+#> # A tibble: 8 × 3
+#>   substance_reason                     single multiple
+#>   <chr>                                 <int>    <int>
+#> 1 3 whereabouts failures                    1       NA
+#> 2 adverse passport finding (apf)            2       NA
+#> 3 evading sample collection                NA        1
+#> 4 non-anatlyical: administration           NA        1
+#> 5 possession                               NA        1
+#> 6 trafficking                              NA        1
+#> 7 use/attempted use                        NA        1
+#> 8 violation of period of ineligibility     NA        1
 ```

@@ -499,7 +499,7 @@ live <code>tidy_substances</code> dataset built above):</p>
 <span><span class="co">#&gt; <span style="color: #555555;">[45] │</span> <span style="color: #00BBBB;">&lt;metenolone&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">[47] │</span> <span style="color: #00BBBB;">&lt;androgenic anabolic steroid&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">[48] │</span> <span style="color: #00BBBB;">&lt;oxandrolone&gt;</span></span></span>
-<span><span class="co">#&gt; ... and 355 more</span></span></code></pre></div>
+<span><span class="co">#&gt; ... and 357 more</span></span></code></pre></div>
 <p>The output from <code><a href="../reference/classify_wada_substances.html">classify_wada_substances()</a></code> can be used
 to answer questions like: <em>what <code>substance_group</code>’s appear
 the most?</em></p>
@@ -523,12 +523,8 @@ the most?</em></p>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">athlete</span>, <span class="va">substance_reason</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             athlete               substance_reason</span></span>
 <span><span class="co">#&gt; 1      koech, jonah adverse passport finding (apf)</span></span>
-<span><span class="co">#&gt; 2     *name removed                    dorzolamide</span></span>
-<span><span class="co">#&gt; 3 brinegar, michael adverse passport finding (apf)</span></span>
-<span><span class="co">#&gt; 4   mcmahon, kensey                     vadadustat</span></span>
-<span><span class="co">#&gt; 5     *name removed                   capromorelin</span></span>
-<span><span class="co">#&gt; 6    sundeen, tyler                 ritalinic acid</span></span>
-<span><span class="co">#&gt; 7   rodriguez, yair         3 whereabouts failures</span></span></code></pre></div>
+<span><span class="co">#&gt; 2 brinegar, michael adverse passport finding (apf)</span></span>
+<span><span class="co">#&gt; 3   rodriguez, yair         3 whereabouts failures</span></span></code></pre></div>
 <p>The final unclassified substance is actually a result from a
 miss-classified sanction type (for <code>rodriguez, yair</code>).</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -568,30 +564,27 @@ should be missing (<code>NA_character_</code>)</p>
 <span>      <span class="va">substance_reason</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">substance_reason</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                                       substance_reason</span></span>
-<span><span class="co">#&gt; 1                                                       19-norsteroids</span></span>
-<span><span class="co">#&gt; 2                                                                 hctz</span></span>
-<span><span class="co">#&gt; 3                                                              rad-140</span></span>
-<span><span class="co">#&gt; 4                                  2a-methyl-5a-androstan-3a-ol-17-one</span></span>
-<span><span class="co">#&gt; 5                                                    d-methamphetamine</span></span>
-<span><span class="co">#&gt; 6                                                           arimistane</span></span>
-<span><span class="co">#&gt; 7                                                           torasemide</span></span>
-<span><span class="co">#&gt; 8                                                           possession</span></span>
-<span><span class="co">#&gt; 9                                                    use/attempted use</span></span>
-<span><span class="co">#&gt; 10                                           evading sample collection</span></span>
-<span><span class="co">#&gt; 11                                                               igf-1</span></span>
-<span><span class="co">#&gt; 12                                  human chorionic gonadotropin (hcg)</span></span>
-<span><span class="co">#&gt; 13                                                            aod-9064</span></span>
-<span><span class="co">#&gt; 14                                                                s-23</span></span>
-<span><span class="co">#&gt; 15                           intact human chorionic gonadtrophin (hcg)</span></span>
-<span><span class="co">#&gt; 16 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)</span></span>
-<span><span class="co">#&gt; 17                                                      methylecgonine</span></span>
-<span><span class="co">#&gt; 18                                                     propylhexadrine</span></span>
-<span><span class="co">#&gt; 19                                                 androstatrienedione</span></span>
-<span><span class="co">#&gt; 20                                             androst-(2,3)-en-17-one</span></span>
-<span><span class="co">#&gt; 21                                      non-anatlyical: administration</span></span>
-<span><span class="co">#&gt; 22                                                         trafficking</span></span>
-<span><span class="co">#&gt; 23                                 human chorionic gonadotrophin (hcg)</span></span>
-<span><span class="co">#&gt; 24                                violation of period of ineligibility</span></span></code></pre></div>
+<span><span class="co">#&gt; 1                                  2a-methyl-5a-androstan-3a-ol-17-one</span></span>
+<span><span class="co">#&gt; 2                                                    d-methamphetamine</span></span>
+<span><span class="co">#&gt; 3                                                           arimistane</span></span>
+<span><span class="co">#&gt; 4                                                           torasemide</span></span>
+<span><span class="co">#&gt; 5                                                           possession</span></span>
+<span><span class="co">#&gt; 6                                                    use/attempted use</span></span>
+<span><span class="co">#&gt; 7                                            evading sample collection</span></span>
+<span><span class="co">#&gt; 8                                                                igf-1</span></span>
+<span><span class="co">#&gt; 9                                   human chorionic gonadotropin (hcg)</span></span>
+<span><span class="co">#&gt; 10                                                            aod-9064</span></span>
+<span><span class="co">#&gt; 11                                                                s-23</span></span>
+<span><span class="co">#&gt; 12                           intact human chorionic gonadtrophin (hcg)</span></span>
+<span><span class="co">#&gt; 13 thiazide metabolite 4-amino-6-chloro-1,3-benzenedisulfonamide (acb)</span></span>
+<span><span class="co">#&gt; 14                                                      methylecgonine</span></span>
+<span><span class="co">#&gt; 15                                                     propylhexadrine</span></span>
+<span><span class="co">#&gt; 16                                                 androstatrienedione</span></span>
+<span><span class="co">#&gt; 17                                             androst-(2,3)-en-17-one</span></span>
+<span><span class="co">#&gt; 18                                      non-anatlyical: administration</span></span>
+<span><span class="co">#&gt; 19                                                         trafficking</span></span>
+<span><span class="co">#&gt; 20                                 human chorionic gonadotrophin (hcg)</span></span>
+<span><span class="co">#&gt; 21                                violation of period of ineligibility</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -735,15 +728,12 @@ non-analytic:</p>
 <span>      <span class="va">substance_reason</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">substance_reason</span><span class="op">)</span> </span>
 <span><span class="co">#&gt;                       substance_reason</span></span>
-<span><span class="co">#&gt; 1                       19-norsteroids</span></span>
-<span><span class="co">#&gt; 2                                 hctz</span></span>
-<span><span class="co">#&gt; 3                              rad-140</span></span>
-<span><span class="co">#&gt; 4                           possession</span></span>
-<span><span class="co">#&gt; 5                    use/attempted use</span></span>
-<span><span class="co">#&gt; 6            evading sample collection</span></span>
-<span><span class="co">#&gt; 7       non-anatlyical: administration</span></span>
-<span><span class="co">#&gt; 8                          trafficking</span></span>
-<span><span class="co">#&gt; 9 violation of period of ineligibility</span></span></code></pre></div>
+<span><span class="co">#&gt; 1                           possession</span></span>
+<span><span class="co">#&gt; 2                    use/attempted use</span></span>
+<span><span class="co">#&gt; 3            evading sample collection</span></span>
+<span><span class="co">#&gt; 4       non-anatlyical: administration</span></span>
+<span><span class="co">#&gt; 5                          trafficking</span></span>
+<span><span class="co">#&gt; 6 violation of period of ineligibility</span></span></code></pre></div>
 <p>Changing the <code>sanction_type</code> classification to
 non-analytic requires missing (<code>NA_character_</code>) values for
 <code>substance_group</code>:</p>
@@ -757,6 +747,8 @@ non-analytic requires missing (<code>NA_character_</code>) values for
 <span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> <span class="va">substance_reason</span> <span class="op">==</span> <span class="st">"evading sample collection"</span> <span class="op">~</span> <span class="st">"non-analytic"</span>,</span>
 <span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> <span class="va">substance_reason</span> <span class="op">==</span> <span class="st">"non-anatlyical: administration"</span> <span class="op">~</span> <span class="st">"non-analytic"</span>,</span>
 <span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> <span class="va">substance_reason</span> <span class="op">==</span> <span class="st">"trafficking"</span> <span class="op">~</span> <span class="st">"non-analytic"</span>,</span>
+<span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> <span class="va">substance_reason</span> <span class="op">==</span> <span class="st">"adverse passport finding (apf)"</span> <span class="op">~</span> <span class="st">"non-analytic"</span>,</span>
+<span>      <span class="va">substance_group</span> <span class="op">==</span> <span class="st">"UNCLASSIFIED"</span> <span class="op">&amp;</span> <span class="va">substance_reason</span> <span class="op">==</span> <span class="st">"violation of period of ineligibility"</span> <span class="op">~</span> <span class="st">"non-analytic"</span>,</span>
 <span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">sanction_type</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span> </span>
@@ -781,39 +773,40 @@ Analytical Findings</a>.</p>
 <code class="sourceCode R"><span><span class="va">tidy_substances</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">sanction_type</span>, <span class="va">substance_group</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">sanction_type</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 3</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 14 × 3</span></span></span>
 <span><span class="co">#&gt;    substance_group                       analytic `non-analytic`</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> M1 MANIPULATION OF BLOOD                     3             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> M2 CHEMICAL AND PHYSICAL MANIPULATION        1             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> P1 BETA-BLOCKERS                             2             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> S0 UNAPPROVED SUBSTANCES                     2             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> S1 ANABOLIC AGENTS                         378             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> S2 PEP HORMONES/G FACTORS/MIMETICS          46             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> S1 ANABOLIC AGENTS                         380             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> S2 PEP HORMONES/G FACTORS/MIMETICS          49             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> S3 BETA-2 AGONISTS                          12             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> S4 HORMONE AND METABOLIC MODULATORS        101             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> S5 DIURETICS/MASKING AGENTS                 72             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> S6 STIMULANTS                               78             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> S5 DIURETICS/MASKING AGENTS                 75             <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> S6 STIMULANTS                               79             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> S7 NARCOTICS                                 2             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> S8 CANNABINOIDS                             48             <span style="color: #BB0000;">NA</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> S9 GLUCOCORTICOIDS                           6             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> UNCLASSIFIED                                12             <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> <span style="color: #BB0000;">NA</span>                                          <span style="color: #BB0000;">NA</span>              6</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> <span style="color: #BB0000;">NA</span>                                          <span style="color: #BB0000;">NA</span>              9</span></span></code></pre></div>
 <p>And the <code>non-analytic</code> sanctions are truly <a href="https://www.usada.org/spirit-of-sport/education/non-analytical-anti-doping-rule-violations/" class="external-link">Non-Analytical
 Anti-doping Rule Violations</a>.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">tidy_substances</span>, <span class="va">sanction_type</span> <span class="op">==</span> <span class="st">"non-analytic"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">substance_reason</span>, <span class="va">substance_cat</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">substance_cat</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 3</span></span></span>
-<span><span class="co">#&gt;   substance_reason               single multiple</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 3 whereabouts failures              1       <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> evading sample collection          <span style="color: #BB0000;">NA</span>        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> non-anatlyical: administration     <span style="color: #BB0000;">NA</span>        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> possession                         <span style="color: #BB0000;">NA</span>        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> trafficking                        <span style="color: #BB0000;">NA</span>        1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> use/attempted use                  <span style="color: #BB0000;">NA</span>        1</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 3</span></span></span>
+<span><span class="co">#&gt;   substance_reason                     single multiple</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                 <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 3 whereabouts failures                    1       <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> adverse passport finding (apf)            2       <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> evading sample collection                <span style="color: #BB0000;">NA</span>        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> non-anatlyical: administration           <span style="color: #BB0000;">NA</span>        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> possession                               <span style="color: #BB0000;">NA</span>        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> trafficking                              <span style="color: #BB0000;">NA</span>        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> use/attempted use                        <span style="color: #BB0000;">NA</span>        1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> violation of period of ineligibility     <span style="color: #BB0000;">NA</span>        1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
